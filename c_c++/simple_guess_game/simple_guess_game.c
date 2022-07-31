@@ -9,15 +9,14 @@
 
 #define NUMBER_OF_TRIES 3
 
-int secret_number = 0;
-int secret_number_user_guess = 0;
-
+unsigned int secret_number = 0;
+unsigned int secret_number_user_guess = 0;
 unsigned int tries_counter = 0;
-unsigned int tries_left;
 
 void main()
 {
     print_game_header();
+
     while(tries_counter < NUMBER_OF_TRIES)
     {
         tries_counter++;
@@ -46,6 +45,8 @@ void print_game_header()
 
 void request_user_guess()
 {
+    printf("\n Try number %d of %d \n", tries_counter, NUMBER_OF_TRIES);
+
     printf("\n What's your guess? ");
     scanf("%d", &secret_number_user_guess);
 
@@ -62,9 +63,7 @@ void request_user_guess()
         printf("\n Your guess is wrong! \n");
         if(guess_is_higher)
         {
-            tries_left = (NUMBER_OF_TRIES - tries_counter);
             printf("\n Your guess is higher than secret number! \n");
-            printf("\n You have %d tries left! \n", tries_left);
         }
         else
         {
