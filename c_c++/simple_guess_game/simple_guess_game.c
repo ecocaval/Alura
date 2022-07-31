@@ -7,19 +7,26 @@
 #include <stdbool.h>
 #include "simple_guess_game.h"
 
+#define NUMBER_OF_TRIES 3
+
 int secret_number = 0;
 int secret_number_user_guess = 0;
+
+unsigned int tries_counter = 0;
+unsigned int tries_left;
 
 void main()
 {
     print_game_header();
-    while(1)
+    while(tries_counter < NUMBER_OF_TRIES)
     {
+        tries_counter++;
+
         request_user_guess();
-        print_mark();
-        if(secret_number_user_guess == secret_number) 
+
+        if(secret_number_user_guess == secret_number || tries_counter == NUMBER_OF_TRIES) 
         {
-           printf("\n Ending code... \n");
+           printf("\n Ending guessing game... \n");
            break;
         }
     }
@@ -55,11 +62,14 @@ void request_user_guess()
         printf("\n Your guess is wrong! \n");
         if(guess_is_higher)
         {
+            tries_left = (NUMBER_OF_TRIES - tries_counter);
             printf("\n Your guess is higher than secret number! \n");
+            printf("\n You have %d tries left! \n", tries_left);
         }
         else
         {
             printf("\n Your guess is lower than secret number! \n");
         }
     }
+    print_mark();
 }
