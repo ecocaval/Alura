@@ -8,3 +8,9 @@ void print_mark();
 void print_game_header();
 
 void request_user_guess();
+
+void check_guess();
+
+bool check_stop_condition();
+
+bool check_negative_guess();
