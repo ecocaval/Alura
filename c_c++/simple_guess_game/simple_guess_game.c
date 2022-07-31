@@ -5,11 +5,14 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include "simple_guess_game.h"
 
-#define NUMBER_OF_TRIES 3
+#define NUMBER_OF_TRIES 10
+#define TOTAL_POINTS 1000
 
-int secret_number = 0;
+int total_points = TOTAL_POINTS;
+int secret_number = 50;
 int secret_number_user_guess = 0;
 int tries_counter = 0;
 
@@ -75,6 +78,8 @@ void check_guess()
         {
             printf("\n Your guess is lower than secret number! \n");
         }
+
+        total_points -= abs((secret_number_user_guess - secret_number) / 2);
     }
 
     print_mark();
@@ -82,8 +87,15 @@ void check_guess()
 
 bool check_stop_condition()
 {
-    if(secret_number_user_guess == secret_number || tries_counter == NUMBER_OF_TRIES) 
+    if(tries_counter == NUMBER_OF_TRIES) 
     {
+        printf("\n Ending guessing game... \n");
+
+        return true;
+    }
+    if(secret_number_user_guess == secret_number) 
+    {
+        printf("\n You won with a total of %d points! \n", total_points);
         printf("\n Ending guessing game... \n");
 
         return true;
