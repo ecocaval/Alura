@@ -4,10 +4,11 @@
 */
 
 #include <stdio.h>
+#include <stdbool.h>
 #include "simple_guess_game.h"
 
-int secret_number;
-int secret_number_user_guess;
+int secret_number = 0;
+int secret_number_user_guess = 0;
 
 void main()
 {
@@ -16,7 +17,11 @@ void main()
     {
         request_user_guess();
         print_mark();
-        if(secret_number_user_guess == secret_number) break;
+        if(secret_number_user_guess == secret_number) 
+        {
+           printf("\n Ending code... \n");
+           break;
+        }
     }
 }
 
@@ -37,14 +42,18 @@ void request_user_guess()
     printf("\n What's your guess? ");
     scanf("%d", &secret_number_user_guess);
 
-    if(secret_number_user_guess == secret_number)
+    bool guess_is_right = (secret_number_user_guess == secret_number);
+
+    bool guess_is_higher = (secret_number_user_guess > secret_number);
+
+    if(guess_is_right)
     {
         printf("\n Your guess is right! \n");
     }
     else
     {
         printf("\n Your guess is wrong! \n");
-        if (secret_number_user_guess > secret_number)
+        if(guess_is_higher)
         {
             printf("\n Your guess is higher than secret number! \n");
         }
