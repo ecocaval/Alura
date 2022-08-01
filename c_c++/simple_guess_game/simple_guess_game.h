@@ -15,6 +15,8 @@ void check_guess();
 
 void generate_secret_number();
 
+void request_game_difficulty();
+
 bool check_stop_condition();
 
 bool check_negative_guess();

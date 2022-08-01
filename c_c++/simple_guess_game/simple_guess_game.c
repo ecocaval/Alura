@@ -9,26 +9,39 @@
 
 #include "simple_guess_game.h"
 
-#define NUMBER_OF_TRIES 10
+#define EASY_MODE   1
+#define MEDIUM_MODE 2
+#define HARD_MODE   3
+
+#define NUMBER_OF_TRIES_HARD   5
+#define NUMBER_OF_TRIES_MEDIUM 8
+#define NUMBER_OF_TRIES_EASY   10
+
 #define GUESS_INTERVAL 100
+
 #define TOTAL_POINTS 1000
 
 float total_points = TOTAL_POINTS;
 
-int random_number;
+unsigned int random_number;
 
-short secret_number;
+unsigned short number_of_tries;
+unsigned short secret_number;
+unsigned short tries_counter = 1;
+unsigned short difficulty_mode = 0;
+
 short secret_number_user_guess = 0;
-short tries_counter = 1;
 
 bool guess_is_right;
 bool guess_is_higher;
 
 void main()
 {
-    generate_secret_number();
-
     print_game_header();
+
+    request_game_difficulty();
+
+    generate_secret_number();
 
     while(1)
     {
@@ -58,7 +71,7 @@ void print_game_header()
 
 void request_user_guess()
 {
-    printf("\n Try number %d of %d \n", tries_counter, NUMBER_OF_TRIES);
+    printf("\n Try number %d of %d \n", tries_counter, number_of_tries);
 
     printf("\n What's your guess? ");
     scanf("%d", &secret_number_user_guess);
@@ -101,9 +114,34 @@ void generate_secret_number()
     secret_number = random_number % GUESS_INTERVAL;
 }
 
+void request_game_difficulty()
+{
+    printf("\n Choose the difficulty:\n");
+    printf("\n (1)Easy (2)Medium (3)Hard : ");
+
+    scanf("%d", &difficulty_mode);
+    print_mark();
+
+    while(difficulty_mode != EASY_MODE && difficulty_mode != MEDIUM_MODE && difficulty_mode != HARD_MODE)
+    {   
+        printf("\n Your number input is invalid! Please choose from %d to %d!\n", EASY_MODE, HARD_MODE);
+        printf("\n (1)Easy (2)Medium (3)Hard : ");
+        scanf("%d", &difficulty_mode);
+        
+        print_mark();
+    }
+
+    switch(difficulty_mode)
+    {
+        case(EASY_MODE):   number_of_tries = NUMBER_OF_TRIES_EASY; break;
+        case(MEDIUM_MODE): number_of_tries = NUMBER_OF_TRIES_MEDIUM; break;
+        case(HARD_MODE):   number_of_tries = NUMBER_OF_TRIES_HARD; break;
+    }
+}
+
 bool check_stop_condition()
 {
-    if(tries_counter == NUMBER_OF_TRIES) 
+    if(tries_counter == number_of_tries) 
     {
         printf("\n You've lost, secret number was %d! \n", secret_number);
         printf("\n Ending guessing game... \n");
