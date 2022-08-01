@@ -4,29 +4,34 @@
 */
 
 #include <stdio.h>
-#include <stdbool.h>
 #include <stdlib.h>
+#include <time.h>
+
 #include "simple_guess_game.h"
 
 #define NUMBER_OF_TRIES 10
+#define GUESS_INTERVAL 100
 #define TOTAL_POINTS 1000
 
-int total_points = TOTAL_POINTS;
-int secret_number = 50;
-int secret_number_user_guess = 0;
-int tries_counter = 0;
+float total_points = TOTAL_POINTS;
+
+int random_number;
+
+short secret_number;
+short secret_number_user_guess = 0;
+short tries_counter = 1;
 
 bool guess_is_right;
 bool guess_is_higher;
 
 void main()
 {
+    generate_secret_number();
+
     print_game_header();
 
-    while(tries_counter < NUMBER_OF_TRIES)
+    while(1)
     {
-        tries_counter++;
-
         request_user_guess();
 
         if(check_negative_guess()) continue;
@@ -34,6 +39,8 @@ void main()
         check_guess();
 
         if(check_stop_condition()) break;
+
+        tries_counter++;
     }
 }
 
@@ -79,23 +86,33 @@ void check_guess()
             printf("\n Your guess is lower than secret number! \n");
         }
 
-        total_points -= abs((secret_number_user_guess - secret_number) / 2);
+        total_points -= (double)abs(secret_number_user_guess - secret_number)/2;
     }
 
     print_mark();
+}
+
+void generate_secret_number()
+{
+    int seconds_ref = time(0);
+    srand(seconds_ref);
+    random_number = rand();
+
+    secret_number = random_number % GUESS_INTERVAL;
 }
 
 bool check_stop_condition()
 {
     if(tries_counter == NUMBER_OF_TRIES) 
     {
+        printf("\n You've lost, secret number was %d! \n", secret_number);
         printf("\n Ending guessing game... \n");
 
         return true;
     }
     if(secret_number_user_guess == secret_number) 
     {
-        printf("\n You won with a total of %d points! \n", total_points);
+        printf("\n You won with a total of %.1f points! \n", total_points);
         printf("\n Ending guessing game... \n");
 
         return true;
