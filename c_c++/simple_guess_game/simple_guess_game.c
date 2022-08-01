@@ -117,7 +117,7 @@ void generate_secret_number()
 void request_game_difficulty()
 {
     printf("\n Choose the difficulty:\n");
-    printf("\n (1)Easy (2)Medium (3)Hard : ");
+    printf("\n (%d)Easy (%d)Medium (%d)Hard : ", EASY_MODE, MEDIUM_MODE, HARD_MODE);
 
     scanf("%d", &difficulty_mode);
     print_mark();
@@ -125,7 +125,7 @@ void request_game_difficulty()
     while(difficulty_mode != EASY_MODE && difficulty_mode != MEDIUM_MODE && difficulty_mode != HARD_MODE)
     {   
         printf("\n Your number input is invalid! Please choose from %d to %d!\n", EASY_MODE, HARD_MODE);
-        printf("\n (1)Easy (2)Medium (3)Hard : ");
+        printf("\n (%d)Easy (%d)Medium (%d)Hard : ", EASY_MODE, MEDIUM_MODE, HARD_MODE);
         scanf("%d", &difficulty_mode);
         
         print_mark();
