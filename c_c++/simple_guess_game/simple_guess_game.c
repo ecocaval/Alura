@@ -133,9 +133,17 @@ void request_game_difficulty()
 
     switch(difficulty_mode)
     {
-        case(EASY_MODE):   number_of_tries = NUMBER_OF_TRIES_EASY; break;
-        case(MEDIUM_MODE): number_of_tries = NUMBER_OF_TRIES_MEDIUM; break;
-        case(HARD_MODE):   number_of_tries = NUMBER_OF_TRIES_HARD; break;
+        case(EASY_MODE):   
+            number_of_tries = NUMBER_OF_TRIES_EASY; 
+            break;
+
+        case(MEDIUM_MODE): 
+            number_of_tries = NUMBER_OF_TRIES_MEDIUM; 
+            break;
+
+        case(HARD_MODE):   
+            number_of_tries = NUMBER_OF_TRIES_HARD; 
+            break;
     }
 }
 
