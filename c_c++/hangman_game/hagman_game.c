@@ -7,11 +7,11 @@
 #define BLANK_SPACE ' '
 #define UNDERLINE_SPACE '_'
 
-#define SECRET_WORD "randomm"
+#define SECRET_WORD "random"
 #define ALPHABET_SIZE 26
 
 unsigned short underline_counter;
-unsigned short number_of_tries = 0;
+unsigned short number_of_guesses = 0;
 
 unsigned short get_right;
 unsigned short get_hanged;
@@ -20,24 +20,6 @@ char user_guess;
 char secret_word[SECRET_WORD_MAX_SIZE];
 char guesses[ALPHABET_SIZE];
 char word_displayed[SECRET_WORD_MAX_SIZE * 2];
-
-int repeated_guess()
-{
-    unsigned short letter_repeated = 0;
-
-    for(int counter = 0; counter < number_of_tries; counter++)
-    {
-        if(guesses[counter] == guesses[number_of_tries]) 
-        {
-            letter_repeated = 1;
-            printf("\nGuess is repeated!\n");
-
-            (number_of_tries)--;
-            break;
-        }
-    }
-    return letter_repeated;
-}
 
 void print_mark()
 {
@@ -69,7 +51,7 @@ void get_user_guess()
     printf("\nPlease enter your guess: ");
     scanf(" %c", &user_guess); // space between %c to avoid "enter key" on buffer;
 
-    if(number_of_tries < ALPHABET_SIZE - 1) guesses[number_of_tries] = user_guess;
+    if(number_of_guesses < ALPHABET_SIZE - 1) guesses[number_of_guesses] = user_guess;
 }
 
 void compare_guess_secret_word()
@@ -79,15 +61,17 @@ void compare_guess_secret_word()
         if(secret_word[counter] == user_guess)
         {
             word_displayed[counter*2] = user_guess;
-            if(!repeated_guess()) underline_counter--;
+            underline_counter--;
         }
     }
     printf("%s\n", word_displayed);
     print_mark();
 
-    number_of_tries++;
+    number_of_guesses++;
 
-    printf("\nYou had %d guesses!\n", number_of_tries);
+    printf("\nYou had %d guesses!\n", number_of_guesses);
+
+     // printf("%s\n", guesses);
 }
 
 void check_stop_condition()
@@ -98,13 +82,40 @@ void check_stop_condition()
         printf("\nYou won the game!\n");
         printf("\n");
     }
-    if(number_of_tries == 10)
+    if(check_if_hanged()) get_hanged = true;
+}
+
+int check_if_hanged()
+{
+    int mistakes = 0;
+    int found_word = 0;
+
+    if(number_of_guesses != 1)
     {
-        get_hanged = true;
-        printf("\nYou lost the game!");
-        printf("\nThere was %d letter(s) left!\n", underline_counter);
-        printf("\n");
+        for(int i = 0; i < number_of_guesses; i++)
+        {
+            found_word = 0; 
+
+            for(int j = 0; j < strlen(secret_word); j++)
+            {   
+                if(guesses[i] == secret_word[j]) 
+                {
+                    found_word = 1;
+                    break;
+                }
+            }
+
+            // printf("%d", found_word);
+            
+            if(!found_word) 
+            {
+                mistakes++;
+            }
+        }
     }
+
+    // printf("\n %d \n", mistakes);
+    return(mistakes > 10);
 }
 
 void main()
@@ -118,9 +129,6 @@ void main()
         get_user_guess();
 
         compare_guess_secret_word();
-
-        printf("%s\n", guesses);
-        printf("%d\n", underline_counter);
         
         check_stop_condition();
     }
