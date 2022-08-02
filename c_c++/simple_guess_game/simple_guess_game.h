@@ -1,6 +1,6 @@
 /**
  * @brief
-    teste.h -- created in 30/07/2022 (brazil)
+    simple_guess_game.h -- created in 30/07/2022 (brazil)
 */
 
 #include <stdbool.h>

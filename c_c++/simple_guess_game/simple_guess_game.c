@@ -1,6 +1,6 @@
 /**
  * @brief
-    teste.c -- created in 30/07/2022 (brazil)
+    simple_guess_game.c -- created in 30/07/2022 (brazil)
 */
 
 #include <stdio.h>

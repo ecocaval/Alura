@@ -1,25 +1,51 @@
+/**
+ * @brief
+    hangman_game.c -- created in 30/07/2022 (brazil)
+*/
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+
+#include "hangman_game.h"
 
 #define SECRET_WORD_MAX_SIZE 20
 
 #define BLANK_SPACE ' '
 #define UNDERLINE_SPACE '_'
 
-#define SECRET_WORD "random"
+#define SECRET_WORD "abobora"
 #define ALPHABET_SIZE 26
 
-unsigned short underline_counter;
-unsigned short number_of_guesses = 0;
+int underline_counter;
+int number_of_guesses = 0;
 
-unsigned short get_right;
-unsigned short get_hanged;
+int get_right;
+int get_hanged;
+
+int mistakes = 0;
+int found_word;
 
 char user_guess;
 char secret_word[SECRET_WORD_MAX_SIZE];
 char guesses[ALPHABET_SIZE];
 char word_displayed[SECRET_WORD_MAX_SIZE * 2];
+
+void main()
+{
+    game_header();
+
+    generate_secret_word();
+
+    while(!get_right && !get_hanged)
+    {   
+        get_user_guess();
+
+        compare_guess_secret_word();
+        
+        check_stop_condition();
+    }
+}
 
 void print_mark()
 {
@@ -39,7 +65,7 @@ void generate_secret_word()
     
     underline_counter = strlen(secret_word);
 
-    for(unsigned short counter = 0; counter < strlen(secret_word); counter++)
+    for(int counter = 0; counter < strlen(secret_word); counter++)
     {
         word_displayed[counter * 2] = UNDERLINE_SPACE;
         word_displayed[counter * 2 + 1] = BLANK_SPACE;
@@ -51,12 +77,15 @@ void get_user_guess()
     printf("\nPlease enter your guess: ");
     scanf(" %c", &user_guess); // space between %c to avoid "enter key" on buffer;
 
-    if(number_of_guesses < ALPHABET_SIZE - 1) guesses[number_of_guesses] = user_guess;
+    if(number_of_guesses < ALPHABET_SIZE - 1) 
+    {
+        guesses[number_of_guesses] = user_guess;
+    }
 }
 
 void compare_guess_secret_word()
 {
-    for(unsigned short counter = 0; counter < strlen(secret_word); counter++)
+    for(int counter = 0; counter < strlen(secret_word); counter++)
     {
         if(secret_word[counter] == user_guess)
         {
@@ -87,20 +116,17 @@ void check_stop_condition()
 
 int check_if_hanged()
 {
-    int mistakes = 0;
-    int found_word = 0;
-
     if(number_of_guesses != 1)
     {
-        for(int i = 0; i < number_of_guesses; i++)
+        for(int guess_counter = 0; guess_counter < number_of_guesses; guess_counter++)
         {
-            found_word = 0; 
+            found_word = false; 
 
-            for(int j = 0; j < strlen(secret_word); j++)
+            for(int letter_counter = 0; letter_counter < strlen(secret_word); letter_counter++)
             {   
-                if(guesses[i] == secret_word[j]) 
+                if(guesses[guess_counter] == secret_word[letter_counter]) 
                 {
-                    found_word = 1;
+                    found_word = true;
                     break;
                 }
             }
@@ -118,18 +144,3 @@ int check_if_hanged()
     return(mistakes > 10);
 }
 
-void main()
-{
-    game_header();
-
-    generate_secret_word();
-
-    while(!get_right && !get_hanged)
-    {   
-        get_user_guess();
-
-        compare_guess_secret_word();
-        
-        check_stop_condition();
-    }
-}
