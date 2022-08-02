@@ -7,7 +7,7 @@
 #define BLANK_SPACE ' '
 #define UNDERLINE_SPACE '_'
 
-#define SECRET_WORD "paredu"
+#define SECRET_WORD "plutao"
 #define ALPHABET_SIZE 26
 
 unsigned short underline_counter;
@@ -96,11 +96,14 @@ void check_stop_condition()
     {
         get_right = true;
         printf("\nYou won the game!\n");
+        printf("\n");
     }
     if(number_of_tries == 10)
     {
         get_hanged = true;
-        printf("\nYou lost the game!\n");
+        printf("\nYou lost the game!");
+        printf("\nThere was %d letter(s) left!\n", underline_counter);
+        printf("\n");
     }
 }
 
@@ -115,8 +118,9 @@ void main()
         get_user_guess();
 
         compare_guess_secret_word(&number_of_tries);
-        
-        // printf("%s", guesses);
+
+        printf("%s\n", guesses);
+        printf("%d\n", underline_counter);
         
         check_stop_condition();
     }
