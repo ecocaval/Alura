@@ -3,12 +3,11 @@
 #include <string.h>
 
 #define SECRET_WORD_MAX_SIZE 20
-#define LETTERS_GUESSED_SIZE 26
 
 #define BLANK_SPACE ' '
 #define UNDERLINE_SPACE '_'
 
-#define SECRET_WORD "algum"
+#define SECRET_WORD "BANANA"
 
 unsigned short underline_counter;
 unsigned short number_of_tries = 0;
@@ -16,14 +15,8 @@ unsigned short number_of_tries = 0;
 unsigned short get_right;
 unsigned short get_hanged;
 
-unsigned short  guess_is_repeated = 0;
-unsigned short  repeat_aux = 0;
-
-unsigned short *ptr_aux;
-
 char user_guess;
 char secret_word[SECRET_WORD_MAX_SIZE];
-char letters_guessed[LETTERS_GUESSED_SIZE];
 char word_displayed[SECRET_WORD_MAX_SIZE * 2];
 
 void main()
@@ -81,24 +74,13 @@ void compare_guess_to_secret_word(unsigned short* number_of_tries_aux)
     *number_of_tries_aux += 1;
     
     printf("\n%d\n", *number_of_tries_aux);
-    
-    ptr_aux = letters_guessed;
 
     for(int counter = 0; counter < strlen(secret_word); counter++)
     {
-        if(!check_if_guess_repeated()) 
+        if(secret_word[counter] == user_guess)
         {
-            if(secret_word[counter] == user_guess)
-            {
-                word_displayed[counter*2] = user_guess;
-                letters_guessed[*number_of_tries_aux] = user_guess;
-                underline_counter--;
-            }
-        }
-        else 
-        {
-            printf("\n Guess is repeated! \n");
-            repeat_aux = 0;
+            word_displayed[counter*2] = user_guess;
+            underline_counter--;
         }
     }
 }
@@ -111,21 +93,3 @@ void check_stop_condition()
         printf("\n You won the game! \n");
     }
 }
-
-int check_if_guess_repeated()
-{   
-    for(unsigned short counter = 0; counter < LETTERS_GUESSED_SIZE; counter++)
-    {
-        ptr_aux = &letters_guessed[counter];
-
-        if(*ptr_aux == user_guess) repeat_aux = 1;
-    }
-
-    if(repeat_aux) return 1;
-    
-    else 
-    {   
-        repeat_aux = 0;
-        return 0;
-    }
-}   
