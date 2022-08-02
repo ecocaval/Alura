@@ -16,3 +16,5 @@ void compare_guess_secret_word();
 void check_stop_condition();
 
 int check_if_hanged();
+
+int generate_random_number();

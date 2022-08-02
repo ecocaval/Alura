@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include <time.h>
 
 #include "hangman_game.h"
 
@@ -23,7 +24,7 @@ int number_of_guesses = 0;
 int get_right;
 int get_hanged;
 
-int mistakes = 0;
+int mistakes = 1;
 int found_word;
 
 char user_guess;
@@ -61,6 +62,19 @@ void game_header()
 
 void generate_secret_word()
 {
+    FILE* words_bank;
+
+    words_bank = fopen("/words/brazilian_words.txt", "r"); /*
+                                                                opens words data bank in read mode,
+                                                                one variable must receive it and 
+                                                                must be FILE pointer type;
+                                                           */
+
+
+
+
+    fclose(words_bank); // closing the word_bank file we opened before
+
     sprintf(secret_word, SECRET_WORD);
     
     underline_counter = strlen(secret_word);
@@ -70,6 +84,13 @@ void generate_secret_word()
         word_displayed[counter * 2] = UNDERLINE_SPACE;
         word_displayed[counter * 2 + 1] = BLANK_SPACE;
     }   
+
+}
+
+int generate_random_number()
+{
+    srand(time(0));
+    return rand();
 }
 
 void get_user_guess()
@@ -136,11 +157,12 @@ int check_if_hanged()
             if(!found_word) 
             {
                 mistakes++;
+                break;
             }
         }
     }
 
     // printf("\n %d \n", mistakes);
-    return(mistakes > 10);
+    return(mistakes == 10);
 }
 
