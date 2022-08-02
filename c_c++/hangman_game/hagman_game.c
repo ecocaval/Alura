@@ -7,7 +7,7 @@
 #define BLANK_SPACE ' '
 #define UNDERLINE_SPACE '_'
 
-#define SECRET_WORD "maco"
+#define SECRET_WORD "randomm"
 #define ALPHABET_SIZE 26
 
 unsigned short underline_counter;
@@ -21,13 +21,13 @@ char secret_word[SECRET_WORD_MAX_SIZE];
 char guesses[ALPHABET_SIZE];
 char word_displayed[SECRET_WORD_MAX_SIZE * 2];
 
-int repeated_guess(char guess_letter, char guesses_aux[ALPHABET_SIZE])
+int repeated_guess()
 {
-    int letter_repeated = 0;
+    unsigned short letter_repeated = 0;
 
     for(int counter = 0; counter < number_of_tries; counter++)
     {
-        if(guesses_aux[counter] == guesses_aux[number_of_tries]) 
+        if(guesses[counter] == guesses[number_of_tries]) 
         {
             letter_repeated = 1;
             printf("\nGuess is repeated!\n");
@@ -57,7 +57,7 @@ void generate_secret_word()
     
     underline_counter = strlen(secret_word);
 
-    for(int counter = 0; counter < strlen(secret_word); counter++)
+    for(unsigned short counter = 0; counter < strlen(secret_word); counter++)
     {
         word_displayed[counter * 2] = UNDERLINE_SPACE;
         word_displayed[counter * 2 + 1] = BLANK_SPACE;
@@ -74,18 +74,18 @@ void get_user_guess()
 
 void compare_guess_secret_word()
 {
-    for(int counter = 0; counter < strlen(secret_word); counter++)
+    for(unsigned short counter = 0; counter < strlen(secret_word); counter++)
     {
         if(secret_word[counter] == user_guess)
         {
             word_displayed[counter*2] = user_guess;
-            if(!repeated_guess(user_guess, guesses)) underline_counter--;
+            if(!repeated_guess()) underline_counter--;
         }
     }
     printf("%s\n", word_displayed);
     print_mark();
 
-    (number_of_tries)++;
+    number_of_tries++;
 
     printf("\nYou had %d guesses!\n", number_of_tries);
 }
