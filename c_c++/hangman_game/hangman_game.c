@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
@@ -178,17 +179,18 @@ void check_stop_condition()
     if(underline_counter == 0) 
     {
         get_right = true;
+        
         printf("\n%s\n", word_displayed);
         printf("\nYou won the game!\n");
         printf("\n");
     }
-    if(check_if_hanged()) 
+    else if(check_if_hanged()) 
     {
         get_hanged = true;
+         
         printf("\n%s\n", word_displayed);
         printf("\nYou lost the game!\n");
         printf("\nSecret word was: %s\n", secret_word);
         printf("\n");
     }
 }
-
