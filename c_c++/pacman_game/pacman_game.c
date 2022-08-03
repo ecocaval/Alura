@@ -38,7 +38,7 @@ void scan_game_map()
         printf("%s ", map_analyser);
         printf("Analizing row: %d\n", rows_analysed);
 
-        while (map_analyser[0] == '|')
+        while (map_analyser[0] == SIDE_WALL)
         {
             rows_analysed++;
 
@@ -57,19 +57,12 @@ void scan_game_map()
 
             printf("%s ", map_analyser);
             printf("Analizing row: %d\n", rows_analysed);
-
-            for (int i = 0; i < 10000; i++)
-            {
-                for (int i = 0; i < 10000; i++)
-                {
-                    // delay
-                }   
-            }
         }
 
         game_total_rows = rows_analysed;
 
-        printf("\nMap total number of rows: %d\n", game_total_rows);
+        printf("\nMap total number of rows: %d", game_total_rows);
+        printf("\nMap total number of columns: %d\n", strlen(map_analyser));
         
     }
     fclose(f_game_map);
