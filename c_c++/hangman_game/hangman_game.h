@@ -21,4 +21,4 @@ int check_if_hanged();
 
 void check_stop_condition();
 
-
+void add_word_to_list();

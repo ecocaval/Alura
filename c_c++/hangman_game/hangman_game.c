@@ -53,6 +53,8 @@ void main()
         
         check_stop_condition();
     }
+
+    add_word_to_list();
 }
 
 void print_mark()
@@ -86,7 +88,10 @@ void generate_secret_word()
     }
     else
     {
-        fscanf(ptr_words_list, "%d", &words_in_list_counter);
+        fscanf(ptr_words_list, "%d", &words_in_list_counter); /* 
+                                                                firts line from words data bank gives
+                                                                us the total number of word in the list
+                                                              */
 
         random_selector = generate_random_number() % words_in_list_counter; /*
                                                                               creates a selector that goes from 0 
@@ -222,7 +227,6 @@ void check_stop_condition()
         
         printf("\n%s\n", word_displayed);
         printf("\nYou won the game!\n");
-        printf("\n");
     }
     else if(check_if_hanged()) 
     {
@@ -231,12 +235,37 @@ void check_stop_condition()
         printf("\n%s\n", word_displayed);
         printf("\nYou lost the game!\n");
         printf("\nSecret word was: %s\n", secret_word);
-        printf("\n");
     }
 
     if(!get_right && !get_hanged) 
     {
         if(!check_repeated_guess()) number_of_guesses++;
         printf("\nGuesses: %d\n", number_of_guesses);
+    }
+}
+
+void add_word_to_list()
+{
+    char user_answer;
+
+    print_mark();
+    printf("\nWould you like to add a word to this game? (Y/N): ");
+    
+    while(user_answer != 'Y' && user_answer != 'N')
+    {
+        scanf(" %c", &user_answer);
+
+        if(user_answer == 'Y')
+        {
+
+        }
+        else if(user_answer == 'N')
+        {
+
+        }
+        else
+        {
+            printf("\nYour answer is not valid, please enter (Y/N): ");
+        }
     }
 }
