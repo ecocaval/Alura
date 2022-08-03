@@ -257,10 +257,10 @@ void add_word_to_list()
 
         if(user_answer == 'Y')
         {
-            char new_word[SECRET_WORD_MAX_SIZE];
+            char user_new_word[SECRET_WORD_MAX_SIZE];
 
             printf("\nWhat's the new word: ");
-            scanf("%s", new_word);
+            scanf("%s", user_new_word);
 
             FILE* ptr_word_list;
 
@@ -269,8 +269,31 @@ void add_word_to_list()
                                                                         to read and write in 
                                                                         txt file
                                                                       */
+            if(ptr_word_list == NULL)
+            {
+                printf("\nWords list file was not opened sucessfully!\n");
+                exit(1);
+            }
+            else
+            {  
+                int words_in_list_counter;
 
+                fscanf(ptr_word_list, "%d", &words_in_list_counter);
+                words_in_list_counter++;
 
+                fseek(ptr_word_list, 0, SEEK_SET); /* 
+                                                     points seek to the first line
+                                                     of word list .txt, this way we 
+                                                     can overwrite the total number
+                                                     of words in the file. 
+                                                   */
+                fprintf(ptr_word_list, "%d", words_in_list_counter);
+
+                fseek(ptr_word_list, 0, SEEK_END);                
+                fprintf(ptr_word_list, "\n%s", user_new_word);
+
+                fclose(ptr_word_list);
+            }                                                 
         }
         else if(user_answer == 'N')
         {   
