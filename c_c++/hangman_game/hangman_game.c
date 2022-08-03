@@ -22,7 +22,7 @@
 
 #define ALPHABET_SIZE 26
 
-int words_left;
+int not_guessed_words;
 int number_of_guesses = 0;
 
 int get_right;
@@ -90,7 +90,7 @@ void generate_secret_word()
 
         random_selector = generate_random_number() % words_in_list_counter; /*
                                                                               creates a selector that goes from 0 
-                                                                              to the number of words in list bank
+                                                                              to the number of words in the list bank
                                                                             */
         for(int i = 0; i <= random_selector; i++)
         {
@@ -99,7 +99,7 @@ void generate_secret_word()
 
         fclose(ptr_words_list); // closing the word_bank file we opened before
         
-        words_left = strlen(secret_word);
+        not_guessed_words = strlen(secret_word);
 
         for(int counter = 0; counter < strlen(secret_word); counter++)
         {
@@ -154,7 +154,7 @@ void compare_guess_secret_word()
 
             aux_guess = 1;
 
-            if(!check_repeated_guess()) words_left--;
+            if(!check_repeated_guess()) not_guessed_words--;
         }
         
         switch (aux_guess)
@@ -225,8 +225,7 @@ int check_if_hanged()
 
 void check_stop_condition()
 {
-
-    if(words_left == 0) 
+    if(not_guessed_words == 0) 
     {
         get_right = true;
         
