@@ -11,17 +11,6 @@
 
 #include "hangman_game.h"
 
-#define SECRET_WORD_MAX_SIZE 46 /*
-                                    biggest brazilian word has 46 letters according to
-                                    the brazilian dictionary, the word is:
-                                    pneumoultramicroscopicossilicovulcanoconiótico
-                                */
-
-#define BLANK_SPACE ' '
-#define UNDERLINE_SPACE '_'
-
-#define ALPHABET_SIZE 26
-
 int not_guessed_words;
 int number_of_guesses = 0;
 
@@ -262,14 +251,14 @@ void add_word_to_list()
             printf("\nWhat's the new word: ");
             scanf("%s", user_new_word);
 
-            FILE* ptr_word_list;
+            FILE* f_word_list;
 
-            ptr_word_list = fopen("words/brazilian_words.txt", "r+"); /* 
+            f_word_list = fopen("words/brazilian_words.txt", "r+"); /* 
                                                                         r+ gives us permission
                                                                         to read and write in 
                                                                         txt file
                                                                       */
-            if(ptr_word_list == NULL)
+            if(f_word_list == NULL)
             {
                 printf("\nWords list file was not opened sucessfully!\n");
                 exit(1);
@@ -278,21 +267,21 @@ void add_word_to_list()
             {  
                 int words_in_list_counter;
 
-                fscanf(ptr_word_list, "%d", &words_in_list_counter);
+                fscanf(f_word_list, "%d", &words_in_list_counter);
                 words_in_list_counter++;
 
-                fseek(ptr_word_list, 0, SEEK_SET); /* 
+                fseek(f_word_list, 0, SEEK_SET); /* 
                                                      points seek to the first line
                                                      of word list .txt, this way we 
                                                      can overwrite the total number
                                                      of words in the file. 
                                                    */
-                fprintf(ptr_word_list, "%d", words_in_list_counter);
+                fprintf(f_word_list, "%d", words_in_list_counter);
 
-                fseek(ptr_word_list, 0, SEEK_END);                
-                fprintf(ptr_word_list, "\n%s", user_new_word);
+                fseek(f_word_list, 0, SEEK_END);                
+                fprintf(f_word_list, "\n%s", user_new_word);
 
-                fclose(ptr_word_list);
+                fclose(f_word_list);
             }                                                 
         }
         else if(user_answer == 'N')
