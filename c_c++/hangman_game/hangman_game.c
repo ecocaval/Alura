@@ -36,6 +36,7 @@ int found_word;
 char user_guess;
 char secret_word[SECRET_WORD_MAX_SIZE];
 char guesses[ALPHABET_SIZE];
+char found_word_string[ALPHABET_SIZE];
 char word_displayed[SECRET_WORD_MAX_SIZE * 2];
 
 void main()
@@ -143,21 +144,38 @@ int check_repeated_guess()
 
 void compare_guess_secret_word()
 {
+    int aux_guess = 0;
+
     for(int counter = 0; counter < strlen(secret_word); counter++)
     {
         if(secret_word[counter] == user_guess)
         {
             word_displayed[counter*2] = user_guess;
 
+            aux_guess = 1;
+
             if(!check_repeated_guess()) words_left--;
-
-            guess_is_right = 1;
         }
-        else guess_is_right = 0;
+        
+        switch (aux_guess)
+        {
+        case (1):
+            guess_is_right = 1;
+            if(!check_repeated_guess()) 
+            {
+                found_word_string[number_of_guesses] = 'Y';
+            }
+            break;
+        
+        case (0):
+            guess_is_right = 0;
+            if(!check_repeated_guess()) 
+            {
+                found_word_string[number_of_guesses] = 'N';
+            }
+            break;
+        }
     }
-    if(!check_repeated_guess()) number_of_guesses++;
-
-    printf("\nYou had %d guesses!\n", number_of_guesses);
 
     printf("\nGuesses string:             %s\n", guesses);
 }
@@ -166,32 +184,25 @@ int check_if_hanged()
 {
     if(number_of_guesses != 1)
     {
-        printf("Found guess in secret word: ");
+        printf("Found guess in secret word: %s", found_word_string);
         for(int guess_counter = 0; guess_counter < number_of_guesses; guess_counter++)
         {
             found_word = false; 
 
             for(int letter_counter = 0; letter_counter < strlen(secret_word); letter_counter++)
-            {   
+            {
                 if(guesses[guess_counter] == secret_word[letter_counter]) 
-                {
+                   {
                     found_word = true;
                     break;
                 }
             }
 
-            printf("%d", found_word);
-            
-            number_of_guesses--;
-
-            if(!found_word && !check_repeated_guess() && !guess_is_right) 
+            if(!found_word && !guess_is_right && !check_repeated_guess()) 
             {
                 mistakes++;
-                number_of_guesses++;
                 break;
             }
-
-            number_of_guesses++;
         }
     }
     else
@@ -203,7 +214,7 @@ int check_if_hanged()
             if(user_guess == secret_word[letter_counter]) found_word = true;
         }
 
-        printf("Found guess in secret word: %d", found_word);
+        printf("Found guess in secret word: %s", found_word_string);
 
         if(!found_word) mistakes++;
     }
@@ -214,6 +225,7 @@ int check_if_hanged()
 
 void check_stop_condition()
 {
+
     if(words_left == 0) 
     {
         get_right = true;
@@ -231,4 +243,8 @@ void check_stop_condition()
         printf("\nSecret word was: %s\n", secret_word);
         printf("\n");
     }
+
+    if(!check_repeated_guess()) number_of_guesses++;
+
+    printf("\nGuesses: %d\n", number_of_guesses);
 }
