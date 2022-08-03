@@ -13,6 +13,8 @@ int generate_random_number();
 
 void get_user_guess();
 
+int check_repeated_guess();
+
 void compare_guess_secret_word();
 
 int check_if_hanged();

@@ -28,7 +28,9 @@ int number_of_guesses = 0;
 int get_right;
 int get_hanged;
 
-int mistakes = 1;
+int got_guess_right;
+
+int mistakes = 0;
 int found_word;
 
 char user_guess;
@@ -79,6 +81,7 @@ void generate_secret_word()
     if(ptr_words_list == NULL) // checks if the file was opened
     {
         printf("\nWords list file was not opened sucessfully!\n");
+        exit(1);
     }
     else
     {
@@ -118,7 +121,7 @@ void get_user_guess()
     printf("\nPlease enter your guess: ");
     scanf(" %c", &user_guess); // space between %c to avoid "enter key" on buffer;
 
-    if(number_of_guesses < ALPHABET_SIZE - 1) 
+    if(number_of_guesses < ALPHABET_SIZE - 1 && !check_repeated_guess()) 
     {
         guesses[number_of_guesses] = user_guess;
     }
@@ -126,21 +129,36 @@ void get_user_guess()
     print_mark();
 }
 
+int check_repeated_guess()
+{
+    for(int guess_counter = 0; guess_counter < number_of_guesses; guess_counter++)
+    {
+        if(user_guess == guesses[guess_counter])
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+
 void compare_guess_secret_word()
 {
     for(int counter = 0; counter < strlen(secret_word); counter++)
     {
-        if(secret_word[counter] == user_guess)
+        if(secret_word[counter] == user_guess && !check_repeated_guess())
         {
             word_displayed[counter*2] = user_guess;
             underline_counter--;
+            got_guess_right = 1;
+            break;
         }
+        else got_guess_right = 0;
     }
-    number_of_guesses++;
+    if(!check_repeated_guess()) number_of_guesses++;
 
     printf("\nYou had %d guesses!\n", number_of_guesses);
 
-     // printf("%s\n", guesses);
+    printf("%s\n", guesses);
 }
 
 int check_if_hanged()
@@ -160,17 +178,35 @@ int check_if_hanged()
                 }
             }
 
-            // printf("%d", found_word);
+            printf("%d", found_word);
             
-            if(!found_word) 
+            number_of_guesses--;
+
+            if(!found_word && !check_repeated_guess()) 
             {
                 mistakes++;
+                number_of_guesses++;
                 break;
             }
+
+            number_of_guesses++;
         }
     }
+    else
+    {
+        found_word = false; 
 
-    // printf("\n %d \n", mistakes);
+        for(int letter_counter = 0; letter_counter < strlen(secret_word); letter_counter++)
+        {   
+            if(user_guess == secret_word[letter_counter]) found_word = true;
+        }
+
+        printf("%d", found_word);
+        
+        if(!found_word) mistakes++;
+    }
+
+    printf("\n %d \n", mistakes);
     return(mistakes == 10);
 }
 
