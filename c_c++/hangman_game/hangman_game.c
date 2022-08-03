@@ -10,12 +10,15 @@
 
 #include "hangman_game.h"
 
-#define SECRET_WORD_MAX_SIZE 20
+#define SECRET_WORD_MAX_SIZE 46 /*
+                                    biggest brazilian word has 46 letters according to
+                                    the brazilian dictionary, the word is:
+                                    pneumoultramicroscopicossilicovulcanoconiótico
+                                */
 
 #define BLANK_SPACE ' '
 #define UNDERLINE_SPACE '_'
 
-#define SECRET_WORD "abobora"
 #define ALPHABET_SIZE 26
 
 int underline_counter;
@@ -62,29 +65,43 @@ void game_header()
 
 void generate_secret_word()
 {
-    FILE* words_bank;
+    FILE* ptr_words_list;
 
-    words_bank = fopen("/words/brazilian_words.txt", "r"); /*
+    int random_selector, words_in_list_counter;
+
+    ptr_words_list = fopen("words/brazilian_words.txt", "r"); /*
                                                                 opens words data bank in read mode,
                                                                 one variable must receive it and 
                                                                 must be FILE pointer type;
-                                                           */
-
-
-
-
-    fclose(words_bank); // closing the word_bank file we opened before
-
-    sprintf(secret_word, SECRET_WORD);
-    
-    underline_counter = strlen(secret_word);
-
-    for(int counter = 0; counter < strlen(secret_word); counter++)
+                                                              */
+                                                          
+    if(ptr_words_list == NULL) // checks if the file was opened
     {
-        word_displayed[counter * 2] = UNDERLINE_SPACE;
-        word_displayed[counter * 2 + 1] = BLANK_SPACE;
-    }   
+        printf("\nWords list file was not opened sucessfully!\n");
+    }
+    else
+    {
+        fscanf(ptr_words_list, "%d", &words_in_list_counter);
 
+        random_selector = generate_random_number() % words_in_list_counter; /*
+                                                                              creates a selector that goes from 0 
+                                                                              to the number of words in list bank
+                                                                            */
+        for(int i = 0; i <= random_selector; i++)
+        {
+            fscanf(ptr_words_list, "%s", secret_word);
+        }
+
+        fclose(ptr_words_list); // closing the word_bank file we opened before
+        
+        underline_counter = strlen(secret_word);
+
+        for(int counter = 0; counter < strlen(secret_word); counter++)
+        {
+            word_displayed[counter * 2] = UNDERLINE_SPACE;
+            word_displayed[counter * 2 + 1] = BLANK_SPACE;
+        }   
+    }
 }
 
 int generate_random_number()
@@ -95,6 +112,8 @@ int generate_random_number()
 
 void get_user_guess()
 {
+    printf("\n%s\n", word_displayed);
+
     printf("\nPlease enter your guess: ");
     scanf(" %c", &user_guess); // space between %c to avoid "enter key" on buffer;
 
@@ -102,6 +121,8 @@ void get_user_guess()
     {
         guesses[number_of_guesses] = user_guess;
     }
+
+    print_mark();
 }
 
 void compare_guess_secret_word()
@@ -114,25 +135,11 @@ void compare_guess_secret_word()
             underline_counter--;
         }
     }
-    printf("%s\n", word_displayed);
-    print_mark();
-
     number_of_guesses++;
 
     printf("\nYou had %d guesses!\n", number_of_guesses);
 
      // printf("%s\n", guesses);
-}
-
-void check_stop_condition()
-{
-    if(underline_counter == 0) 
-    {
-        get_right = true;
-        printf("\nYou won the game!\n");
-        printf("\n");
-    }
-    if(check_if_hanged()) get_hanged = true;
 }
 
 int check_if_hanged()
@@ -164,5 +171,24 @@ int check_if_hanged()
 
     // printf("\n %d \n", mistakes);
     return(mistakes == 10);
+}
+
+void check_stop_condition()
+{
+    if(underline_counter == 0) 
+    {
+        get_right = true;
+        printf("\n%s\n", word_displayed);
+        printf("\nYou won the game!\n");
+        printf("\n");
+    }
+    if(check_if_hanged()) 
+    {
+        get_hanged = true;
+        printf("\n%s\n", word_displayed);
+        printf("\nYou lost the game!\n");
+        printf("\nSecret word was: %s\n", secret_word);
+        printf("\n");
+    }
 }
 
