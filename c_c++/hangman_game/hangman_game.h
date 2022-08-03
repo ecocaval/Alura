@@ -12,6 +12,7 @@
 #define BLANK_SPACE ' '
 #define UNDERLINE_SPACE '_'
 
+#define MAX_NUMBER_TRIES 10
 #define ALPHABET_SIZE 26
 
 void print_mark();
