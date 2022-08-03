@@ -5,9 +5,8 @@
 #include <stdio.h>
 
 #define ALPHABET_SIZE 26
-#define SIDE_WALL '|'
-
-#define BLANK_SPACE ' '
+#define SIDE_WALL     '|'
+#define BLANK_SPACE   ' '
 
 void scan_game_map();
 

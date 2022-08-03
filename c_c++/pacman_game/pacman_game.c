@@ -76,12 +76,12 @@ int check_if_row_repeat()
 {
     int right_words_counter = 0;
 
-    for(int columns_counter = 0; columns_counter < strlen(map_analyser); columns_counter++)
+    for(int columns_counter = 0; columns_counter < game_total_columns; columns_counter++)
     {
         if(past_map_analyser[columns_counter] == map_analyser[columns_counter]) right_words_counter++;   
     }
 
-    if(strlen(map_analyser) == right_words_counter)
+    if(game_total_columns == right_words_counter)
     {
         return 1;
     }
