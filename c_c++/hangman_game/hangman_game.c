@@ -22,13 +22,13 @@
 
 #define ALPHABET_SIZE 26
 
-int underline_counter;
+int words_left;
 int number_of_guesses = 0;
 
 int get_right;
 int get_hanged;
 
-int got_guess_right;
+int guess_is_right;
 
 int mistakes = 0;
 int found_word;
@@ -98,7 +98,7 @@ void generate_secret_word()
 
         fclose(ptr_words_list); // closing the word_bank file we opened before
         
-        underline_counter = strlen(secret_word);
+        words_left = strlen(secret_word);
 
         for(int counter = 0; counter < strlen(secret_word); counter++)
         {
@@ -145,14 +145,16 @@ void compare_guess_secret_word()
 {
     for(int counter = 0; counter < strlen(secret_word); counter++)
     {
-        if(secret_word[counter] == user_guess && !check_repeated_guess())
+        if(secret_word[counter] == user_guess)
         {
             word_displayed[counter*2] = user_guess;
-            underline_counter--;
-            got_guess_right = 1;
+
+            if(!check_repeated_guess()) words_left--;
+
+            guess_is_right = 1;
             break;
         }
-        else got_guess_right = 0;
+        else guess_is_right = 0;
     }
     if(!check_repeated_guess()) number_of_guesses++;
 
@@ -182,7 +184,7 @@ int check_if_hanged()
             
             number_of_guesses--;
 
-            if(!found_word && !check_repeated_guess()) 
+            if(!found_word && !check_repeated_guess() && !guess_is_right) 
             {
                 mistakes++;
                 number_of_guesses++;
@@ -202,7 +204,7 @@ int check_if_hanged()
         }
 
         printf("%d", found_word);
-        
+
         if(!found_word) mistakes++;
     }
 
@@ -212,7 +214,7 @@ int check_if_hanged()
 
 void check_stop_condition()
 {
-    if(underline_counter == 0) 
+    if(words_left == 0) 
     {
         get_right = true;
         
