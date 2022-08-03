@@ -7,3 +7,5 @@
 #define BLANK_SPACE ' '
 
 void scan_game_map();
+
+int check_if_row_repeat();
