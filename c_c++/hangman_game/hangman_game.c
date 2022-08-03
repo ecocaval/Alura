@@ -250,18 +250,18 @@ void add_word_to_list()
 
     print_mark();
     printf("\nWould you like to add a word to this game? (Y/N): ");
-    
+
     while(user_answer != 'Y' && user_answer != 'N')
     {
         scanf(" %c", &user_answer);
 
         if(user_answer == 'Y')
         {
-
+            // code
         }
         else if(user_answer == 'N')
         {
-
+            // code
         }
         else
         {
