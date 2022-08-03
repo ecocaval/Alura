@@ -308,7 +308,7 @@ void draw_hangman()
     printf(" |      %c%c%c  \n", ((mistakes >= 5 && mistakes < 9) ? '\\' : BLANK_SPACE), ((mistakes >= 2 && mistakes < MAX_NUMBER_TRIES) ? '|' : BLANK_SPACE), ((mistakes >= 6 && mistakes < 9) ? '/' : BLANK_SPACE));
     printf(" |       %c     \n", (mistakes >= 3 ? '|' : BLANK_SPACE));
     printf(" |       %c     \n", (mistakes >= 4 ? '|' : BLANK_SPACE));
-    printf(" |      %c%c%c   \n", ((mistakes >= 7 && mistakes < MAX_NUMBER_TRIES) ? '/' : BLANK_SPACE), (mistakes >= MAX_NUMBER_TRIES ? '|' : BLANK_SPACE), ((mistakes >= 8 && mistakes < MAX_NUMBER_TRIES) ? '\\' : BLANK_SPACE));
+    printf(" |      %c%c%c  \n", ((mistakes >= 7 && mistakes < MAX_NUMBER_TRIES) ? '/' : BLANK_SPACE), (mistakes >= MAX_NUMBER_TRIES ? '|' : BLANK_SPACE), ((mistakes >= 8 && mistakes < MAX_NUMBER_TRIES) ? '\\' : BLANK_SPACE));
     printf(" |      %c %c   \n", (mistakes >= MAX_NUMBER_TRIES ? '/' : BLANK_SPACE), (mistakes >= MAX_NUMBER_TRIES ? '\\' : BLANK_SPACE));
     printf("_|___           \n");
 }
