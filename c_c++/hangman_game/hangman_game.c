@@ -45,6 +45,8 @@ void main()
         check_stop_condition();
     }
 
+    draw_hangman();
+
     add_word_to_list();
 }
 
@@ -303,10 +305,10 @@ void draw_hangman()
     printf("  _______       \n");
     printf(" |/      |      \n");
     printf(" |      %c%c%c  \n", (mistakes >= 1 ? '(' : BLANK_SPACE), (mistakes >= 1 ? '_' : BLANK_SPACE), (mistakes >= 1 ? ')' : BLANK_SPACE));
-    printf(" |      %c%c%c  \n", ((mistakes >= 5 && mistakes < 9) ? '\\' : BLANK_SPACE), ((mistakes >= 2 && mistakes < 9) ? '|' : BLANK_SPACE), ((mistakes >= 6 && mistakes < 9) ? '/' : BLANK_SPACE));
+    printf(" |      %c%c%c  \n", ((mistakes >= 5 && mistakes < 9) ? '\\' : BLANK_SPACE), ((mistakes >= 2 && mistakes < 10) ? '|' : BLANK_SPACE), ((mistakes >= 6 && mistakes < 9) ? '/' : BLANK_SPACE));
     printf(" |       %c     \n", (mistakes >= 3 ? '|' : BLANK_SPACE));
     printf(" |       %c     \n", (mistakes >= 4 ? '|' : BLANK_SPACE));
-    printf(" |      %c %c   \n", (mistakes >= 7 ? '/' : BLANK_SPACE), (mistakes >= 8 ? '\\' : BLANK_SPACE));
-    printf(" |              \n");
+    printf(" |      %c%c%c   \n", ((mistakes >= 7 && mistakes < 10) ? '/' : BLANK_SPACE), (mistakes >= 10 ? '|' : BLANK_SPACE), ((mistakes >= 8 && mistakes < 10) ? '\\' : BLANK_SPACE));
+    printf(" |      %c %c   \n", (mistakes >= 10 ? '/' : BLANK_SPACE), (mistakes >= 10 ? '\\' : BLANK_SPACE));
     printf("_|___           \n");
 }

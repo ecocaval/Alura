@@ -1,4 +1,4 @@
-1475
+1476
 abaixo
 aberto
 abertura
@@ -1474,3 +1474,4 @@ zero
 zona
 xadrez
 doutorie
+eletronica
