@@ -257,11 +257,25 @@ void add_word_to_list()
 
         if(user_answer == 'Y')
         {
-            // code
+            char new_word[SECRET_WORD_MAX_SIZE];
+
+            printf("\nWhat's the new word: ");
+            scanf("%s", new_word);
+
+            FILE* ptr_word_list;
+
+            ptr_word_list = fopen("words/brazilian_words.txt", "r+"); /* 
+                                                                        r+ gives us permission
+                                                                        to read and write in 
+                                                                        txt file
+                                                                      */
+
+
         }
         else if(user_answer == 'N')
-        {
-            // code
+        {   
+            printf("\nEnding Hangman game, thank you for playing!\n");
+            printf("\n");
         }
         else
         {
