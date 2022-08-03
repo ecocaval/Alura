@@ -184,7 +184,7 @@ void compare_guess_secret_word()
         }
     }
 
-    printf("\nGuesses string:             %s\n", guesses);
+    printf("\nWords guessed:              %s\n", guesses);
 }
 
 int check_if_hanged()
@@ -234,7 +234,9 @@ void check_stop_condition()
         printf("\n");
     }
 
-    if(!check_repeated_guess()) number_of_guesses++;
-
-    printf("\nGuesses: %d\n", number_of_guesses);
+    if(!get_right && !get_hanged) 
+    {
+        if(!check_repeated_guess()) number_of_guesses++;
+        printf("\nGuesses: %d\n", number_of_guesses);
+    }
 }
