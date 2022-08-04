@@ -18,7 +18,6 @@ void main()
     scan_game_map(&game_total_rows, &game_total_columns);
 
     char map[game_total_rows][game_total_columns];
-    printf("%d %d", game_total_rows, game_total_columns);
 }
 
 void scan_game_map(unsigned int* game_total_rows_aux , unsigned int* game_total_columns_aux)
