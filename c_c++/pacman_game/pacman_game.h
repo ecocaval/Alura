@@ -10,6 +10,8 @@
 
 void scan_game_map();
 
-void count_map_rows(FILE* file_ptr);
+void count_map_rows(FILE* map_ptr, 
+                    unsigned int *row_analysed_aux, 
+                    unsigned int game_total_columns_aux);
 
-int check_if_row_repeat();
+int check_if_row_repeat(unsigned int game_total_columns_aux);
