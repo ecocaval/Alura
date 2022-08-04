@@ -10,14 +10,43 @@
 
 #include "pacman_game.h"
 
+char** game_map;
+
 void main()
 {
-    unsigned int game_total_rows = 0;
-    unsigned int game_total_columns = 0;
+    unsigned int game_total_rows, game_total_columns = 0;
 
     scan_game_map(&game_total_rows, &game_total_columns);
+    // printf("%d %d", game_total_rows, game_total_columns);
 
-    char map[game_total_rows][game_total_columns];
+    game_map = malloc(sizeof(char*) * game_total_rows);
+    
+    for(int i = 0; i < game_total_rows; i++)
+    {
+        game_map[i] = malloc(sizeof(char) * game_total_columns);
+    }
+
+    FILE* f_game_map;
+
+    f_game_map = fopen("maps/game_map.txt", "r");
+
+    if(f_game_map == NULL)
+    {
+        printf("\nGame map file could not be opened!\n");
+        exit(1);
+    }
+    else
+    {
+        for(int i = 0; i < game_total_rows; i++)
+        {
+            fscanf(f_game_map, "%s", game_map[i]);
+            printf("%s\n", game_map[i]);
+        }
+    }
+
+    free(game_map);
+    
+    fclose(f_game_map);
 }
 
 void scan_game_map(unsigned int* game_total_rows_aux , unsigned int* game_total_columns_aux)
@@ -29,7 +58,7 @@ void scan_game_map(unsigned int* game_total_rows_aux , unsigned int* game_total_
 
     FILE* f_game_map;
 
-    f_game_map = fopen("maps/game_map.txt", "r+");
+    f_game_map = fopen("maps/game_map.txt", "r");
 
     if(f_game_map == NULL)
     {
