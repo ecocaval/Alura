@@ -17,36 +17,9 @@ void main()
     unsigned int game_total_rows, game_total_columns = 0;
 
     scan_game_map(&game_total_rows, &game_total_columns);
-    // printf("%d %d", game_total_rows, game_total_columns);
+    // printf("%d %d\n", game_total_rows, game_total_columns);
 
-    game_map = malloc(sizeof(char*) * game_total_rows);
-    
-    for(int i = 0; i < game_total_rows; i++)
-    {
-        game_map[i] = malloc(sizeof(char) * game_total_columns);
-    }
-
-    FILE* f_game_map;
-
-    f_game_map = fopen("maps/game_map.txt", "r");
-
-    if(f_game_map == NULL)
-    {
-        printf("\nGame map file could not be opened!\n");
-        exit(1);
-    }
-    else
-    {
-        for(int i = 0; i < game_total_rows; i++)
-        {
-            fscanf(f_game_map, "%s", game_map[i]);
-            printf("%s\n", game_map[i]);
-        }
-    }
-
-    free(game_map);
-    
-    fclose(f_game_map);
+    set_game_map(&game_total_rows, &game_total_columns);
 }
 
 void scan_game_map(unsigned int* game_total_rows_aux , unsigned int* game_total_columns_aux)
@@ -119,4 +92,38 @@ int check_if_row_repeat(unsigned int game_total_columns_aux, char map_analyser_a
     {
         return 0;
     }
+}
+
+void set_game_map(unsigned int* game_total_rows_aux, unsigned int* game_total_columns_aux)
+{
+    game_map = malloc(sizeof(char*) * *game_total_rows_aux);
+
+    for(int i = 0; i < *game_total_rows_aux; i++)
+    {
+        game_map[i] = malloc(sizeof(char) * (*game_total_columns_aux + 1)); // + 1 because of string's \0
+    }
+
+    FILE* f_game_map;
+    f_game_map = fopen("maps/game_map.txt", "r");
+
+    if(f_game_map == NULL)
+    {
+        printf("\nGame map file could not be opened!\n");
+        exit(1);
+    }
+    else
+    {
+        for(int i = 0; i < *game_total_rows_aux; i++)
+        {
+            fscanf(f_game_map, "%s", game_map[i]);
+            printf("%s\n", game_map[i]);
+        }
+    }
+    fclose(f_game_map);
+
+    for(int i = 0; i < *game_total_rows_aux; i++)
+    {
+        free(game_map[i]);
+    }
+    free(game_map);
 }
