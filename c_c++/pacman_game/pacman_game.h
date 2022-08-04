@@ -23,3 +23,5 @@ void free_game_map(unsigned int game_total_rows_aux);
 void allocate_game_map(unsigned int game_total_rows_aux, unsigned int  game_total_columns_aux);
 
 void open_game_map_file(unsigned int game_total_rows_aux);
+
+int game_is_over();

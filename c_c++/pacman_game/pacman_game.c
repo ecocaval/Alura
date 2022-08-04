@@ -19,9 +19,26 @@ void main()
     scan_game_map(&game_total_rows, &game_total_columns);
     // printf("%d %d\n", game_total_rows, game_total_columns);
 
-    set_game_map(game_total_rows, game_total_columns);
-
+    do
+    {
+        set_game_map(game_total_rows, game_total_columns);  
+    } 
+    while (!game_is_over());
     
+}
+
+int game_is_over()
+{
+    if(1) // game is over condition 
+    {
+
+        return 1;
+    }   
+    else
+    {
+
+        return 0;
+    }
 }
 
 void scan_game_map(unsigned int* game_total_rows_aux , unsigned int* game_total_columns_aux)
