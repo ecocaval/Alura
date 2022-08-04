@@ -18,13 +18,13 @@ void main()
     scan_game_map(&game_total_rows, &game_total_columns);
 
     char map[game_total_rows][game_total_columns];
-
+    printf("%d %d", game_total_rows, game_total_columns);
 }
 
 void scan_game_map(unsigned int* game_total_rows_aux , unsigned int* game_total_columns_aux)
 {
-    char map_analyser[ALPHABET_SIZE];
-    char past_map_analyser[ALPHABET_SIZE];
+    char map_analyser[MAX_COLUMNS];
+    char past_map_analyser[MAX_COLUMNS];
 
     unsigned int rows_analysed = 1;
 
@@ -43,23 +43,16 @@ void scan_game_map(unsigned int* game_total_rows_aux , unsigned int* game_total_
 
         *game_total_columns_aux = strlen(map_analyser);
 
-        printf("\n%s ", map_analyser);
-        printf("Analizing row: %d\n", rows_analysed);
-
         count_map_rows(f_game_map, &rows_analysed, *game_total_columns_aux, 
                        map_analyser, past_map_analyser);
 
         *game_total_rows_aux = rows_analysed;
-
-        printf("\nMap total number of rows: %d", *game_total_rows_aux);
-        printf("\nMap total number of columns: %d\n", *game_total_columns_aux);
     }
-
     fclose(f_game_map);
 }
 
 void count_map_rows(FILE* map_ptr, unsigned int *row_analysed_aux, unsigned int game_total_columns_aux,
-                                   char map_analyser_aux[ALPHABET_SIZE], char past_map_analyser_aux[ALPHABET_SIZE])
+                                   char map_analyser_aux[MAX_COLUMNS], char past_map_analyser_aux[MAX_COLUMNS])
 {
     while (map_analyser_aux[0] == SIDE_WALL)
     {
@@ -77,14 +70,11 @@ void count_map_rows(FILE* map_ptr, unsigned int *row_analysed_aux, unsigned int 
             (*row_analysed_aux)--;
             break;
         }
-
-        printf("%s ", map_analyser_aux);
-        printf("Analizing row: %d\n", *row_analysed_aux);
     }
 }
 
-int check_if_row_repeat(unsigned int game_total_columns_aux, char map_analyser_aux[ALPHABET_SIZE], 
-                                                             char past_map_analyser_aux[ALPHABET_SIZE])
+int check_if_row_repeat(unsigned int game_total_columns_aux, char map_analyser_aux[MAX_COLUMNS], 
+                                                             char past_map_analyser_aux[MAX_COLUMNS])
 {
     unsigned int right_words_counter = 0;
 
