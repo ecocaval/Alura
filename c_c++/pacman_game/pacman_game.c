@@ -54,7 +54,7 @@ void count_map_rows(FILE* map_ptr, unsigned int *row_analysed_aux, unsigned int 
     {
         (*row_analysed_aux)++;
 
-        for(int columns_counter = 0; columns_counter < game_total_columns_aux; columns_counter++)
+        for(unsigned int columns_counter = 0; columns_counter < game_total_columns_aux; columns_counter++)
         {
             past_map_analyser[columns_counter] = map_analyser[columns_counter];
         }
@@ -74,9 +74,9 @@ void count_map_rows(FILE* map_ptr, unsigned int *row_analysed_aux, unsigned int 
 
 int check_if_row_repeat(unsigned int game_total_columns_aux)
 {
-    int right_words_counter = 0;
+    unsigned int right_words_counter = 0;
 
-    for(int columns_counter = 0; columns_counter < game_total_columns_aux; columns_counter++)
+    for(unsigned int columns_counter = 0; columns_counter < game_total_columns_aux; columns_counter++)
     {
         if(past_map_analyser[columns_counter] == map_analyser[columns_counter]) right_words_counter++;   
     }
