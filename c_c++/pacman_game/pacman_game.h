@@ -16,4 +16,10 @@ void count_map_rows(FILE* map_ptr, unsigned int *row_analysed_aux, unsigned int 
 int check_if_row_repeat(unsigned int game_total_columns_aux, char map_analyser_aux[MAX_COLUMNS], 
                         char past_map_analyser_aux[MAX_COLUMNS]);
 
-void set_game_map(unsigned int* game_total_rows_aux, unsigned int* game_total_columns_aux);
+void set_game_map(unsigned int game_total_rows_aux, unsigned int game_total_columns_aux);
+
+void free_game_map(unsigned int game_total_rows_aux);
+
+void allocate_game_map(unsigned int game_total_rows_aux, unsigned int  game_total_columns_aux);
+
+void open_game_map_file(unsigned int game_total_rows_aux);

@@ -19,7 +19,9 @@ void main()
     scan_game_map(&game_total_rows, &game_total_columns);
     // printf("%d %d\n", game_total_rows, game_total_columns);
 
-    set_game_map(&game_total_rows, &game_total_columns);
+    set_game_map(game_total_rows, game_total_columns);
+
+    
 }
 
 void scan_game_map(unsigned int* game_total_rows_aux , unsigned int* game_total_columns_aux)
@@ -94,15 +96,36 @@ int check_if_row_repeat(unsigned int game_total_columns_aux, char map_analyser_a
     }
 }
 
-void set_game_map(unsigned int* game_total_rows_aux, unsigned int* game_total_columns_aux)
+void set_game_map(unsigned int game_total_rows_aux, unsigned int game_total_columns_aux)
 {
-    game_map = malloc(sizeof(char*) * *game_total_rows_aux);
+    allocate_game_map(game_total_rows_aux, game_total_columns_aux);
 
-    for(int i = 0; i < *game_total_rows_aux; i++)
+    open_game_map_file(game_total_rows_aux);
+
+    free_game_map(game_total_rows_aux);
+}
+
+void free_game_map(unsigned int game_total_rows_aux)
+{
+    for(int i = 0; i < game_total_rows_aux; i++)
     {
-        game_map[i] = malloc(sizeof(char) * (*game_total_columns_aux + 1)); // + 1 because of string's \0
+        free(game_map[i]);
     }
+    free(game_map);
+}
 
+void allocate_game_map(unsigned int game_total_rows_aux, unsigned int game_total_columns_aux)
+{
+    game_map = malloc(sizeof(char*) * game_total_rows_aux);
+
+    for(int i = 0; i < game_total_rows_aux; i++)
+    {
+        game_map[i] = malloc(sizeof(char) * (game_total_columns_aux + 1)); // + 1 because of string's \0
+    }
+}
+
+void open_game_map_file(unsigned int game_total_rows_aux)
+{
     FILE* f_game_map;
     f_game_map = fopen("maps/game_map.txt", "r");
 
@@ -113,17 +136,11 @@ void set_game_map(unsigned int* game_total_rows_aux, unsigned int* game_total_co
     }
     else
     {
-        for(int i = 0; i < *game_total_rows_aux; i++)
+        for(int i = 0; i < game_total_rows_aux; i++)
         {
             fscanf(f_game_map, "%s", game_map[i]);
             printf("%s\n", game_map[i]);
         }
     }
     fclose(f_game_map);
-
-    for(int i = 0; i < *game_total_rows_aux; i++)
-    {
-        free(game_map[i]);
-    }
-    free(game_map);
 }
