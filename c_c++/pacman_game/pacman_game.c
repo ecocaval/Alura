@@ -68,9 +68,6 @@ void find_in_game_map(GAME* map, PACMAN* pacman, char finding_char)
 
 void set_move_direction(char direction, PACMAN* pacman)
 {
-    unsigned int direction_aux;
-    unsigned int i = 0;
-
     switch (direction)
     {
         case MOVE_UP:
