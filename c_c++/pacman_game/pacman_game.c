@@ -11,15 +11,13 @@
 
 #include "pacman_game.h"
 
-struct game
-{
-    char** map;
-    unsigned int total_rows;
-    unsigned int total_columns;
-} game_1;
+struct game game_1;
 
 void main()
 {
+
+    game_1.total_rows = 0;
+    game_1.total_columns = 0;
 
     char user_command;
 

@@ -2,8 +2,6 @@
  * @brief pacman_game -- created in 03/08/2022 (Brazil) by Érico
 */
 
-#include <stdio.h>
-
 #define MAX_COLUMNS   100
 
 #define SIDE_WALL     '|'
@@ -15,6 +13,13 @@
 #define MOVING_SPACE  '.'
 #define BLANK_SPACE   ' '
 #define EXIT_BUTTON   'y'
+
+struct game
+{
+    char** map;
+    unsigned int total_rows;
+    unsigned int total_columns;
+};
 
 void scan_game_map();
 
