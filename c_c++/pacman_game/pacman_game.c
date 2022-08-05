@@ -144,7 +144,7 @@ void move_ghost(GAME* map, POSITION* char_position, char define_ghost)
     }
     else
     {
-        direction_selector = 2 * generate_random_number() % NUMBER_OF_DIRECTIONS;
+        direction_selector = 7 * generate_random_number() % NUMBER_OF_DIRECTIONS;
     }
 
     switch (direction_selector)
