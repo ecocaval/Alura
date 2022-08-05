@@ -25,7 +25,10 @@ void main()
     do
     {
         get_user_command(&game_1, &pacman);
+        move_ghosts(&game_1, &ghost);
+
         update_game_map(&game_1); 
+
     } 
     while(1);
     //while (!game_is_over());
@@ -47,12 +50,13 @@ void move_pacman(GAME* map, POSITION* char_position, char direction)
     char_position -> x_position = 0;
     char_position -> y_position = 0;
     
-    find_in_game_map(map, char_position, PACMAN_CHAR);
+    find_in_game_map(map, char_position, PACMAN_CHAR, FIND_FIRST);
 
     set_move_direction(map, char_position, direction);
 }
 
-void find_in_game_map(GAME* map, POSITION* char_position, char finding_char)
+void find_in_game_map(GAME* map, POSITION* char_position, 
+                      char finding_char, char position_to_find)
 {
     for(int i = 0; i < map -> total_rows; i++)
     {
@@ -62,7 +66,11 @@ void find_in_game_map(GAME* map, POSITION* char_position, char finding_char)
             {
                 char_position -> y_position = i;
                 char_position -> x_position = j;
-            }
+                if(position_to_find == FIND_FIRST) 
+                {
+                    return;
+                }
+            }    
         }
     }
 }
@@ -125,13 +133,21 @@ int game_is_over()
     return 0;
 }
 
-void ghosts(GAME* map, POSITION* char_position)
+void move_ghosts(GAME* map, POSITION* char_position)
 {
-    find_in_game_map(map, char_position, GHOST_CHAR);
+    find_in_game_map(map, char_position, GHOST_CHAR, FIND_FIRST);
 
-    if(char_position -> x_position - 1 == MOVING_SPACE)
+    if(map->map[char_position -> y_position][char_position -> x_position - 1]  == MOVING_SPACE)
     {
-
+        map->map[char_position -> y_position][char_position -> x_position] = MOVING_SPACE;
+        map->map[char_position -> y_position][char_position -> x_position - 1] = GHOST_CHAR;
     }
 
+    find_in_game_map(map, char_position, GHOST_CHAR, FIND_LAST);
+
+    if(map->map[char_position -> y_position][char_position -> x_position - 1]  == MOVING_SPACE)
+    {
+        map->map[char_position -> y_position][char_position -> x_position] = MOVING_SPACE;
+        map->map[char_position -> y_position][char_position -> x_position - 1] = GHOST_CHAR;
+    }
 }
