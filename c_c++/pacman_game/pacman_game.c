@@ -11,7 +11,7 @@
 
 #include "pacman_game.h"
 
-struct game game_1;
+GAME game_1;
 
 void main()
 {
@@ -23,7 +23,7 @@ void main()
     do
     {
         get_user_command();
-        update_game_map(game_1.total_rows);
+        update_game_map(game_1.total_rows); 
     } 
     while(1);
     //while (!game_is_over());
@@ -35,9 +35,12 @@ void get_user_command()
 {
     char user_command;
 
-    user_command = getch();    
+    user_command = getch();
+        
     move_pacman(user_command);
 }
+
+
 
 void scan_game_map()
 {
@@ -258,4 +261,3 @@ void free_game_map()
     }
     free(game_1.map);
 }
-

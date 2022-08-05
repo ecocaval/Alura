@@ -21,6 +21,8 @@ struct game
     unsigned int total_columns;
 };
 
+typedef struct game GAME;
+
 void scan_game_map();
 
 void get_user_command();
