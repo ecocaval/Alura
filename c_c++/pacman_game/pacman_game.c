@@ -6,6 +6,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
+#include "conio.h"
 #include <time.h>
 
 #include "pacman_game.h"
@@ -26,7 +27,7 @@ void main()
 
     do
     {
-        scanf(" %c", &user_command); 
+        user_command = getch();
         
         move_pacman(user_command, game_total_rows, game_total_columns);
 
@@ -36,8 +37,8 @@ void main()
         }
 
     } 
-    //while (!game_is_over());
     while(1);
+    //while (!game_is_over());
 
     free_game_map(game_total_rows);
 }
@@ -184,34 +185,46 @@ void set_move_direction(char direction, unsigned int* pacman_y_position, unsigne
     unsigned int direction_aux;
     unsigned int i = 0;
 
-    switch (direction)
+        switch (direction)
     {
     case MOVE_UP:
-        printf("\nYou moved up!\n");
-        game_map[*pacman_y_position - 1][*pacman_x_position] = PACMAN_CHAR;
-        game_map[*pacman_y_position][*pacman_x_position] = MOVING_SPACE;
-        pacman_y_position--;
+        if(game_map[*pacman_y_position - 1][*pacman_x_position] == MOVING_SPACE)
+        {
+            printf("\nYou moved up!\n");
+            game_map[*pacman_y_position - 1][*pacman_x_position] = PACMAN_CHAR;
+            game_map[*pacman_y_position][*pacman_x_position] = MOVING_SPACE;
+            pacman_y_position--;
+        }
         break;
     
     case MOVE_DOWN:
-        printf("\nYou moved down!\n");
-        game_map[*pacman_y_position + 1][*pacman_x_position] = PACMAN_CHAR;
-        game_map[*pacman_y_position][*pacman_x_position] = MOVING_SPACE;
-        pacman_y_position++;
+        if(game_map[*pacman_y_position + 1][*pacman_x_position] == MOVING_SPACE)
+        {
+            printf("\nYou moved down!\n");
+            game_map[*pacman_y_position + 1][*pacman_x_position] = PACMAN_CHAR;
+            game_map[*pacman_y_position][*pacman_x_position] = MOVING_SPACE;
+            pacman_y_position++;
+        }
         break;
     
     case MOVE_RIGHT:
-        printf("\nYou moved right!\n");
-        game_map[*pacman_y_position][*pacman_x_position + 1] = PACMAN_CHAR;
-        game_map[*pacman_y_position][*pacman_x_position] = MOVING_SPACE;
-        pacman_x_position++;
+        if(game_map[*pacman_y_position][*pacman_x_position + 1] == MOVING_SPACE)
+        {
+            printf("\nYou moved right!\n");
+            game_map[*pacman_y_position][*pacman_x_position + 1] = PACMAN_CHAR;
+            game_map[*pacman_y_position][*pacman_x_position] = MOVING_SPACE;
+            pacman_x_position++;
+        }
         break;
 
     case MOVE_LEFT:
-        printf("\nYou moved left!\n");
-        game_map[*pacman_y_position][*pacman_x_position - 1] = PACMAN_CHAR;
-        game_map[*pacman_y_position][*pacman_x_position] = MOVING_SPACE;
-        pacman_x_position--;
+        if(game_map[*pacman_y_position][*pacman_x_position - 1] == MOVING_SPACE)
+        {
+            printf("\nYou moved left!\n");
+            game_map[*pacman_y_position][*pacman_x_position - 1] = PACMAN_CHAR;
+            game_map[*pacman_y_position][*pacman_x_position] = MOVING_SPACE;
+            pacman_x_position--;
+        }
         break;
     
     default:
