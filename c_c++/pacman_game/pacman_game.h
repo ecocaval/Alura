@@ -19,6 +19,8 @@
 
 #define NUMBER_OF_DIRECTIONS 4
 
+#define MAX_NUMBER_OF_RANDOM_TRIES 50
+
 #include "game_map/game_map.h"
 
 struct char_position
@@ -39,6 +41,8 @@ void find_in_game_map(GAME* map, POSITION* char_position,
 void set_move_direction(GAME* map, POSITION* char_position, char direction);
 
 int game_is_over();
+
+void define_random_direction(unsigned int* direction_selector, char define_ghost);
 
 void move_ghost(GAME* map, POSITION* char_position, char define_ghost);
 
