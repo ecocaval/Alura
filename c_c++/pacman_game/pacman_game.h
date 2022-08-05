@@ -19,12 +19,14 @@ struct char_position
 
 typedef struct char_position POSITION;
 
-void get_user_command(POSITION* char_position);
+void get_user_command(GAME* map, POSITION* char_position);
 
-void move_pacman(char direction, GAME* map, POSITION* char_position);
+void move_pacman(GAME* map, POSITION* char_position, char direction);
 
 void find_in_game_map(GAME* map, POSITION* char_position, char finding_char);
 
-void set_move_direction(char direction, POSITION* char_position);
+void set_move_direction(GAME* map, POSITION* char_position, char direction);
 
 int game_is_over();
+
+void ghosts(GAME* map, POSITION* char_position);

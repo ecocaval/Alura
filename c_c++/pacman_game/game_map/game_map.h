@@ -8,7 +8,10 @@
 #define MAX_COLUMNS   100
 
 #define SIDE_WALL     '|'
+
 #define PACMAN_CHAR   '@'
+#define GHOST_CHAR    'F'
+
 #define MOVING_SPACE  '.'
 
 struct game
