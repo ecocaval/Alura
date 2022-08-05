@@ -10,15 +10,14 @@
 #include <time.h>
 
 #include "pacman_game.h"
-
-GAME game_1;
+#include "maps/game_map.h"
 
 void main()
 {
-    scan_game_map(&game_1.total_rows, &game_1.total_rows);
+    scan_game_map(game_1);
     // printf("%d %d\n", game_total_rows, game_total_columns);
 
-    set_game_map(game_1.total_rows, game_1.total_columns);  
+    set_game_map(game_1);  
 
     do
     {
@@ -40,58 +39,6 @@ void get_user_command()
     move_pacman(user_command);
 }
 
-
-
-void scan_game_map()
-{
-    char map_analyser[MAX_COLUMNS];
-    char past_map_analyser[MAX_COLUMNS];
-
-    unsigned int rows_analysed = 1;
-
-    FILE* f_game_map;
-
-    f_game_map = fopen("maps/game_map.txt", "r");
-
-    if(f_game_map == NULL)
-    {
-        printf("\nGame map file could not be opened!\n");
-        exit(1);
-    }
-    else
-    {
-        fscanf(f_game_map, "%s\n", map_analyser);
-        game_1.total_columns = strlen(map_analyser);
-
-        count_map_rows(f_game_map, &rows_analysed,  
-                       map_analyser, past_map_analyser);
-        game_1.total_rows = rows_analysed;
-    }
-    fclose(f_game_map);
-}
-
-void count_map_rows(FILE* map_ptr, unsigned int *row_analysed, 
-                    char map_analyser[MAX_COLUMNS], char past_map_analyser[MAX_COLUMNS])
-{
-    while (map_analyser[0] == SIDE_WALL)
-    {
-        (*row_analysed)++;
-
-        for(unsigned int i = 0; i < game_1.total_columns; i++) 
-        {
-            past_map_analyser[i] = map_analyser[i];
-        }
-
-        fscanf(map_ptr, "%s\n", map_analyser);
-
-        if(check_if_row_repeat(map_analyser, past_map_analyser)) 
-        {
-            (*row_analysed)--;
-            break;
-        }
-    }
-}
-
 int check_if_row_repeat(char map_analyser[MAX_COLUMNS], char past_map_analyser[MAX_COLUMNS])
 {
     unsigned int right_words_counter = 0;
@@ -109,44 +56,6 @@ int check_if_row_repeat(char map_analyser[MAX_COLUMNS], char past_map_analyser[M
     {
         return 0;
     }
-}
-
-void set_game_map()
-{
-    allocate_game_map();
-
-    open_game_map_file();
-}
-
-void allocate_game_map()
-{
-    game_1.map = malloc(sizeof(char*) * game_1.total_rows);
-
-    for(int i = 0; i < game_1.total_rows; i++)
-    {
-        game_1.map[i] = malloc(sizeof(char) * (game_1.total_columns + 1)); // + 1 because of string's \0
-    }
-}
-
-void open_game_map_file()
-{
-    FILE* f_game_map;
-    f_game_map = fopen("maps/game_map.txt", "r");
-
-    if(f_game_map == NULL)
-    {
-        printf("\nGame map file could not be opened!\n");
-        exit(1);
-    }
-    else
-    {
-        for(int i = 0; i < game_1.total_rows; i++)
-        {
-            fscanf(f_game_map, "%s", game_1.map[i]);
-            printf("%s\n", game_1.map[i]);
-        }
-    }
-    fclose(f_game_map);
 }
 
 void move_pacman(char direction)
@@ -231,14 +140,6 @@ void set_move_direction(char direction, unsigned int* pacman_y_position, unsigne
     }
 }
 
-void update_game_map()
-{
-    for(int i = 0; i < game_1.total_rows; i++)
-    {
-        printf("%s\n", game_1.map[i]);
-    }
-}
-
 int game_is_over()
 {
     if(0) // game is over condition 
@@ -251,13 +152,4 @@ int game_is_over()
 
         return 0;
     }
-}
-
-void free_game_map()
-{
-    for(int i = 0; i < game_1.total_rows; i++)
-    {
-        free(game_1.map[i]);
-    }
-    free(game_1.map);
 }
