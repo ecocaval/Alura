@@ -46,18 +46,18 @@ void move_pacman(char direction, GAME* map, PACMAN* pacman)
     pacman->x_position = 0;
     pacman->y_position = 0;
     
-    find_pacman(map, pacman);
+    find_in_game_map(map, pacman, PACMAN_CHAR);
 
     set_move_direction(direction, pacman);
 }
 
-void find_pacman(GAME* map, PACMAN* pacman)
+void find_in_game_map(GAME* map, PACMAN* pacman, char finding_char)
 {
     for(int i = 0; i < map->total_rows; i++)
     {
         for(int j = 0; j < map->total_columns; j++)
         {
-            if(map->map[i][j] == PACMAN_CHAR)
+            if(map->map[i][j] == finding_char)
             {
                 pacman->y_position = i;
                 pacman->x_position = j;

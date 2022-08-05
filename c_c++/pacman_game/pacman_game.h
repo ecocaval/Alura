@@ -23,7 +23,7 @@ void get_user_command(PACMAN* pacman);
 
 void move_pacman(char direction, GAME* map, PACMAN* pacman);
 
-void find_pacman(GAME* map, PACMAN* pacman);
+void find_in_game_map(GAME* map, PACMAN* pacman, char finding_char);
 
 void set_move_direction(char direction, PACMAN* pacman);
 
