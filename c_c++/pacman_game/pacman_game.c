@@ -31,11 +31,7 @@ void main()
         
         move_pacman(user_command, game_total_rows, game_total_columns);
 
-        for(int i = 0; i < game_total_rows; i++)
-        {
-            printf("%s\n", game_map[i]);
-        }
-
+        update_game_map(game_total_rows);
     } 
     while(1);
     //while (!game_is_over());
@@ -95,7 +91,7 @@ void count_map_rows(FILE* map_ptr, unsigned int *row_analysed, unsigned int game
 }
 
 int check_if_row_repeat(unsigned int game_total_columns, char map_analyser[MAX_COLUMNS], 
-                                                             char past_map_analyser[MAX_COLUMNS])
+                                                         char past_map_analyser[MAX_COLUMNS])
 {
     unsigned int right_words_counter = 0;
 
@@ -230,6 +226,14 @@ void set_move_direction(char direction, unsigned int* pacman_y_position, unsigne
     default:
         printf("\nYour move is not valid please press (w/a/s/d)!\n");
         break;
+    }
+}
+
+void update_game_map(unsigned int game_total_rows)
+{
+    for(int i = 0; i < game_total_rows; i++)
+    {
+        printf("%s\n", game_map[i]);
     }
 }
 
