@@ -23,6 +23,8 @@ struct game
 
 void scan_game_map();
 
+void get_user_command();
+
 void count_map_rows(FILE* map_ptr, unsigned int *row_analysed, 
                     char map_analyser[MAX_COLUMNS], char past_map_analyser[MAX_COLUMNS]);
 

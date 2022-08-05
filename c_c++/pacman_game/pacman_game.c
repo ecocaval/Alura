@@ -15,12 +15,6 @@ struct game game_1;
 
 void main()
 {
-
-    game_1.total_rows = 0;
-    game_1.total_columns = 0;
-
-    char user_command;
-
     scan_game_map(&game_1.total_rows, &game_1.total_rows);
     // printf("%d %d\n", game_total_rows, game_total_columns);
 
@@ -28,16 +22,21 @@ void main()
 
     do
     {
-        user_command = getch();
-        
-        move_pacman(user_command);
-
+        get_user_command();
         update_game_map(game_1.total_rows);
     } 
     while(1);
     //while (!game_is_over());
 
     free_game_map(game_1.total_rows);
+}
+
+void get_user_command()
+{
+    char user_command;
+
+    user_command = getch();    
+    move_pacman(user_command);
 }
 
 void scan_game_map()
