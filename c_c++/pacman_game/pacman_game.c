@@ -31,7 +31,7 @@ void main()
 
     } 
     while(1);
-    //while (!game_is_over());
+    //while (!game_is_over()
 
     free_game_map(&game_1);
 }
