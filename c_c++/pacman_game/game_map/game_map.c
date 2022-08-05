@@ -21,21 +21,19 @@ void scan_game_map(GAME* map)
     FILE* f_game_map;
 
     f_game_map = fopen("maps/game_map.txt", "r");
-
     if(f_game_map == NULL)
     {
         printf("\nGame map file could not be opened!\n");
         exit(1);
     }
-    else
-    {
-        fscanf(f_game_map, "%s\n", map_analyser);
-        map->total_columns = strlen(map_analyser);
 
-        count_map_rows(f_game_map, map, &rows_analysed,  
-                       map_analyser, past_map_analyser);
-        map->total_rows = rows_analysed;
-    }
+    fscanf(f_game_map, "%s\n", map_analyser);
+    map->total_columns = strlen(map_analyser);
+
+    count_map_rows(f_game_map, map, &rows_analysed,  
+                    map_analyser, past_map_analyser);
+    map->total_rows = rows_analysed;
+
     fclose(f_game_map);
 }
 
@@ -74,10 +72,7 @@ int check_if_row_repeat(GAME* map, char map_analyser[MAX_COLUMNS], char past_map
     {
         return 1;
     }
-    else 
-    {
-        return 0;
-    }
+    return 0;
 }
 
 void set_game_map(GAME* map)

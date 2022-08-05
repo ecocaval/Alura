@@ -119,12 +119,7 @@ int game_is_over()
 {
     if(0) // game is over condition 
     {
-
         return 1;
     }   
-    else
-    {
-
-        return 0;
-    }
+    return 0;
 }
