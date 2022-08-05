@@ -9,12 +9,22 @@
 #define BLANK_SPACE   ' '
 #define EXIT_BUTTON   'y'
 
-void get_user_command();
+#include "game_map/game_map.h"
 
-void move_pacman(char direction);
+struct pacman_position
+{
+    unsigned int x_position;
+    unsigned int y_position;
+};
 
-void find_pacman(unsigned int* pacman_y_position, unsigned int* pacman_x_position);
+typedef struct pacman_position PACMAN;
 
-void set_move_direction(char direction, unsigned int* pacman_y_position, unsigned int* pacman_x_position);
+void get_user_command(PACMAN* pacman);
+
+void move_pacman(char direction, GAME* map, PACMAN* pacman);
+
+void find_pacman(GAME* map, PACMAN* pacman);
+
+void set_move_direction(char direction, PACMAN* pacman);
 
 int game_is_over();
