@@ -32,9 +32,9 @@ void open_game_map_file(unsigned int game_total_rows);
 void move_pacman(char direction, unsigned int game_total_rows, unsigned int game_total_columns);
 
 void find_pacman(unsigned int game_total_rows, unsigned int game_total_columns,
-                 unsigned int* pacman_x_position, unsigned int* pacman_y_position);
+                 unsigned int* pacman_y_position, unsigned int* pacman_x_position);
 
-void set_move_direction(char direction, unsigned int* pacman_x_position, unsigned int* pacman_y_position);
+void set_move_direction(char direction, unsigned int* pacman_y_position, unsigned int* pacman_x_position);
 
 int game_is_over();
 

@@ -22,15 +22,22 @@ void main()
     scan_game_map(&game_total_rows, &game_total_columns);
     // printf("%d %d\n", game_total_rows, game_total_columns);
 
+    set_game_map(game_total_rows, game_total_columns);  
+
     do
     {
-        set_game_map(game_total_rows, game_total_columns);  
-        
         scanf(" %c", &user_command); 
-
+        
         move_pacman(user_command, game_total_rows, game_total_columns);
+
+        for(int i = 0; i < game_total_rows; i++)
+        {
+            printf("%s\n", game_map[i]);
+        }
+
     } 
-    while (!game_is_over());
+    //while (!game_is_over());
+    while(1);
 
     free_game_map(game_total_rows);
 }
@@ -146,17 +153,17 @@ void open_game_map_file(unsigned int game_total_rows)
 
 void move_pacman(char direction, unsigned int game_total_rows, unsigned int game_total_columns)
 {
-    unsigned int pacman_x_position = 0;
     unsigned int pacman_y_position = 0;
+    unsigned int pacman_x_position = 0;
     
     find_pacman(game_total_rows, game_total_columns,
-                &pacman_x_position, &pacman_y_position);
+                &pacman_y_position, &pacman_x_position);
 
-    set_move_direction(direction, &pacman_x_position, &pacman_y_position);
+    set_move_direction(direction, &pacman_y_position, &pacman_x_position);
 }
 
 void find_pacman(unsigned int game_total_rows, unsigned int game_total_columns,
-                 unsigned int* pacman_x_position, unsigned int* pacman_y_position)
+                 unsigned int* pacman_y_position, unsigned int* pacman_x_position)
 {
     for(int i = 0; i < game_total_rows; i++)
     {
@@ -164,15 +171,15 @@ void find_pacman(unsigned int game_total_rows, unsigned int game_total_columns,
         {
             if(game_map[i][j] == PACMAN_CHAR)
             {
-                *pacman_x_position = i;
-                *pacman_y_position = j;
+                *pacman_y_position = i;
+                *pacman_x_position = j;
             }
         }
     }
-    printf("\nX position %d ---- Y position %d\n\n", *pacman_x_position, *pacman_y_position);
+    printf("\nX position %d ---- Y position %d\n\n", *pacman_x_position + 1, *pacman_y_position + 1);
 }
 
-void set_move_direction(char direction, unsigned int* pacman_x_position, unsigned int* pacman_y_position)
+void set_move_direction(char direction, unsigned int* pacman_y_position, unsigned int* pacman_x_position)
 {
     unsigned int direction_aux;
     unsigned int i = 0;
@@ -181,18 +188,30 @@ void set_move_direction(char direction, unsigned int* pacman_x_position, unsigne
     {
     case MOVE_UP:
         printf("\nYou moved up!\n");
+        game_map[*pacman_y_position - 1][*pacman_x_position] = PACMAN_CHAR;
+        game_map[*pacman_y_position][*pacman_x_position] = MOVING_SPACE;
+        pacman_y_position--;
         break;
     
     case MOVE_DOWN:
         printf("\nYou moved down!\n");
+        game_map[*pacman_y_position + 1][*pacman_x_position] = PACMAN_CHAR;
+        game_map[*pacman_y_position][*pacman_x_position] = MOVING_SPACE;
+        pacman_y_position++;
         break;
     
     case MOVE_RIGHT:
         printf("\nYou moved right!\n");
+        game_map[*pacman_y_position][*pacman_x_position + 1] = PACMAN_CHAR;
+        game_map[*pacman_y_position][*pacman_x_position] = MOVING_SPACE;
+        pacman_x_position++;
         break;
 
     case MOVE_LEFT:
         printf("\nYou moved left!\n");
+        game_map[*pacman_y_position][*pacman_x_position - 1] = PACMAN_CHAR;
+        game_map[*pacman_y_position][*pacman_x_position] = MOVING_SPACE;
+        pacman_x_position--;
         break;
     
     default:
