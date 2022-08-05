@@ -122,7 +122,7 @@ void update_game_map(GAME* map )
 {
     for(unsigned int i = 0; i < map->total_rows; i++)
     {
-        printf("%s\n", map->map[i]);
+        printf("\r%s\n", map->map[i]);
     }
 }
 

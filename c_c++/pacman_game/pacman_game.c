@@ -64,7 +64,6 @@ void find_in_game_map(GAME* map, PACMAN* pacman, char finding_char)
             }
         }
     }
-    printf("\nX position %d ---- Y position %d\n\n", pacman->x_position + 1, pacman->y_position + 1);
 }
 
 void set_move_direction(char direction, PACMAN* pacman)
@@ -74,52 +73,48 @@ void set_move_direction(char direction, PACMAN* pacman)
 
     switch (direction)
     {
-    case MOVE_UP:
-        if(game_1.map[pacman->y_position - 1][pacman->x_position] == MOVING_SPACE)
-        {
-            printf("\nYou moved up!\n");
-            game_1.map[pacman->y_position - 1][pacman->x_position] = PACMAN_CHAR;
-            game_1.map[pacman->y_position][pacman->x_position] = MOVING_SPACE;
-            pacman->y_position--;
-        }
-        break;
-    
-    case MOVE_DOWN:
-        if(game_1.map[pacman->y_position + 1][pacman->x_position] == MOVING_SPACE)
-        {
-            printf("\nYou moved down!\n");
-            game_1.map[pacman->y_position + 1][pacman->x_position] = PACMAN_CHAR;
-            game_1.map[pacman->y_position][pacman->x_position] = MOVING_SPACE;
-            pacman->y_position++;
-        }
-        break;
-    
-    case MOVE_RIGHT:
-        if(game_1.map[pacman->y_position][pacman->x_position + 1] == MOVING_SPACE)
-        {
-            printf("\nYou moved right!\n");
-            game_1.map[pacman->y_position][pacman->x_position + 1] = PACMAN_CHAR;
-            game_1.map[pacman->y_position][pacman->x_position] = MOVING_SPACE;
-            pacman->x_position++;
-        }
-        break;
+        case MOVE_UP:
+            if(game_1.map[pacman->y_position - 1][pacman->x_position] == MOVING_SPACE)
+            {
+                game_1.map[pacman->y_position - 1][pacman->x_position] = PACMAN_CHAR;
+                game_1.map[pacman->y_position][pacman->x_position] = MOVING_SPACE;
+                pacman->y_position--;
+            }
+            break;
+        
+        case MOVE_DOWN:
+            if(game_1.map[pacman->y_position + 1][pacman->x_position] == MOVING_SPACE)
+            {
+                game_1.map[pacman->y_position + 1][pacman->x_position] = PACMAN_CHAR;
+                game_1.map[pacman->y_position][pacman->x_position] = MOVING_SPACE;
+                pacman->y_position++;
+            }
+            break;
+        
+        case MOVE_RIGHT:
+            if(game_1.map[pacman->y_position][pacman->x_position + 1] == MOVING_SPACE)
+            {
+                game_1.map[pacman->y_position][pacman->x_position + 1] = PACMAN_CHAR;
+                game_1.map[pacman->y_position][pacman->x_position] = MOVING_SPACE;
+                pacman->x_position++;
+            }
+            break;
 
-    case MOVE_LEFT:
-        if(game_1.map[pacman->y_position][pacman->x_position - 1] == MOVING_SPACE)
-        {
-            printf("\nYou moved left!\n");
-            game_1.map[pacman->y_position][pacman->x_position - 1] = PACMAN_CHAR;
-            game_1.map[pacman->y_position][pacman->x_position] = MOVING_SPACE;
-            pacman->x_position--;
-        }
-        break;
+        case MOVE_LEFT:
+            if(game_1.map[pacman->y_position][pacman->x_position - 1] == MOVING_SPACE)
+            {
+                game_1.map[pacman->y_position][pacman->x_position - 1] = PACMAN_CHAR;
+                game_1.map[pacman->y_position][pacman->x_position] = MOVING_SPACE;
+                pacman->x_position--;
+            }
+            break;
 
-    case EXIT_BUTTON:
-        exit(1);    
-    
-    default:
-        printf("\nYour move is not valid please press (w/a/s/d)!\n");
-        break;
+        case EXIT_BUTTON:
+            exit(1);    
+        
+        default:
+            printf("\nYour move is not valid please press (w/a/s/d)!\n");
+            break;
     }
 }
 
