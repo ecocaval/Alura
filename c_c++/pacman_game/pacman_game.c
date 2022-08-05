@@ -12,7 +12,7 @@
 #include "pacman_game.h"
 
 GAME game_1;
-PACMAN pacman_1;
+POSITION pacman;
 
 void main()
 {
@@ -23,7 +23,7 @@ void main()
 
     do
     {
-        get_user_command(&pacman_1);
+        get_user_command(&pacman);
         update_game_map(&game_1); 
     } 
     while(1);
@@ -32,26 +32,26 @@ void main()
     free_game_map(&game_1);
 }
 
-void get_user_command(PACMAN* pacman)
+void get_user_command(POSITION* char_position)
 {
     char user_command;
 
     user_command = getch();
         
-    move_pacman(user_command, &game_1, &pacman_1);
+    move_pacman(user_command, &game_1, char_position);
 }
 
-void move_pacman(char direction, GAME* map, PACMAN* pacman)
+void move_pacman(char direction, GAME* map, POSITION* char_position)
 {
-    pacman->x_position = 0;
-    pacman->y_position = 0;
+    char_position->x_position = 0;
+    char_position->y_position = 0;
     
-    find_in_game_map(map, pacman, PACMAN_CHAR);
+    find_in_game_map(map, char_position, PACMAN_CHAR);
 
-    set_move_direction(direction, pacman);
+    set_move_direction(direction, char_position);
 }
 
-void find_in_game_map(GAME* map, PACMAN* pacman, char finding_char)
+void find_in_game_map(GAME* map, POSITION* char_position, char finding_char)
 {
     for(int i = 0; i < map->total_rows; i++)
     {
@@ -59,50 +59,50 @@ void find_in_game_map(GAME* map, PACMAN* pacman, char finding_char)
         {
             if(map->map[i][j] == finding_char)
             {
-                pacman->y_position = i;
-                pacman->x_position = j;
+                char_position->y_position = i;
+                char_position->x_position = j;
             }
         }
     }
 }
 
-void set_move_direction(char direction, PACMAN* pacman)
+void set_move_direction(char direction, POSITION* char_position)
 {
     switch (direction)
     {
         case MOVE_UP:
-            if(game_1.map[pacman->y_position - 1][pacman->x_position] == MOVING_SPACE)
+            if(game_1.map[char_position->y_position - 1][char_position->x_position] == MOVING_SPACE)
             {
-                game_1.map[pacman->y_position - 1][pacman->x_position] = PACMAN_CHAR;
-                game_1.map[pacman->y_position][pacman->x_position] = MOVING_SPACE;
-                pacman->y_position--;
+                game_1.map[char_position->y_position - 1][char_position->x_position] = PACMAN_CHAR;
+                game_1.map[char_position->y_position][char_position->x_position] = MOVING_SPACE;
+                char_position->y_position--;
             }
             break;
         
         case MOVE_DOWN:
-            if(game_1.map[pacman->y_position + 1][pacman->x_position] == MOVING_SPACE)
+            if(game_1.map[char_position->y_position + 1][char_position->x_position] == MOVING_SPACE)
             {
-                game_1.map[pacman->y_position + 1][pacman->x_position] = PACMAN_CHAR;
-                game_1.map[pacman->y_position][pacman->x_position] = MOVING_SPACE;
-                pacman->y_position++;
+                game_1.map[char_position->y_position + 1][char_position->x_position] = PACMAN_CHAR;
+                game_1.map[char_position->y_position][char_position->x_position] = MOVING_SPACE;
+                char_position->y_position++;
             }
             break;
         
         case MOVE_RIGHT:
-            if(game_1.map[pacman->y_position][pacman->x_position + 1] == MOVING_SPACE)
+            if(game_1.map[char_position->y_position][char_position->x_position + 1] == MOVING_SPACE)
             {
-                game_1.map[pacman->y_position][pacman->x_position + 1] = PACMAN_CHAR;
-                game_1.map[pacman->y_position][pacman->x_position] = MOVING_SPACE;
-                pacman->x_position++;
+                game_1.map[char_position->y_position][char_position->x_position + 1] = PACMAN_CHAR;
+                game_1.map[char_position->y_position][char_position->x_position] = MOVING_SPACE;
+                char_position->x_position++;
             }
             break;
 
         case MOVE_LEFT:
-            if(game_1.map[pacman->y_position][pacman->x_position - 1] == MOVING_SPACE)
+            if(game_1.map[char_position->y_position][char_position->x_position - 1] == MOVING_SPACE)
             {
-                game_1.map[pacman->y_position][pacman->x_position - 1] = PACMAN_CHAR;
-                game_1.map[pacman->y_position][pacman->x_position] = MOVING_SPACE;
-                pacman->x_position--;
+                game_1.map[char_position->y_position][char_position->x_position - 1] = PACMAN_CHAR;
+                game_1.map[char_position->y_position][char_position->x_position] = MOVING_SPACE;
+                char_position->x_position--;
             }
             break;
 
