@@ -25,7 +25,8 @@ void main()
     do
     {
         get_user_command(&game_1, &pacman);
-        move_ghosts(&game_1, &ghost);
+        move_ghost(&game_1, &ghost, FIND_FIRST);
+        move_ghost(&game_1, &ghost, FIND_LAST);
 
         update_game_map(&game_1); 
 
@@ -133,21 +134,65 @@ int game_is_over()
     return 0;
 }
 
-void move_ghosts(GAME* map, POSITION* char_position)
+void move_ghost(GAME* map, POSITION* char_position, char define_ghost)
 {
-    find_in_game_map(map, char_position, GHOST_CHAR, FIND_FIRST);
+    unsigned int direction_selector;
 
-    if(map->map[char_position -> y_position][char_position -> x_position - 1]  == MOVING_SPACE)
+    if(define_ghost == FIND_FIRST)
     {
-        map->map[char_position -> y_position][char_position -> x_position] = MOVING_SPACE;
-        map->map[char_position -> y_position][char_position -> x_position - 1] = GHOST_CHAR;
+        direction_selector = generate_random_number() % NUMBER_OF_DIRECTIONS;
+    }
+    else
+    {
+        direction_selector = 2 * generate_random_number() % NUMBER_OF_DIRECTIONS;
     }
 
-    find_in_game_map(map, char_position, GHOST_CHAR, FIND_LAST);
-
-    if(map->map[char_position -> y_position][char_position -> x_position - 1]  == MOVING_SPACE)
+    switch (direction_selector)
     {
-        map->map[char_position -> y_position][char_position -> x_position] = MOVING_SPACE;
-        map->map[char_position -> y_position][char_position -> x_position - 1] = GHOST_CHAR;
+        case RANDOM_UP:
+            find_in_game_map(map, char_position, GHOST_CHAR, define_ghost);
+
+            if(map->map[char_position -> y_position - 1][char_position -> x_position]  == MOVING_SPACE)
+            {
+                map->map[char_position -> y_position][char_position -> x_position] = MOVING_SPACE;
+                map->map[char_position -> y_position - 1][char_position -> x_position] = GHOST_CHAR;
+            }
+            break;
+        
+        case RANDOM_DOWN:
+            find_in_game_map(map, char_position, GHOST_CHAR, define_ghost);
+
+            if(map->map[char_position -> y_position + 1][char_position -> x_position]  == MOVING_SPACE)
+            {
+                map->map[char_position -> y_position][char_position -> x_position] = MOVING_SPACE;
+                map->map[char_position -> y_position + 1][char_position -> x_position] = GHOST_CHAR;
+            }
+            break;
+            
+        case RANDOM_RIGHT:
+            find_in_game_map(map, char_position, GHOST_CHAR, define_ghost);
+
+            if(map->map[char_position -> y_position][char_position -> x_position + 1]  == MOVING_SPACE)
+            {
+                map->map[char_position -> y_position][char_position -> x_position] = MOVING_SPACE;
+                map->map[char_position -> y_position][char_position -> x_position + 1] = GHOST_CHAR;
+            }
+            break;
+            
+        case RANDOM_LEFT:
+            find_in_game_map(map, char_position, GHOST_CHAR, define_ghost);
+
+            if(map->map[char_position -> y_position][char_position -> x_position - 1]  == MOVING_SPACE)
+            {
+                map->map[char_position -> y_position][char_position -> x_position] = MOVING_SPACE;
+                map->map[char_position -> y_position][char_position -> x_position - 1] = GHOST_CHAR;
+            }
+            break;
     }
+}
+
+int generate_random_number()
+{
+    srand(time(0));
+    return rand();
 }

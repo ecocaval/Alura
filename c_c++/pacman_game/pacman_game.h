@@ -12,6 +12,13 @@
 #define FIND_FIRST    'F'
 #define FIND_LAST     'L'
 
+#define RANDOM_UP      0
+#define RANDOM_DOWN    1
+#define RANDOM_LEFT    2
+#define RANDOM_RIGHT   3
+
+#define NUMBER_OF_DIRECTIONS 4
+
 #include "game_map/game_map.h"
 
 struct char_position
@@ -33,4 +40,6 @@ void set_move_direction(GAME* map, POSITION* char_position, char direction);
 
 int game_is_over();
 
-void move_ghosts(GAME* map, POSITION* char_position);
+void move_ghost(GAME* map, POSITION* char_position, char define_ghost);
+
+int generate_random_number();
