@@ -5,9 +5,8 @@
 (C & C++:)
 
 - Games developed:
-
---> Simple Guess Game
---> Hangman Game
---> Pacman Game
+-- Simple Guess Game
+-- Hangman Game
+-- Pacman Game
 
 **********************
