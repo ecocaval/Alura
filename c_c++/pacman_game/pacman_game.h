@@ -2,15 +2,10 @@
  * @brief pacman_game -- created in 03/08/2022 (Brazil) by Érico
 */
 
-#define MAX_COLUMNS   100
-
-#define SIDE_WALL     '|'
-#define PACMAN_CHAR   '@'
 #define MOVE_UP       'w'
 #define MOVE_DOWN     's'
 #define MOVE_LEFT     'a'
 #define MOVE_RIGHT    'd'
-#define MOVING_SPACE  '.'
 #define BLANK_SPACE   ' '
 #define EXIT_BUTTON   'y'
 

@@ -10,24 +10,26 @@
 #include <time.h>
 
 #include "pacman_game.h"
-#include "maps/game_map.h"
+#include "game_map/game_map.h"
+
+GAME game_1;
 
 void main()
 {
-    scan_game_map(game_1);
+    scan_game_map(&game_1);
     // printf("%d %d\n", game_total_rows, game_total_columns);
 
-    set_game_map(game_1);  
+    set_game_map(&game_1);  
 
     do
     {
         get_user_command();
-        update_game_map(game_1.total_rows); 
+        update_game_map(&game_1); 
     } 
     while(1);
     //while (!game_is_over());
 
-    free_game_map(game_1.total_rows);
+    free_game_map(&game_1);
 }
 
 void get_user_command()
@@ -37,25 +39,6 @@ void get_user_command()
     user_command = getch();
         
     move_pacman(user_command);
-}
-
-int check_if_row_repeat(char map_analyser[MAX_COLUMNS], char past_map_analyser[MAX_COLUMNS])
-{
-    unsigned int right_words_counter = 0;
-
-    for(unsigned int i = 0; i < game_1.total_columns; i++)
-    {
-        if(past_map_analyser[i] == map_analyser[i]) right_words_counter++;   
-    }
-
-    if(game_1.total_columns == right_words_counter)
-    {
-        return 1;
-    }
-    else 
-    {
-        return 0;
-    }
 }
 
 void move_pacman(char direction)
