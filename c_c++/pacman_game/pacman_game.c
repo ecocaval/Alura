@@ -11,35 +11,38 @@
 
 #include "pacman_game.h"
 
-char** game_map;
-char** last_round_game_map;
+struct game
+{
+    char** map;
+    unsigned int total_rows;
+    unsigned int total_columns;
+} game_1;
 
 void main()
 {
+
     char user_command;
 
-    unsigned int game_total_rows, game_total_columns = 0;
-
-    scan_game_map(&game_total_rows, &game_total_columns);
+    scan_game_map(&game_1.total_rows, &game_1.total_rows);
     // printf("%d %d\n", game_total_rows, game_total_columns);
 
-    set_game_map(game_total_rows, game_total_columns);  
+    set_game_map(game_1.total_rows, game_1.total_columns);  
 
     do
     {
         user_command = getch();
         
-        move_pacman(user_command, game_total_rows, game_total_columns);
+        move_pacman(user_command);
 
-        update_game_map(game_total_rows);
+        update_game_map(game_1.total_rows);
     } 
     while(1);
     //while (!game_is_over());
 
-    free_game_map(game_total_rows);
+    free_game_map(game_1.total_rows);
 }
 
-void scan_game_map(unsigned int* game_total_rows , unsigned int* game_total_columns)
+void scan_game_map()
 {
     char map_analyser[MAX_COLUMNS];
     char past_map_analyser[MAX_COLUMNS];
@@ -58,31 +61,30 @@ void scan_game_map(unsigned int* game_total_rows , unsigned int* game_total_colu
     else
     {
         fscanf(f_game_map, "%s\n", map_analyser);
-        *game_total_columns = strlen(map_analyser);
+        game_1.total_columns = strlen(map_analyser);
 
-        count_map_rows(f_game_map, &rows_analysed, 
-                       *game_total_columns, 
+        count_map_rows(f_game_map, &rows_analysed,  
                        map_analyser, past_map_analyser);
-        *game_total_rows = rows_analysed;
+        game_1.total_rows = rows_analysed;
     }
     fclose(f_game_map);
 }
 
-void count_map_rows(FILE* map_ptr, unsigned int *row_analysed, unsigned int game_total_columns,
-                                   char map_analyser[MAX_COLUMNS], char past_map_analyser[MAX_COLUMNS])
+void count_map_rows(FILE* map_ptr, unsigned int *row_analysed, 
+                    char map_analyser[MAX_COLUMNS], char past_map_analyser[MAX_COLUMNS])
 {
     while (map_analyser[0] == SIDE_WALL)
     {
         (*row_analysed)++;
 
-        for(unsigned int i = 0; i < game_total_columns; i++)
+        for(unsigned int i = 0; i < game_1.total_columns; i++) 
         {
             past_map_analyser[i] = map_analyser[i];
         }
 
         fscanf(map_ptr, "%s\n", map_analyser);
 
-        if(check_if_row_repeat(game_total_columns, map_analyser, past_map_analyser)) 
+        if(check_if_row_repeat(map_analyser, past_map_analyser)) 
         {
             (*row_analysed)--;
             break;
@@ -90,17 +92,16 @@ void count_map_rows(FILE* map_ptr, unsigned int *row_analysed, unsigned int game
     }
 }
 
-int check_if_row_repeat(unsigned int game_total_columns, char map_analyser[MAX_COLUMNS], 
-                                                             char past_map_analyser[MAX_COLUMNS])
+int check_if_row_repeat(char map_analyser[MAX_COLUMNS], char past_map_analyser[MAX_COLUMNS])
 {
     unsigned int right_words_counter = 0;
 
-    for(unsigned int i = 0; i < game_total_columns; i++)
+    for(unsigned int i = 0; i < game_1.total_columns; i++)
     {
         if(past_map_analyser[i] == map_analyser[i]) right_words_counter++;   
     }
 
-    if(game_total_columns == right_words_counter)
+    if(game_1.total_columns == right_words_counter)
     {
         return 1;
     }
@@ -110,24 +111,24 @@ int check_if_row_repeat(unsigned int game_total_columns, char map_analyser[MAX_C
     }
 }
 
-void set_game_map(unsigned int game_total_rows, unsigned int game_total_columns)
+void set_game_map()
 {
-    allocate_game_map(game_total_rows, game_total_columns);
+    allocate_game_map();
 
-    open_game_map_file(game_total_rows);
+    open_game_map_file();
 }
 
-void allocate_game_map(unsigned int game_total_rows, unsigned int game_total_columns)
+void allocate_game_map()
 {
-    game_map = malloc(sizeof(char*) * game_total_rows);
+    game_1.map = malloc(sizeof(char*) * game_1.total_rows);
 
-    for(int i = 0; i < game_total_rows; i++)
+    for(int i = 0; i < game_1.total_rows; i++)
     {
-        game_map[i] = malloc(sizeof(char) * (game_total_columns + 1)); // + 1 because of string's \0
+        game_1.map[i] = malloc(sizeof(char) * (game_1.total_columns + 1)); // + 1 because of string's \0
     }
 }
 
-void open_game_map_file(unsigned int game_total_rows)
+void open_game_map_file()
 {
     FILE* f_game_map;
     f_game_map = fopen("maps/game_map.txt", "r");
@@ -139,34 +140,32 @@ void open_game_map_file(unsigned int game_total_rows)
     }
     else
     {
-        for(int i = 0; i < game_total_rows; i++)
+        for(int i = 0; i < game_1.total_rows; i++)
         {
-            fscanf(f_game_map, "%s", game_map[i]);
-            printf("%s\n", game_map[i]);
+            fscanf(f_game_map, "%s", game_1.map[i]);
+            printf("%s\n", game_1.map[i]);
         }
     }
     fclose(f_game_map);
 }
 
-void move_pacman(char direction, unsigned int game_total_rows, unsigned int game_total_columns)
+void move_pacman(char direction)
 {
     unsigned int pacman_y_position = 0;
     unsigned int pacman_x_position = 0;
     
-    find_pacman(game_total_rows, game_total_columns,
-                &pacman_y_position, &pacman_x_position);
+    find_pacman(&pacman_y_position, &pacman_x_position);
 
     set_move_direction(direction, &pacman_y_position, &pacman_x_position);
 }
 
-void find_pacman(unsigned int game_total_rows, unsigned int game_total_columns,
-                 unsigned int* pacman_y_position, unsigned int* pacman_x_position)
+void find_pacman(unsigned int* pacman_y_position, unsigned int* pacman_x_position)
 {
-    for(int i = 0; i < game_total_rows; i++)
+    for(int i = 0; i < game_1.total_rows; i++)
     {
-        for(int j = 0; j < game_total_columns; j++)
+        for(int j = 0; j < game_1.total_columns; j++)
         {
-            if(game_map[i][j] == PACMAN_CHAR)
+            if(game_1.map[i][j] == PACMAN_CHAR)
             {
                 *pacman_y_position = i;
                 *pacman_x_position = j;
@@ -181,44 +180,44 @@ void set_move_direction(char direction, unsigned int* pacman_y_position, unsigne
     unsigned int direction_aux;
     unsigned int i = 0;
 
-        switch (direction)
+    switch (direction)
     {
     case MOVE_UP:
-        if(game_map[*pacman_y_position - 1][*pacman_x_position] == MOVING_SPACE)
+        if(game_1.map[*pacman_y_position - 1][*pacman_x_position] == MOVING_SPACE)
         {
             printf("\nYou moved up!\n");
-            game_map[*pacman_y_position - 1][*pacman_x_position] = PACMAN_CHAR;
-            game_map[*pacman_y_position][*pacman_x_position] = MOVING_SPACE;
+            game_1.map[*pacman_y_position - 1][*pacman_x_position] = PACMAN_CHAR;
+            game_1.map[*pacman_y_position][*pacman_x_position] = MOVING_SPACE;
             pacman_y_position--;
         }
         break;
     
     case MOVE_DOWN:
-        if(game_map[*pacman_y_position + 1][*pacman_x_position] == MOVING_SPACE)
+        if(game_1.map[*pacman_y_position + 1][*pacman_x_position] == MOVING_SPACE)
         {
             printf("\nYou moved down!\n");
-            game_map[*pacman_y_position + 1][*pacman_x_position] = PACMAN_CHAR;
-            game_map[*pacman_y_position][*pacman_x_position] = MOVING_SPACE;
+            game_1.map[*pacman_y_position + 1][*pacman_x_position] = PACMAN_CHAR;
+            game_1.map[*pacman_y_position][*pacman_x_position] = MOVING_SPACE;
             pacman_y_position++;
         }
         break;
     
     case MOVE_RIGHT:
-        if(game_map[*pacman_y_position][*pacman_x_position + 1] == MOVING_SPACE)
+        if(game_1.map[*pacman_y_position][*pacman_x_position + 1] == MOVING_SPACE)
         {
             printf("\nYou moved right!\n");
-            game_map[*pacman_y_position][*pacman_x_position + 1] = PACMAN_CHAR;
-            game_map[*pacman_y_position][*pacman_x_position] = MOVING_SPACE;
+            game_1.map[*pacman_y_position][*pacman_x_position + 1] = PACMAN_CHAR;
+            game_1.map[*pacman_y_position][*pacman_x_position] = MOVING_SPACE;
             pacman_x_position++;
         }
         break;
 
     case MOVE_LEFT:
-        if(game_map[*pacman_y_position][*pacman_x_position - 1] == MOVING_SPACE)
+        if(game_1.map[*pacman_y_position][*pacman_x_position - 1] == MOVING_SPACE)
         {
             printf("\nYou moved left!\n");
-            game_map[*pacman_y_position][*pacman_x_position - 1] = PACMAN_CHAR;
-            game_map[*pacman_y_position][*pacman_x_position] = MOVING_SPACE;
+            game_1.map[*pacman_y_position][*pacman_x_position - 1] = PACMAN_CHAR;
+            game_1.map[*pacman_y_position][*pacman_x_position] = MOVING_SPACE;
             pacman_x_position--;
         }
         break;
@@ -232,11 +231,11 @@ void set_move_direction(char direction, unsigned int* pacman_y_position, unsigne
     }
 }
 
-void update_game_map(unsigned int game_total_rows)
+void update_game_map()
 {
-    for(int i = 0; i < game_total_rows; i++)
+    for(int i = 0; i < game_1.total_rows; i++)
     {
-        printf("%s\n", game_map[i]);
+        printf("%s\n", game_1.map[i]);
     }
 }
 
@@ -254,12 +253,12 @@ int game_is_over()
     }
 }
 
-void free_game_map(unsigned int game_total_rows)
+void free_game_map()
 {
-    for(int i = 0; i < game_total_rows; i++)
+    for(int i = 0; i < game_1.total_rows; i++)
     {
-        free(game_map[i]);
+        free(game_1.map[i]);
     }
-    free(game_map);
+    free(game_1.map);
 }
 
