@@ -91,7 +91,7 @@ void count_map_rows(FILE* map_ptr, unsigned int *row_analysed, unsigned int game
 }
 
 int check_if_row_repeat(unsigned int game_total_columns, char map_analyser[MAX_COLUMNS], 
-                                                         char past_map_analyser[MAX_COLUMNS])
+                                                             char past_map_analyser[MAX_COLUMNS])
 {
     unsigned int right_words_counter = 0;
 
@@ -222,6 +222,9 @@ void set_move_direction(char direction, unsigned int* pacman_y_position, unsigne
             pacman_x_position--;
         }
         break;
+
+    case EXIT_BUTTON:
+        exit(1);    
     
     default:
         printf("\nYour move is not valid please press (w/a/s/d)!\n");

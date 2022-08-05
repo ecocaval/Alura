@@ -14,6 +14,7 @@
 #define MOVE_RIGHT    'd'
 #define MOVING_SPACE  '.'
 #define BLANK_SPACE   ' '
+#define EXIT_BUTTON   'y'
 
 void scan_game_map(unsigned int* game_total_rows , unsigned int* game_total_columns);
 
