@@ -1,16 +1,15 @@
 #include <stdio.h>
 
 #define TOP_LIMIT 1000
+#define STARTING_N0 0
+#define STARTING_N1 1
 
 void main()
 {
-    int n0 = 0;
-    int n1 = 1;
+    printf("\n%d\n", STARTING_N0);
+    printf("\n%d\n", STARTING_N1);
 
-    printf("\n%d\n", n0);
-    printf("\n%d\n", n1);
-
-    call_fibonacci(0, 1);
+    call_fibonacci(STARTING_N0, STARTING_N1);
 }
 
 void call_fibonacci(int n0, int n1)
