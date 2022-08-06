@@ -41,6 +41,7 @@ void copy_original_map(GAME* original_map, GAME* copy_map)
 {
     allocate_game_map(copy_map);
     
+    
     for(unsigned int i = 0; i < original_map -> total_rows; i++)
     {
         for(unsigned int j = 0; j < original_map -> total_columns; j++)
@@ -123,6 +124,7 @@ void open_game_map_file(GAME* map)
             printf("%s\n", map->map[i]);
         }
     }
+    printf("\n\n");
     fclose(f_game_map);
 }
 
@@ -132,6 +134,7 @@ void update_game_map(GAME* map )
     {
         printf("\r%s\n", map->map[i]);
     }
+    printf("\n\n");
 }
 
 void free_game_map(GAME* map)

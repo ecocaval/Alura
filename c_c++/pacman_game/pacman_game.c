@@ -16,31 +16,33 @@ GAME original_map_copy;
 POSITION pacman;
 POSITION ghost;
 
+unsigned int game_is_over = 0;
+unsigned int got_pill = 0;
+
 void main()
 {
-    unsigned int game_is_over = 0;
-    unsigned int got_pill = 0;
 
     char user_command;
     char previous_user_command;
 
-    scan_game_map(&game_1);
-    scan_game_map(&original_map_copy);
+    scan_game_map(&game_1); scan_game_map(&original_map_copy);
     // printf("%d %d\n", game_total_rows, game_total_columns);
 
-    set_game_map(&game_1);  
-    copy_original_map(&game_1, &original_map_copy);
+    set_game_map(&game_1); copy_original_map(&game_1, &original_map_copy);
 
     do
     {
+        move_ghost(&game_1, &ghost, FIND_FIRST); move_ghost(&game_1, &ghost, FIND_LAST);
         get_user_command(&game_1, &original_map_copy,&pacman, &user_command, previous_user_command);
-        move_ghost(&game_1, &ghost, FIND_FIRST);
-        move_ghost(&game_1, &ghost, FIND_LAST);
         update_game_map(&game_1); 
 
         previous_user_command = user_command;
     } 
     while(!game_is_over);
+
+    update_game_map(&game_1); 
+
+    printf("\n****** Game over! A ghost got you! ******\n\n");
 
     free_game_map(&game_1);
     free_game_map(&original_map_copy);
@@ -88,6 +90,11 @@ void set_move_direction(GAME* map, GAME* original_map_copy, POSITION* char_posit
     switch (direction)
     {
         case MOVE_UP:
+            if (map -> map[char_position -> y_position - 1][char_position -> x_position] == GHOST_CHAR)
+            {
+                game_is_over = 1;
+                break;
+            }
             if(map -> map[char_position -> y_position - 1][char_position -> x_position] == MOVING_SPACE ||
                map -> map[char_position -> y_position - 1][char_position -> x_position] == PILL_CHAR)
             {
@@ -98,6 +105,11 @@ void set_move_direction(GAME* map, GAME* original_map_copy, POSITION* char_posit
             break;
         
         case MOVE_DOWN:
+            if (map -> map[char_position -> y_position + 1][char_position -> x_position] == GHOST_CHAR)
+            {
+                game_is_over = 1;
+                break;
+            }
             if(map -> map[char_position -> y_position + 1][char_position -> x_position] == MOVING_SPACE ||
                map -> map[char_position -> y_position + 1][char_position -> x_position] == PILL_CHAR)
             {
@@ -108,6 +120,11 @@ void set_move_direction(GAME* map, GAME* original_map_copy, POSITION* char_posit
             break;
         
         case MOVE_RIGHT:
+            if (map -> map[char_position -> y_position][char_position -> x_position + 1] == GHOST_CHAR)
+            {
+                game_is_over = 1;
+                break;
+            }
             if(map -> map[char_position -> y_position][char_position -> x_position + 1] == MOVING_SPACE ||
                map -> map[char_position -> y_position][char_position -> x_position + 1] == PILL_CHAR)
             {
@@ -118,61 +135,17 @@ void set_move_direction(GAME* map, GAME* original_map_copy, POSITION* char_posit
             break;
 
         case MOVE_LEFT:
+            if (map -> map[char_position -> y_position][char_position -> x_position - 1] == GHOST_CHAR)
+            {
+                game_is_over = 1;
+                break;
+            }
             if(map -> map[char_position -> y_position][char_position -> x_position - 1] == MOVING_SPACE ||
                map -> map[char_position -> y_position][char_position -> x_position - 1] == PILL_CHAR)
             {
                 map -> map[char_position -> y_position][char_position -> x_position - 1] = PACMAN_CHAR;
                 map -> map[char_position -> y_position][char_position -> x_position] = MOVING_SPACE;
                 char_position -> x_position--;
-            }
-            break;
-
-        case EXPLODE_PILL:
-            switch (previous_user_command)
-            {
-            case MOVE_UP:
-                for(unsigned int i = 1; i < EXPLOSION_RANGE; i++)
-                {
-                    if(map -> map[char_position -> y_position - i][char_position -> x_position] == GHOST_CHAR)
-                    {
-                        map -> map[char_position -> y_position - i][char_position -> x_position] = MOVING_SPACE;
-                        break;
-                    }
-                }
-                break;
-            
-            case MOVE_DOWN:
-                for(unsigned int i = 1; i < EXPLOSION_RANGE; i++)
-                {
-                    if(map -> map[char_position -> y_position + i][char_position -> x_position] == GHOST_CHAR)
-                    {
-                        map -> map[char_position -> y_position + i][char_position -> x_position] = MOVING_SPACE;
-                        break;
-                    }
-                }
-                break;
-            
-            case MOVE_RIGHT:
-                for(unsigned int i = 1; i < EXPLOSION_RANGE; i++)
-                {
-                    if(map -> map[char_position -> y_position][char_position -> x_position + i] == GHOST_CHAR)
-                    {
-                        map -> map[char_position -> y_position][char_position -> x_position + i] = MOVING_SPACE;
-                        break;
-                    }
-                }
-                break;
-            
-            case MOVE_LEFT:
-                for(unsigned int i = 1; i < EXPLOSION_RANGE; i++)
-                {
-                    if(map -> map[char_position -> y_position][char_position -> x_position - i] == GHOST_CHAR)
-                    {
-                        map -> map[char_position -> y_position][char_position -> x_position - i] = MOVING_SPACE;
-                        break;
-                    }
-                }
-                break;
             }
             break;
 
@@ -209,9 +182,16 @@ void move_ghost(GAME* map, POSITION* char_position, char define_ghost)
     {
         case RANDOM_UP:
             find_in_game_map(map, char_position, GHOST_CHAR, define_ghost);
+
+            if(map->map[char_position -> y_position - 1][char_position -> x_position] == PACMAN_CHAR)
+            {
+                game_is_over = 1;
+                break;
+            }
+
             while(!next_position_is_valid && number_of_random_tries < MAX_NUMBER_OF_RANDOM_TRIES)
             {
-                if(map->map[char_position -> y_position - 1][char_position -> x_position]  == MOVING_SPACE)
+                if(map->map[char_position -> y_position - 1][char_position -> x_position] == MOVING_SPACE)
                 {
                     map->map[char_position -> y_position][char_position -> x_position] = MOVING_SPACE;
                     map->map[char_position -> y_position - 1][char_position -> x_position] = GHOST_CHAR;
@@ -223,9 +203,16 @@ void move_ghost(GAME* map, POSITION* char_position, char define_ghost)
         
         case RANDOM_DOWN:
             find_in_game_map(map, char_position, GHOST_CHAR, define_ghost);
+
+            if(map->map[char_position -> y_position + 1][char_position -> x_position] == PACMAN_CHAR)
+            {
+                game_is_over = 1;
+                break;
+            }
+
             while(!next_position_is_valid && number_of_random_tries < MAX_NUMBER_OF_RANDOM_TRIES)
             {
-                if(map->map[char_position -> y_position + 1][char_position -> x_position]  == MOVING_SPACE)
+                if(map->map[char_position -> y_position + 1][char_position -> x_position] == MOVING_SPACE)
                 {
                     map->map[char_position -> y_position][char_position -> x_position] = MOVING_SPACE;
                     map->map[char_position -> y_position + 1][char_position -> x_position] = GHOST_CHAR;
@@ -237,9 +224,16 @@ void move_ghost(GAME* map, POSITION* char_position, char define_ghost)
             
         case RANDOM_RIGHT:
             find_in_game_map(map, char_position, GHOST_CHAR, define_ghost);
+
+            if(map->map[char_position -> y_position][char_position -> x_position + 1] == PACMAN_CHAR)
+            {
+                game_is_over = 1;
+                break;
+            }
+
             while(!next_position_is_valid && number_of_random_tries < MAX_NUMBER_OF_RANDOM_TRIES)
             {
-                if(map->map[char_position -> y_position][char_position -> x_position + 1]  == MOVING_SPACE)
+                if(map->map[char_position -> y_position][char_position -> x_position + 1] == MOVING_SPACE)
                 {
                     map->map[char_position -> y_position][char_position -> x_position] = MOVING_SPACE;
                     map->map[char_position -> y_position][char_position -> x_position + 1] = GHOST_CHAR;
@@ -251,9 +245,16 @@ void move_ghost(GAME* map, POSITION* char_position, char define_ghost)
             
         case RANDOM_LEFT:
             find_in_game_map(map, char_position, GHOST_CHAR, define_ghost);
+
+            if(map->map[char_position -> y_position][char_position -> x_position - 1] == PACMAN_CHAR)
+            {
+                game_is_over = 1;
+                break;
+            }
+
             while(!next_position_is_valid && number_of_random_tries < MAX_NUMBER_OF_RANDOM_TRIES)
             {
-                if(map->map[char_position -> y_position][char_position -> x_position - 1]  == MOVING_SPACE)
+                if(map->map[char_position -> y_position][char_position -> x_position - 1] == MOVING_SPACE)
                 {
                     map->map[char_position -> y_position][char_position -> x_position] = MOVING_SPACE;
                     map->map[char_position -> y_position][char_position -> x_position - 1] = GHOST_CHAR;
