@@ -37,6 +37,19 @@ void scan_game_map(GAME* map)
     fclose(f_game_map);
 }
 
+void copy_original_map(GAME* original_map, GAME* copy_map)
+{
+    allocate_game_map(copy_map);
+    
+    for(unsigned int i = 0; i < original_map -> total_rows; i++)
+    {
+        for(unsigned int j = 0; j < original_map -> total_columns; j++)
+        {
+            copy_map -> map [i][j] = original_map -> map[i][j];
+        }
+    }
+}
+
 void count_map_rows(FILE* map_ptr, GAME* map, unsigned int *row_analysed, 
                     char map_analyser[MAX_COLUMNS], char past_map_analyser[MAX_COLUMNS])
 {

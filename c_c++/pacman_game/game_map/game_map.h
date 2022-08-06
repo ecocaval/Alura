@@ -11,6 +11,7 @@
 
 #define PACMAN_CHAR   '@'
 #define GHOST_CHAR    'F'
+#define PILL_CHAR     '*'
 
 #define MOVING_SPACE  '.'
 
@@ -24,6 +25,8 @@ struct game
 typedef struct game GAME;
 
 void scan_game_map(GAME* map);
+
+void copy_original_map(GAME* original_map, GAME* copy_map);
 
 void count_map_rows(FILE* map_ptr, GAME* map, unsigned int *row_analysed, 
                     char map_analyser[MAX_COLUMNS], char past_map_analyser[MAX_COLUMNS]);
