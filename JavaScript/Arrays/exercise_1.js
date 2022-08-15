@@ -1,11 +1,18 @@
-let notas = [10, 6.5, 8, 7.5]
+// let notas = [10, 7, 8, 5, 10]
 
-let medias = [0]
+// notas.pop()
 
-for(let i = 0; i < notas.length; i++) {
-    medias[0] += notas[i]
-}
+// let media = 0
 
-medias[0] /= notas.length
+// for(let i = 0; i < notas.length; i++) {
+//     media += notas[i]
+// }
 
-console.log(medias[0])
+// media /= notas.length
+
+// console.log(media)
+
+let firstArray = [1, 2]
+let secondArray = [3, 4]
+
+console.log(firstArray.concat(secondArray))
