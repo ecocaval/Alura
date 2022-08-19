@@ -14,5 +14,3 @@ const exibeNomeENota = (nomeDoAluno) => {
 
 console.log(exibeNomeENota('Roberto'))
 console.log(exibeNomeENota('Carlos'))
-
-console.log(salaDeAula)
