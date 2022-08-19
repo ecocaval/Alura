@@ -1,3 +1,5 @@
+// Sem splice()
+
 const listaDeAlunos = ['João', 'Ana', 'Caio', 'Lara', 'Marjorie', 'Leo']
 const copiaListaOriginal = []
 
@@ -35,3 +37,13 @@ for(let i = 0; i < copiaListaOriginal.length; i++) {
 listaDeAlunos.push('Rodrigo')
 
 console.log(listaDeAlunos)
+
+/***********************************************************************/
+
+// Com splice()
+
+const listaDeAlunos2 = ['João', 'Ana', 'Caio', 'Lara', 'Marjorie', 'Leo']
+console.log(listaDeAlunos2)
+
+listaDeAlunos2.splice(1,2,'Rodrigo')
+console.log(listaDeAlunos2)
