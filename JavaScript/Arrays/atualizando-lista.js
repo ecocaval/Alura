@@ -7,7 +7,7 @@ const copiaLista = (listaOriginal, copiaDaLista) => {
     }
 }
 
-const limpaListaCopia = (copiaDaLista) => {
+const limpaCopiaLista = (copiaDaLista) => {
     const tamanhoDaCopia = copiaDaLista.length
     for(let i = 0; i < tamanhoDaCopia; i++) {
         copiaDaLista.pop()
@@ -28,7 +28,7 @@ for(let i = 0; i < copiaListaOriginal.length; i++) {
         } 
         i -= 2
     }
-    limpaListaCopia(copiaListaOriginal)
+    limpaCopiaLista(copiaListaOriginal)
     copiaLista(listaDeAlunos, copiaListaOriginal)
 }
 
