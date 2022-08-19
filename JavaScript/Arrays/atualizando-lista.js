@@ -15,24 +15,23 @@ const limpaListaCopia = (copiaDaLista) => {
 }
 
 copiaLista(listaDeAlunos, copiaListaOriginal)
-
-console.log(copiaListaOriginal)
+console.log(listaDeAlunos)
 
 for(let i = 0; i < copiaListaOriginal.length; i++) {
     if(copiaListaOriginal[i] == 'Ana' || copiaListaOriginal[i] == 'Caio') {
         for(let j = i; j < copiaListaOriginal.length; j++){
             listaDeAlunos.pop()
-        }
+        } 
         i++
         for(let j = i; j < copiaListaOriginal.length; j++){
             listaDeAlunos.push(copiaListaOriginal[j])
-        }
+        } 
         i -= 2
     }
-    // console.log(listaDeAlunos)
-
     limpaListaCopia(copiaListaOriginal)
     copiaLista(listaDeAlunos, copiaListaOriginal)
 }
+
+listaDeAlunos.push('Rodrigo')
 
 console.log(listaDeAlunos)
