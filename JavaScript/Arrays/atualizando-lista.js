@@ -23,7 +23,14 @@ for(let i = 0; i < copiaListaOriginal.length; i++) {
         for(let j = i; j < copiaListaOriginal.length; j++){
             listaDeAlunos.pop()
         }
+        i++
+        for(let j = i; j < copiaListaOriginal.length; j++){
+            listaDeAlunos.push(copiaListaOriginal[j])
+        }
+        i -= 2
     }
+    // console.log(listaDeAlunos)
+
     limpaListaCopia(copiaListaOriginal)
     copiaLista(listaDeAlunos, copiaListaOriginal)
 }
