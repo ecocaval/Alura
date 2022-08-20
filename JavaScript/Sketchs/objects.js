@@ -38,17 +38,82 @@
 // console.log(userErico)
 // console.log(userVitoria)
 
-const cliente = {
-    nome: 'Andre',
-    sobrenome: 'Andrade',
-    idade: 18,
-    cpf: '129014894039',
-    email: 'sadjsi@email.com'
+// const cliente = {
+//     nome: 'Andre',
+//     sobrenome: 'Andrade',
+//     idade: 18,
+//     cpf: '129014894039',
+//     email: 'sadjsi@email.com'
+// }
+
+
+// const chavesAnalisadas = ['nome', 'sobrenome', 'idade', 'cpf']
+
+// chavesAnalisadas.forEach(chave =>{
+//     console.log(cliente[chave])
+// })
+
+// class Cliente {
+//     constructor(nome, idade, cpf, email, telefones, dependentes) {
+//         this.nome = nome
+//         this.idade = idade
+//         this.cpf = cpf
+//         this.email = email
+//         this.telefones = telefones
+//         this.dependentes = dependentes
+//     }
+// }
+
+// let erico = new Cliente('Erico', 
+//                          22, 
+//                         '13140363788', 
+//                         'ecocaval@hotmail.com', 
+//                         ['24992266520', '48999917321'], 
+//                         [{nome: 'Sabrina', parentesco: 'Filha', idade: 9}])
+
+// erico.dependentes.push({nome: 'Samara', parentesco: 'Filha', idade: 13})                       
+
+// erico.dependentes.forEach(dependente => {
+//     if(dependente.idade > 8) {
+//         console.log(dependente.idade)
+//     }
+// })
+
+let cliente1 = {
+    nome: 'Erico',
+    saldo: 100,
+
+    enviaTransf: function(valor, cliente) {
+        if(this.saldo >= valor) {
+            this.saldo -= valor
+            cliente.saldo += valor
+        }
+    },
 }
 
+let cliente2 = {
+    nome: 'Roberto',
+    saldo: 100,
 
-const chavesAnalisadas = ['nome', 'sobrenome', 'idade', 'cpf']
+    enviaTransf: function(valor, cliente) {
+        if(this.saldo >= valor) {
+            this.saldo -= valor
+            cliente.saldo += valor
+        } else {
+            console.log(`Desculpe Sr.(a) ${this.nome}, seu saldo de R$ ${this.saldo} é insuficiente para realizar a transação de R$ ${valor}`)
+        }
+    },
+}
 
-chavesAnalisadas.forEach(chave =>{
-    console.log(cliente[chave])
-})
+console.log(`Saldo do cliente 1: ${cliente1.saldo}`)
+console.log(`Saldo do cliente 2: ${cliente2.saldo}`)
+
+cliente1.enviaTransf(50, cliente2)
+
+console.log(`Saldo do cliente 1: ${cliente1.saldo}`)
+console.log(`Saldo do cliente 2: ${cliente2.saldo}`)
+
+cliente2.enviaTransf(200,cliente1)
+
+console.log(`Saldo do cliente 1: ${cliente1.saldo}`)
+console.log(`Saldo do cliente 2: ${cliente2.saldo}`)
