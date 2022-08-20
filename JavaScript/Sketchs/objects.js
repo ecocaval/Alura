@@ -32,25 +32,23 @@
 //     }
 // }
 
-// let usererico = new User('erico', 'Cavalcanti', '22', '22/11/2015', 'Premium')
+// let userErico = new User('Erico', 'Cavalcanti', '22', '22/11/2015', 'Premium')
 // let userVitoria = new User('Vitoria', 'Harter', '24', '24/03/2007', 'Standard')
 
-// console.log(usererico)
+// console.log(userErico)
 // console.log(userVitoria)
 
 const cliente = {
-    nome: '',
-    sobrenome: '',
-    idade: 0,
-    cpf: '',
-    email: ''
+    nome: 'Andre',
+    sobrenome: 'Andrade',
+    idade: 18,
+    cpf: '129014894039',
+    email: 'sadjsi@email.com'
 }
 
-const erico = cliente
-erico.nome = 'Erico'
-erico.sobrenome = 'Cavalcanti'
-erico.idade = 22
-erico.cpf = '12114578218'
-erico.email = 'ajseaj@gmail.com'
 
-console.log(erico)
+const chavesAnalisadas = ['nome', 'sobrenome', 'idade', 'cpf']
+
+chavesAnalisadas.forEach(chave =>{
+    console.log(cliente[chave])
+})
