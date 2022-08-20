@@ -105,15 +105,12 @@ let cliente2 = {
     },
 }
 
-console.log(`Saldo do cliente 1: ${cliente1.saldo}`)
-console.log(`Saldo do cliente 2: ${cliente2.saldo}`)
+console.log(`Saldo do cliente 1: ${cliente1.saldo}`, `Saldo do cliente 2: ${cliente2.saldo}`)
 
 cliente1.enviaTransf(50, cliente2)
 
-console.log(`Saldo do cliente 1: ${cliente1.saldo}`)
-console.log(`Saldo do cliente 2: ${cliente2.saldo}`)
+console.log(`Saldo do cliente 1: ${cliente1.saldo}`, `Saldo do cliente 2: ${cliente2.saldo}`)
 
 cliente2.enviaTransf(200,cliente1)
 
-console.log(`Saldo do cliente 1: ${cliente1.saldo}`)
-console.log(`Saldo do cliente 2: ${cliente2.saldo}`)
+console.log(`Saldo do cliente 1: ${cliente1.saldo}`, `Saldo do cliente 2: ${cliente2.saldo}`)
