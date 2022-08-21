@@ -27,7 +27,6 @@ ClientBalance.prototype.transferToPoup = function(clientReceiving, amount) {
     }
 }
 
-
 const clientEricoBalance = new ClientBalance('Érico', 'Cavalcanti', '13140363788', 1500, 4000)
 const clientVitoriaBalance = new ClientBalance('Vitoria', 'Harter', '44955219772', 20000, 40000)
 
