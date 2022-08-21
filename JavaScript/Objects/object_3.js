@@ -1,8 +1,3 @@
-function sendSecureOfferTo(client) {
-    console.log(`Olá sr(a). ${client.name}, gostaria de conhecer nossos planos de seguro?`)
-    client.receivedSecureOffer = true
-}
-
 const client = {
     name: 'Andre',
     lastName: 'Andrade',
@@ -16,6 +11,9 @@ const client = {
         age: 11
     },
 
+    secure: 'disabled',
+    receivedSecureOffer: false,
+
     sendTransf: function(value, client) {
         if(this.balance >= value) {
             this.balance -= value
@@ -25,16 +23,30 @@ const client = {
         }
     },
 
-    secure: 'disabled',
-    receivedSecureOffer: false,
+    sendSecureOfferTo: function(client) {
+        console.log(`Olá sr(a). ${client.name}, gostaria de conhecer nossos planos de seguro?`)
+        client.receivedSecureOffer = true
+    },
+
 }
 
-for(let clientInfo in client) {
-    if(clientInfo === 'dependent') {
-        sendSecureOfferTo(client)
+function offerSecureOption(client) {
+    const clientInfos = Object.keys(client)
+    if(clientInfos.includes('dependent')) {
+       client.sendSecureOfferTo(client) 
+    } else {
+        console.log(`O cliente ${client.name} não possui dependentes!`)
     }
 }
 
-if(!client.receivedSecureOffer) {
-    console.log(`O cliente ${client.name} não possui dependentes!`)
-}
+offerSecureOption(client)
+
+// for(let clientInfo in client) {
+//     if(clientInfo === 'dependent') {
+//         sendSecureOfferTo(client)
+//     }
+// }
+
+// if(!client.receivedSecureOffer) {
+//     console.log(`O cliente ${client.name} não possui dependentes!`)
+// }
