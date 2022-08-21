@@ -8,7 +8,7 @@ const client = {
     dependent: {
         name: 'Tamires',
         relation: 'Daughter',
-        age: 11
+        age: 11,
     },
 
     secure: 'disabled',
@@ -31,7 +31,7 @@ const client = {
 }
 
 function offerSecureOption(client) {
-    const clientInfos = Object.keys(client)
+    const clientInfos = Object.keys(client) //creates an array of client object keys
     if(clientInfos.includes('dependent')) {
        client.sendSecureOfferTo(client) 
     } else {
