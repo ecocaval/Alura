@@ -21,7 +21,7 @@ function runTransfer(clientSending, clientReceveing, amountToSend) {
     console.log(consoleSpaceOut)
 }
 
-function Client(name, lastName, age, email, cpf, dependents, hasSecure, balance, sendTransfer) {
+function Client(name, lastName, age, email, cpf, dependents, hasSecure, balance) {
     this.name = name
     this.lastName = lastName
     this.age = age
