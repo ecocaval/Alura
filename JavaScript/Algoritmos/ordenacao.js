@@ -33,6 +33,7 @@ booksList.forEach(book => {
         }
         booksPrices[bookCounter] = objectPricesAnalyser[priceIndex]
     }
+    
     bookCounter++
 })
 
