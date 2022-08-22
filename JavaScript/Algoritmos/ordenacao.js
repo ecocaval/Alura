@@ -10,11 +10,14 @@ const booksList = []
 
 const homoDeus = new Book('Homo Deus','Harari', 50)
 const homoSapiens = new Book('Homo Sapiens', 'Harari', 75)
-const antiCristo = new Book('Anti Cristo', 'Nietzsche', 60)
+const antiCrist = new Book('Anti Crist', 'Nietzsche', 60)
+const bible = new Book('Bible', '?', 10)
 
 booksList.push(homoDeus)
 booksList.push(homoSapiens)
-booksList.push(antiCristo)
+booksList.push(antiCrist)
+booksList.push(bible)
+console.log(booksList)
 
 const booksListKeys = []
 const booksPrices = []
@@ -36,7 +39,6 @@ booksList.forEach(book => {
     
     bookCounter++
 })
-
 console.log(booksPrices)
 
 booksPrices.forEach(bookprice => {
@@ -51,5 +53,4 @@ booksPrices.forEach(bookprice => {
         }
     }
 })
-
 console.log(booksPrices)
