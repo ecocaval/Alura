@@ -20,10 +20,9 @@ booksList.push(bible)
 let booksListPricedLowToGreat = []
 
 booksListPricedLowToGreat = booksList.slice() // make a copy of original list
-
 console.log(booksListPricedLowToGreat)
 
-booksList.forEach(book => {
+booksListPricedLowToGreat.forEach( book => {
     for(let currentBookPriceIndex in booksList) {
         if(currentBookPriceIndex > 0) {
             if(booksListPricedLowToGreat[currentBookPriceIndex - 1].price < booksListPricedLowToGreat[currentBookPriceIndex].price) {
@@ -37,5 +36,4 @@ booksList.forEach(book => {
         }
     }
 })
-
 console.log(booksListPricedLowToGreat)
