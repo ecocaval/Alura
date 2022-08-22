@@ -25,9 +25,11 @@ console.log(booksListPricedLowToGreat)
 booksListPricedLowToGreat.forEach( book => {
     for(let currentBookPriceIndex in booksList) {
         if(currentBookPriceIndex > 0) {
-            if(booksListPricedLowToGreat[currentBookPriceIndex - 1].price < booksListPricedLowToGreat[currentBookPriceIndex].price) {
+            if(booksListPricedLowToGreat[currentBookPriceIndex - 1].price < 
+               booksListPricedLowToGreat[currentBookPriceIndex].price) {
                 continue
             }
+
             const copyLastBook = booksListPricedLowToGreat[currentBookPriceIndex - 1]
             const copyCurrentBookPrice = booksListPricedLowToGreat[currentBookPriceIndex]
 
