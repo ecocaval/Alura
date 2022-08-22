@@ -48,9 +48,9 @@ booksListPricedLowToGreat.forEach( book => {
 
             // inverting books positions
             const copyLastBook = booksListPricedLowToGreat[currentBookPriceIndex - 1]
-            const copyCurrentBookPrice = booksListPricedLowToGreat[currentBookPriceIndex]
+            const copyCurrentBook = booksListPricedLowToGreat[currentBookPriceIndex]
 
-            booksListPricedLowToGreat[currentBookPriceIndex - 1] = copyCurrentBookPrice
+            booksListPricedLowToGreat[currentBookPriceIndex - 1] = copyCurrentBook
             booksListPricedLowToGreat[currentBookPriceIndex] = copyLastBook
         }
     }
