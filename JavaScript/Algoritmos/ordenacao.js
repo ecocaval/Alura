@@ -9,18 +9,33 @@ class Book {
 const booksList = []
 
 const homoDeus = new Book('Homo Deus','Harari', 50)
-booksList.push(homoDeus)
-
 const homoSapiens = new Book('Homo Sapiens', 'Harari', 75)
-booksList.push(homoSapiens)
-
 const antiCristo = new Book('Anti Cristo', 'Nietzsche', 60)
+
+booksList.push(homoDeus)
+booksList.push(homoSapiens)
 booksList.push(antiCristo)
 
-// think how to push prices from book list
+const booksListKeys = []
+const booksPrices = []
+let bookCounter = 0
 
-const booksPrices = [25, 15, 30, 50, 45, 20, 100, 48, 90, 44.2, 31.7, 55.8, 100.5]
- 
+booksList.forEach(book => {
+    const objectKeyAnalyser = (Object.keys(book))
+    const objectPricesAnalyser = (Object.values(book))
+    const priceIndex = objectKeyAnalyser.indexOf('price')
+
+    // console.log(objectKeyAnalyser, 'book number: ' + bookCounter)
+    
+    for(let objectKey in objectKeyAnalyser) {
+        if(objectKeyAnalyser[objectKey] != 'price') {
+            continue
+        }
+        booksPrices[bookCounter] = objectPricesAnalyser[priceIndex]
+    }
+    bookCounter++
+})
+
 console.log(booksPrices)
 
 booksPrices.forEach(bookprice => {
