@@ -8,9 +8,9 @@ booksPrices.forEach(bookprice => {
             if(booksPrices[currentBookPriceIndex - 1] < booksPrices[currentBookPriceIndex]) {
                 continue
             } else {
-                const copyCurrentBookPrice = booksPrices[currentBookPriceIndex - 1]
+                const copyLastBookPrice = booksPrices[currentBookPriceIndex - 1]
                 booksPrices[currentBookPriceIndex - 1] = booksPrices[currentBookPriceIndex] 
-                booksPrices[currentBookPriceIndex] = copyCurrentBookPrice
+                booksPrices[currentBookPriceIndex] = copyLastBookPrice
             }
         }
     }
