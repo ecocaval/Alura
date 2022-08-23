@@ -12,8 +12,8 @@ Array.prototype.equals = function (array) {
     }       
     return true
 }
-
-Object.defineProperty(Array.prototype, "equals", {enumerable: false});// Hide method from for-in loops
+ 
+Object.defineProperty(Array.prototype, "equals", {enumerable: false}); // Hide method from for-in loops
 
 class Book {
     constructor(name, author, price) {
@@ -52,7 +52,12 @@ let currentBookList = []
 
 for(let book in booksListPricedLowToGreat) {
 
-    if(lastBookList.equals(currentBookList)) break
+    if(lastBookList.equals(currentBookList)) break /*
+                                                      if any books were moved
+                                                      during last interaction we
+                                                      can break the loop, avoiding
+                                                      unnecessary repetition
+                                                   */
 
     lastBookList = booksListPricedLowToGreat.slice()
 
@@ -71,7 +76,6 @@ for(let book in booksListPricedLowToGreat) {
                 */
                 continue
             }
-            
             // inverting books positions
             const copyLastBook = booksListPricedLowToGreat[currentBookPriceIndex - 1]
             const copyCurrentBook = booksListPricedLowToGreat[currentBookPriceIndex]
