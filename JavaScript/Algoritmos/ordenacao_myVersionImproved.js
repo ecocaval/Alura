@@ -1,19 +1,19 @@
 
-Array.prototype.equals = function (array) {
-    if (!array) return false;
+// Array.prototype.equals = function (array) {
+//     if (!array) return false;
 
-    if (this.length != array.length) return false
+//     if (this.length != array.length) return false
 
-    for (var i = 0, l = this.length; i < l; i++) {
-        if (this[i] instanceof Array && array[i] instanceof Array) {
-            if (!this[i].equals(array[i])) return false      
-        }           
-        else if (this[i] != array[i]) return false   
-    }       
-    return true
-}
+//     for (var i = 0, l = this.length; i < l; i++) {
+//         if (this[i] instanceof Array && array[i] instanceof Array) {
+//             if (!this[i].equals(array[i])) return false      
+//         }           
+//         else if (this[i] != array[i]) return false   
+//     }       
+// //     return true
+// // }
  
-Object.defineProperty(Array.prototype, "equals", {enumerable: false}); // Hide method from for-in loops
+// Object.defineProperty(Array.prototype, "equals", {enumerable: false}); // Hide method from for-in loops
 
 class Book {
     constructor(name, author, price) {
@@ -37,54 +37,58 @@ booksList.push(antiCrist)
 booksList.push(homoSapiens)
 booksList.push(bible)
 
-/*
-    make a copy of original list
-*/
-let booksListPricedLowToGreat = []
+console.log(booksList)
+booksList.sort((a, b) => a.price - b.price); // nutella version
+console.log(booksList)
 
-booksListPricedLowToGreat = booksList.slice() 
+// /*
+//     make a copy of original list
+// */
+// let booksListPricedLowToGreat = []
 
-/* 
-    repeats the algorithm 'n' times, 'n' is defined by the books list length
-*/
-let lastBookList = booksListPricedLowToGreat.slice()
-let currentBookList = []
+// booksListPricedLowToGreat = booksList.slice() 
 
-for(let book in booksListPricedLowToGreat) {
+// /* 
+//     repeats the algorithm 'n' times, 'n' is defined by the books list length
+// */
+// let lastBookList = booksListPricedLowToGreat.slice()
+// let currentBookList = []
 
-    if(lastBookList.equals(currentBookList)) break /*
-                                                      if any books were moved
-                                                      during last interaction we
-                                                      can break the loop, avoiding
-                                                      unnecessary repetition
-                                                   */
+// for(let book in booksListPricedLowToGreat) {
 
-    lastBookList = booksListPricedLowToGreat.slice()
+//     if(lastBookList.equals(currentBookList)) break /*
+//                                                       if any books were moved
+//                                                       during last interaction we
+//                                                       can break the loop, avoiding
+//                                                       unnecessary repetition
+//                                                    */
 
-    for(let currentBookPriceIndex in booksList) {
+//     lastBookList = booksListPricedLowToGreat.slice()
 
-        if(currentBookPriceIndex > 0) { 
-            /*
-                if currentBookPriceIndex === 0 then currentBookPriceIndex-1 === -1, 
-                so we test that index to continue
-            */
-           if(booksListPricedLowToGreat[currentBookPriceIndex - 1].price < 
-              booksListPricedLowToGreat[currentBookPriceIndex].price) {
-                /*
-                    if last book's value is already lower than current one
-                    we don't need to invert their positions
-                */
-                continue
-            }
-            // inverting books positions
-            const copyLastBook = booksListPricedLowToGreat[currentBookPriceIndex - 1]
-            const copyCurrentBook = booksListPricedLowToGreat[currentBookPriceIndex]
+//     for(let currentBookPriceIndex in booksList) {
+
+//         if(currentBookPriceIndex > 0) { 
+//             /*
+//                 if currentBookPriceIndex === 0 then currentBookPriceIndex-1 === -1, 
+//                 so we test that index to continue
+//             */
+//            if(booksListPricedLowToGreat[currentBookPriceIndex - 1].price < 
+//               booksListPricedLowToGreat[currentBookPriceIndex].price) {
+//                 /*
+//                     if last book's value is already lower than current one
+//                     we don't need to invert their positions
+//                 */
+//                 continue
+//             }
+//             // inverting books positions
+//             const copyLastBook = booksListPricedLowToGreat[currentBookPriceIndex - 1]
+//             const copyCurrentBook = booksListPricedLowToGreat[currentBookPriceIndex]
             
-            booksListPricedLowToGreat[currentBookPriceIndex - 1] = copyCurrentBook
-            booksListPricedLowToGreat[currentBookPriceIndex] = copyLastBook
-        }
-    }
-    currentBookList = booksListPricedLowToGreat.slice()   
-}
+//             booksListPricedLowToGreat[currentBookPriceIndex - 1] = copyCurrentBook
+//             booksListPricedLowToGreat[currentBookPriceIndex] = copyLastBook
+//         }
+//     }
+//     currentBookList = booksListPricedLowToGreat.slice()   
+// }
 
-console.log(booksListPricedLowToGreat)
+// console.log(booksListPricedLowToGreat)
