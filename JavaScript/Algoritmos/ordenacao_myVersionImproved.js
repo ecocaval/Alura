@@ -39,12 +39,27 @@ booksList.push(bible)
 
 console.log(booksList)
 /*
-    if (a,b) = (booksList[n],booksList[n+1]) so if:
+    if (a, b) = (booksList[n], booksList[n+1]) so if:
         a - b > 0: a is sorted after b (because a = booksList[n] is greater then next array element)
         a - b < 0: a is sorted before b (because a = booksList[n] is lower then next array element)
         a - b = 0: positions are maintained
 */
-booksList.sort((a, b) => a.price - b.price); // nutella version
+// booksList.sort((a, b) => a.price - b.price); // nutella version
+
+booksList.sort((a, b) => {
+    const nameA = a.name.toUpperCase();
+    const nameB = b.name.toUpperCase(); 
+
+    if (nameA < nameB) {
+      return -1
+    }
+
+    if (nameA > nameB) {
+      return 1
+    }
+
+    return 0;
+  })
 
 console.log(booksList)
 
