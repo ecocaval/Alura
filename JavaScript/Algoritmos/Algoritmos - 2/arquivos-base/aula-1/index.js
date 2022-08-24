@@ -37,22 +37,32 @@ const putBooksInAscendingPriceOrder = (booksToAnalyseObj) => {
     }
 
     const booksAnalysedInfo = copyBookInfoArrToObj(booksToAnalyseObj)    
-    
-    // console.log(booksToAnalyseObj)
-    // console.log(booksAnalysedInfo)
 
     const booksInAscendigOrder = []
     let bookNumberIdentifier = 1
 
+    const editorsNameList0 = booksAnalysedInfo.editorsList[0]
+    const editorsNameList1 = booksAnalysedInfo.editorsList[1]
+    /*
+        - 1 because we see the array position that begins in 0.
+    */
+    const booksList0Size = booksAnalysedInfo.booksListSizeArr[0] - 1
+    const booksList1Size = booksAnalysedInfo.booksListSizeArr[1] - 1
+
     for(let contador = 0; contador < booksAnalysedInfo.actualFinalMax; contador++) {
 
-        const list0Book = booksToAnalyseObj[booksAnalysedInfo.editorsList[0]][booksAnalysedInfo.actualsListArr[0]] 
-        const list1Book = booksToAnalyseObj[booksAnalysedInfo.editorsList[1]][booksAnalysedInfo.actualsListArr[1]] 
+        let actualPivotList0 = booksAnalysedInfo.actualsListArr[0]
+        let actualPivotList1 = booksAnalysedInfo.actualsListArr[1]
+
+        let list0IsFinished = booksAnalysedInfo.listIsFinishedArr[0]
+        let list1IsFinished = booksAnalysedInfo.listIsFinishedArr[1]
         
-        if(list0Book.preco < list1Book.preco || booksAnalysedInfo.listIsFinishedArr[1]) {
+        let list0Book = booksToAnalyseObj[editorsNameList0][actualPivotList0] 
+        let list1Book = booksToAnalyseObj[editorsNameList1][actualPivotList1] 
+        
+        if(list0Book.preco < list1Book.preco || list1IsFinished) {
 
             booksInAscendigOrder.push(list0Book)
-
             {
                 // adds numerity to listed books array
 
@@ -60,10 +70,8 @@ const putBooksInAscendingPriceOrder = (booksToAnalyseObj) => {
                 bookNumberIdentifier++
             }
             
-            if(booksAnalysedInfo.actualsListArr[0] < booksAnalysedInfo.booksListSizeArr[0] - 1) { 
-                /*
-                   - 1 because we see the array position that begins in 0.
-                */
+            if(actualPivotList0 < booksList0Size) { 
+
                 booksAnalysedInfo.actualsListArr[0] += 1
                 continue
             }
@@ -77,20 +85,18 @@ const putBooksInAscendingPriceOrder = (booksToAnalyseObj) => {
         }
         
         booksInAscendigOrder.push(list1Book)
-        
         {
             booksInAscendigOrder[contador].bookNumber = bookNumberIdentifier
             bookNumberIdentifier++
         }
         
-        if(booksAnalysedInfo.actualsListArr[1] < booksAnalysedInfo.booksListSizeArr[1] - 1)  {
+        if(actualPivotList1 < booksList1Size)  {
             booksAnalysedInfo.actualsListArr[1] += 1
             continue
         }
         
-        if(!booksAnalysedInfo.listIsFinishedArr[1]) booksAnalysedInfo.listIsFinishedArr[1] = true 
+        if(!list1IsFinished) booksAnalysedInfo.listIsFinishedArr[1] = true 
     }
-
     return booksInAscendigOrder
 }
 
