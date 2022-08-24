@@ -26,11 +26,11 @@ const putBooksInAscendingPriceOrder = (booksToAnalyseObj) => {
         const booksAnalysedInfoArr = buildBooksInfo(booksToAnalyseObj)
 
         const booksAnalysedInfo = {
-            actualsListArr: booksAnalysedInfoArr[0],
-            listIsFinishedArr: booksAnalysedInfoArr[1],
-            booksListSizeArr: booksAnalysedInfoArr[2],
-            actualFinalMax: booksAnalysedInfoArr[3],
-            editorsList: booksAnalysedInfoArr[4]
+            actualsListArr: booksAnalysedInfoArr[0], // arr of lists pivots
+            listIsFinishedArr: booksAnalysedInfoArr[1], // arr indicating if list was fully scanned
+            booksListSizeArr: booksAnalysedInfoArr[2], // arr indicating both lists length
+            actualFinalMax: booksAnalysedInfoArr[3], // num indicating the sum of the two lists
+            editorsList: booksAnalysedInfoArr[4] // arr indicating both editors names
         }
 
         return booksAnalysedInfo
@@ -53,6 +53,7 @@ const putBooksInAscendingPriceOrder = (booksToAnalyseObj) => {
     const booksAnalysedInfo = copyBookInfoArrToObj(booksToAnalyseObj)    
 
     const booksInAscendigOrder = []
+    
     let bookNumberIdentifier = 1
 
     const editorsNameList0 = booksAnalysedInfo.editorsList[0]
@@ -62,11 +63,11 @@ const putBooksInAscendingPriceOrder = (booksToAnalyseObj) => {
 
     for(let contador = 0; contador < booksAnalysedInfo.actualFinalMax; contador++) {
 
-        let actualPivotList0 = booksAnalysedInfo.actualsListArr[0]
-        let actualPivotList1 = booksAnalysedInfo.actualsListArr[1]
+        const actualPivotList0 = booksAnalysedInfo.actualsListArr[0]
+        const actualPivotList1 = booksAnalysedInfo.actualsListArr[1]
 
-        let list0Book = booksToAnalyseObj[editorsNameList0][actualPivotList0] 
-        let list1Book = booksToAnalyseObj[editorsNameList1][actualPivotList1] 
+        const list0Book = booksToAnalyseObj[editorsNameList0][actualPivotList0] 
+        const list1Book = booksToAnalyseObj[editorsNameList1][actualPivotList1] 
         
         if(list0Book.preco < list1Book.preco || list1IsFinished) {
 
