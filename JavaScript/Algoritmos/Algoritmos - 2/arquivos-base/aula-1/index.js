@@ -1,6 +1,10 @@
 
 const livrosAnalisados = require('./arrays.js') // comes in form of an object of arrays
 
+console.log(`
+Lista de Livros Recebida: *****************`)
+console.log(livrosAnalisados)
+
 const putBooksInAscendingPriceOrder = (booksToAnalyseObj) => {
     
     const buildBooksInfo = (booksToAnalyseObj) => {
@@ -50,6 +54,12 @@ const putBooksInAscendingPriceOrder = (booksToAnalyseObj) => {
         return true
     }
 
+    const incrementBookIdentifier = (bookIdentifier, counter) => {
+        booksInAscendigOrder[counter].bookNumber = bookIdentifier
+        bookIdentifier++
+        return bookIdentifier
+    }
+
     const booksAnalysedInfo = copyBookInfoArrToObj(booksToAnalyseObj)    
 
     const booksInAscendigOrder = []
@@ -72,22 +82,14 @@ const putBooksInAscendingPriceOrder = (booksToAnalyseObj) => {
         if(list0Book.preco < list1Book.preco || list1IsFinished) {
 
             booksInAscendigOrder.push(list0Book)
-            {
-                // adds numerity to listed books array
-
-                booksInAscendigOrder[contador].bookNumber = bookNumberIdentifier
-                bookNumberIdentifier++
-            }
+            bookNumberIdentifier = incrementBookIdentifier(bookNumberIdentifier, contador)
             
             checkIfListIsFinished(0)
             continue
         }
         
         booksInAscendigOrder.push(list1Book)
-        {
-            booksInAscendigOrder[contador].bookNumber = bookNumberIdentifier
-            bookNumberIdentifier++
-        }
+        bookNumberIdentifier = incrementBookIdentifier(bookNumberIdentifier, contador)
         
        if(checkIfListIsFinished(1)) list1IsFinished = true
     }
@@ -96,4 +98,6 @@ const putBooksInAscendingPriceOrder = (booksToAnalyseObj) => {
 
 const livrosOrdenados = putBooksInAscendingPriceOrder(livrosAnalisados)
 
+console.log(`
+Lista de Livros Ordenada: *****************`)
 console.log(livrosOrdenados)
