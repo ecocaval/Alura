@@ -36,6 +36,20 @@ const putBooksInAscendingPriceOrder = (booksToAnalyseObj) => {
         return booksAnalysedInfo
     }
 
+    const checkIfListIsFinished = (listToCheck) => {
+        if(booksAnalysedInfo.actualsListArr[listToCheck] < booksAnalysedInfo.booksListSizeArr[listToCheck] - 1)  {
+            booksAnalysedInfo.actualsListArr[listToCheck] += 1
+            return false
+        }
+        
+        if(!booksAnalysedInfo.listIsFinishedArr[listToCheck]) booksAnalysedInfo.listIsFinishedArr[listToCheck] = true 
+        /*
+            if atualListaFolha reached the top limit it means all elements of the list were added into the 
+            ordered array booksInAscendigOrder, so we set that list as finished.
+        */
+        return true
+    }
+
     const booksAnalysedInfo = copyBookInfoArrToObj(booksToAnalyseObj)    
 
     const booksInAscendigOrder = []
@@ -43,20 +57,14 @@ const putBooksInAscendingPriceOrder = (booksToAnalyseObj) => {
 
     const editorsNameList0 = booksAnalysedInfo.editorsList[0]
     const editorsNameList1 = booksAnalysedInfo.editorsList[1]
-    /*
-        - 1 because we see the array position that begins in 0.
-    */
-    const booksList0Size = booksAnalysedInfo.booksListSizeArr[0] - 1
-    const booksList1Size = booksAnalysedInfo.booksListSizeArr[1] - 1
+
+    let list1IsFinished = false
 
     for(let contador = 0; contador < booksAnalysedInfo.actualFinalMax; contador++) {
 
         let actualPivotList0 = booksAnalysedInfo.actualsListArr[0]
         let actualPivotList1 = booksAnalysedInfo.actualsListArr[1]
 
-        let list0IsFinished = booksAnalysedInfo.listIsFinishedArr[0]
-        let list1IsFinished = booksAnalysedInfo.listIsFinishedArr[1]
-        
         let list0Book = booksToAnalyseObj[editorsNameList0][actualPivotList0] 
         let list1Book = booksToAnalyseObj[editorsNameList1][actualPivotList1] 
         
@@ -70,17 +78,7 @@ const putBooksInAscendingPriceOrder = (booksToAnalyseObj) => {
                 bookNumberIdentifier++
             }
             
-            if(actualPivotList0 < booksList0Size) { 
-
-                booksAnalysedInfo.actualsListArr[0] += 1
-                continue
-            }
-
-            if(!booksAnalysedInfo.listIsFinishedArr[0]) booksAnalysedInfo.listIsFinishedArr[0] = true 
-            /*
-                if atualListaFolha reached the top limit it means all elements of the list were added into the 
-                ordered array booksInAscendigOrder, so we set that list as finished.
-            */
+            checkIfListIsFinished(0)
             continue
         }
         
@@ -90,12 +88,7 @@ const putBooksInAscendingPriceOrder = (booksToAnalyseObj) => {
             bookNumberIdentifier++
         }
         
-        if(actualPivotList1 < booksList1Size)  {
-            booksAnalysedInfo.actualsListArr[1] += 1
-            continue
-        }
-        
-        if(!list1IsFinished) booksAnalysedInfo.listIsFinishedArr[1] = true 
+       if(checkIfListIsFinished(1)) list1IsFinished = true
     }
     return booksInAscendigOrder
 }
