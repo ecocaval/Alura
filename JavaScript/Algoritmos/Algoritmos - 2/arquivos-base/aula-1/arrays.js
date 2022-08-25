@@ -32,7 +32,7 @@ const edGalho = [
   },
   {
     titulo: "Ruby",
-    preco: 28
+    preco: 20
   },
   {
     titulo: "C#",
@@ -44,7 +44,7 @@ const edGalho = [
   },
   {
     titulo: "Scala",
-    preco: 40
+    preco: 20
   }
 ]
 

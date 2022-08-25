@@ -60,11 +60,38 @@ const putBooksInAscendingPriceOrder = (booksToAnalyseObj) => {
         return bookIdentifier
     }
 
+    const sortBothEditorsLists = (booksToAnalyseObj, bookIdentifier) => {
+        
+        let booksToAnalyseInOrder = booksToAnalyseObj
+
+        for(let counter = 0; counter < bookIdentifier.actualsListArr.length; counter++) {
+            booksToAnalyseInOrder[bookIdentifier.editorsList[counter]].sort((a, b) => a.preco - b.preco)
+        }
+        
+        return booksToAnalyseInOrder
+    }
+
+    const buildAscendingArr = (listToCheck, list0, list1) => {
+        
+        let listToPush = {}
+        let listToCheckIsFinished = false
+        
+        if(listToCheck == 0) listToPush = list0
+        else listToPush = list1
+
+        booksInAscendigOrder.push(listToPush)
+        
+        if(checkIfListIsFinished(listToCheck)) listToCheckIsFinished = true
+        return(listToCheckIsFinished)
+    }
+
     const booksAnalysedInfo = copyBookInfoArrToObj(booksToAnalyseObj)    
+
+    const livrosAnalisadosInOrder = sortBothEditorsLists(booksToAnalyseObj, booksAnalysedInfo)
 
     const booksInAscendigOrder = []
     
-    let bookNumberIdentifier = 1
+    let bookNumberIdentifier = 0
 
     const editorsNameList0 = booksAnalysedInfo.editorsList[0]
     const editorsNameList1 = booksAnalysedInfo.editorsList[1]
@@ -73,25 +100,24 @@ const putBooksInAscendingPriceOrder = (booksToAnalyseObj) => {
 
     for(let contador = 0; contador < booksAnalysedInfo.actualFinalMax; contador++) {
 
+        bookNumberIdentifier = incrementBookIdentifier(bookNumberIdentifier, contador)
+
         const actualPivotList0 = booksAnalysedInfo.actualsListArr[0]
         const actualPivotList1 = booksAnalysedInfo.actualsListArr[1]
 
-        const list0Book = booksToAnalyseObj[editorsNameList0][actualPivotList0] 
-        const list1Book = booksToAnalyseObj[editorsNameList1][actualPivotList1] 
+        const list0Book = livrosAnalisadosInOrder[editorsNameList0][actualPivotList0] 
+        const list1Book = livrosAnalisadosInOrder[editorsNameList1][actualPivotList1] 
         
         if(list0Book.preco < list1Book.preco || list1IsFinished) {
 
-            booksInAscendigOrder.push(list0Book)
-            bookNumberIdentifier = incrementBookIdentifier(bookNumberIdentifier, contador)
-            
-            checkIfListIsFinished(0)
+            buildAscendingArr(0,list0Book,list1Book)
+
             continue
         }
         
         booksInAscendigOrder.push(list1Book)
-        bookNumberIdentifier = incrementBookIdentifier(bookNumberIdentifier, contador)
         
-       if(checkIfListIsFinished(1)) list1IsFinished = true
+       if(buildAscendingArr(1,list0Book,list1Book)) list1IsFinished = true
     }
     return booksInAscendigOrder
 }
