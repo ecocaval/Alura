@@ -13,7 +13,7 @@ function assembleLists1and2 (list1, list2) {
 
     let list1Pivot = 0
     let list2Pivot = 0
-    let ascendingOrderedList = []
+    const ascendingOrderedList = []
 
     const checkListAndIncrementFinalList = (list, listPivot) => {
 
