@@ -25,7 +25,7 @@ function quickSortArr(arrToQuickSort) {
             for(let lastObjIndex = currentObjIndex - 1; lastObjIndex >= 0; lastObjIndex--)  {
                 const lastObjPrice = arrToQuickSort[lastObjIndex].price
     
-                if(lastObjPrice < currentObjPrice) numberOfLowerPrices[currentObjIndex]++
+                if(lastObjPrice <= currentObjPrice) numberOfLowerPrices[currentObjIndex]++
             }
         }
 

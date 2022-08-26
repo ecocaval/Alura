@@ -9,11 +9,11 @@ const listaLivros = [
   },
   {
     titulo: "Java",
-    price: 30
+    price: 35
   },
   {
   titulo: "PHP",
-  price: 15
+  price: 35
   },
   {
     titulo: "Elixir",
