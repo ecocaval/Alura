@@ -17,9 +17,7 @@ function quickSortArr(arrToQuickSort) {
             for(let nextObjIndex = currentObjIndex; nextObjIndex < arrToQuickSort.length; nextObjIndex++)  {
                 const nextObjPrice = arrToQuickSort[nextObjIndex].price
     
-                if(nextObjPrice < currentObjPrice) {
-                    numberOfLowerPrices[currentObjIndex]++
-                }
+                if(nextObjPrice < currentObjPrice) numberOfLowerPrices[currentObjIndex]++
             }
         }
 
@@ -27,9 +25,7 @@ function quickSortArr(arrToQuickSort) {
             for(let lastObjIndex = currentObjIndex - 1; lastObjIndex >= 0; lastObjIndex--)  {
                 const lastObjPrice = arrToQuickSort[lastObjIndex].price
     
-                if(lastObjPrice < currentObjPrice) {
-                    numberOfLowerPrices[currentObjIndex]++
-                }
+                if(lastObjPrice < currentObjPrice) numberOfLowerPrices[currentObjIndex]++
             }
         }
 
