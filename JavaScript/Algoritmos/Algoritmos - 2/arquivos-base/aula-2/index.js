@@ -1,43 +1,57 @@
-const listaLivros = require('./array');
+const listaLivros = require(`./array.js`)
 
-function mergeSort(array, nivelAninhamento = 0) {
+function mergeSort(arrToSort) {
 
-  console.log(`
-  nível de aninhamento: ${nivelAninhamento}
-  `)
-  console.log(array)
+  if(arrToSort.length > 1) {
+    const arrToSortSlice1 = mergeSort(arrToSort.slice(0, Math.floor(arrToSort.length / 2)))
+    const arrToSortSlice2 = mergeSort(arrToSort.slice(Math.floor(arrToSort.length / 2), arrToSort.length))
 
-  if(array.length > 1) {
-    const meio = Math.floor(array.length / 2);
-    const parte1 = mergeSort(array.slice(0, meio), nivelAninhamento + 1);
-    const parte2 = mergeSort(array.slice(meio, array.length), nivelAninhamento + 1);
-    array = ordena(parte1, parte2);
+    arrToSort = ascendingPriceOrderList(arrToSortSlice1, arrToSortSlice2)
   }
 
-  return array;
+  return arrToSort
 }
 
-function ordena(parte1, parte2) {
-  let posicaoAtualParte1 = 0 
-  let posicaoAtualParte2 = 0
-  const resultado = []
+function ascendingPriceOrderList (list1, list2) {
 
-  while (posicaoAtualParte1 < parte1.length && posicaoAtualParte2 < parte2.length) {
-    let produtoAtualParte1 = parte1[posicaoAtualParte1]
-    let produtoAtualParte2 = parte2[posicaoAtualParte2]
+  let list1Pivot = 0
+  let list2Pivot = 0
+  const ascendingOrderedList = []
 
-    if (produtoAtualParte1.preco < produtoAtualParte2.preco) {
-      resultado.push(produtoAtualParte1)
-      posicaoAtualParte1++
-    } else {
-      resultado.push(produtoAtualParte2)
-      posicaoAtualParte2++
-    }
+  const incrementFinalList = (list, listPivot) => {
+      if(listPivot != list.length) {
+          ascendingOrderedList.push(list[listPivot])
+          listPivot++
+      }
+      return listPivot
   }
 
-  return resultado.concat(posicaoAtualParte1 < parte1.length
-                        ? parte1.slice(posicaoAtualParte1)
-                        : parte2.slice(posicaoAtualParte2))
+  const listIsFinished = (listToVerify, listToVerifyPivot, listToIncrement, listToIncrementPivot) => {
+      if(listToVerifyPivot === listToVerify.length) {
+          while(listToIncrementPivot < listToIncrement.length){
+              listToIncrementPivot = incrementFinalList(listToIncrement, listToIncrementPivot)
+          }
+          return true
+      } 
+      return false
+  }
+
+  while(list1Pivot < list1.length && list2Pivot < list2.length) {
+      if(list1[list1Pivot].price < list2[list2Pivot].price) {
+         list1Pivot = incrementFinalList(list1, list1Pivot)
+      } else {
+         list2Pivot = incrementFinalList(list2, list2Pivot)
+      }
+
+      if(listIsFinished(list2, list2Pivot, list1, list1Pivot)) {
+          break
+      }
+
+      if(listIsFinished(list1,list1Pivot, list2, list2Pivot)) {
+          break
+      }
+  }
+  return ascendingOrderedList
 }
 
-console.log(mergeSort(listaLivros));
+console.log(mergeSort(listaLivros))
