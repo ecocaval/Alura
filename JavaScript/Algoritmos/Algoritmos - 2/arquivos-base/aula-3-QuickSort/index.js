@@ -2,26 +2,44 @@ const booksAnalysed = require('./array.js') // console.log(booksAnalysed);
 
 function quickSortArr(arrToQuickSort) {
 
-    let pricesChecked = 0
     let priceToScan = []
     let numberOfLowerPrices = []
     let quickSortedList = []
 
-    priceToScan[0] = arrToQuickSort[0].price
-    numberOfLowerPrices[0] = 0
+    for(let currentObjIndex in arrToQuickSort) {
 
-    arrToQuickSort.forEach(elementOfArr => {
+        const currentObjPrice = arrToQuickSort[currentObjIndex].price
 
-        if(arrToQuickSort.indexOf(elementOfArr) > 0) {
-            if(elementOfArr.price < priceToScan[0]) {
-                numberOfLowerPrices[0] += 1
+        numberOfLowerPrices[currentObjIndex] = 0
+        priceToScan[currentObjIndex] = currentObjPrice
+    
+        const scanNextObjs = () => {
+            for(let nextObjIndex = currentObjIndex; nextObjIndex < arrToQuickSort.length; nextObjIndex++)  {
+                const nextObjPrice = arrToQuickSort[nextObjIndex].price
+    
+                if(nextObjPrice < currentObjPrice) {
+                    numberOfLowerPrices[currentObjIndex]++
+                }
             }
         }
-    })
 
-    quickSortedList[numberOfLowerPrices] = arrToQuickSort[0]
+        const scanPreviousObjs = () => {
+            for(let lastObjIndex = currentObjIndex - 1; lastObjIndex >= 0; lastObjIndex--)  {
+                const lastObjPrice = arrToQuickSort[lastObjIndex].price
     
-    console.log(quickSortedList)
+                if(lastObjPrice < currentObjPrice) {
+                    numberOfLowerPrices[currentObjIndex]++
+                }
+            }
+        }
+
+        scanNextObjs()
+
+        scanPreviousObjs()
+        
+        quickSortedList[numberOfLowerPrices[currentObjIndex]] = arrToQuickSort[currentObjIndex]
+    }
+    return quickSortedList
 }
 
-quickSortArr(booksAnalysed)
+console.log(quickSortArr(booksAnalysed))
