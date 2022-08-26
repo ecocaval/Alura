@@ -12,8 +12,8 @@ const listaLivros = [
     preco: 30
   },
   {
-  titulo: "PHP",
-  preco: 15
+    titulo: "PHP",
+    preco: 15
   },
   {
     titulo: "Elixir",
