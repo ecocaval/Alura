@@ -1,106 +1,43 @@
-const editorBooks = require('./array.js')
+const listaLivros = require('./array');
 
-let interaction = 0
+function mergeSort(array, nivelAninhamento = 0) {
 
-const listOrdered = []
+  console.log(`
+  nível de aninhamento: ${nivelAninhamento}
+  `)
+  console.log(array)
 
-function assembleLists1and2 (list1, list2) {
+  if(array.length > 1) {
+    const meio = Math.floor(array.length / 2);
+    const parte1 = mergeSort(array.slice(0, meio), nivelAninhamento + 1);
+    const parte2 = mergeSort(array.slice(meio, array.length), nivelAninhamento + 1);
+    array = ordena(parte1, parte2);
+  }
 
-    // const list1Ordered = list1.sort( (a,b) => a.price - b.price) // sorts arr in ascending order
-    // const list2Ordered = list2.sort( (a,b) => a.price - b.price) // sorts arr in ascending order
-
-    let list1Pivot = 0
-    let list2Pivot = 0
-    const ascendingOrderedList = []
-
-    const checkListAndIncrementFinalList = (list, listPivot) => {
-
-        if(listPivot != list.length) {
-
-            ascendingOrderedList.push(list[listPivot])
-            listPivot++
-
-        }
-
-        return listPivot
-    }
-
-    const verifyIfListIsFinished = (listToVerify, listToVerifyPivot, listToIncrement, listToIncrementPivot) => {
-
-        if(listToVerifyPivot === listToVerify.length) {
-
-            while(listToIncrementPivot < listToIncrement.length){
-
-                listToIncrementPivot = checkListAndIncrementFinalList(listToIncrement, listToIncrementPivot)
-
-            }
-
-            return true
-        } 
-
-        return false
-    }
-
-    while(list1Pivot < list1.length && list2Pivot < list2.length) {
-        
-        if(list1[list1Pivot].price < list2[list2Pivot].price) {
-
-           list1Pivot = checkListAndIncrementFinalList(list1, list1Pivot)
-
-        } else {
-            
-           list2Pivot = checkListAndIncrementFinalList(list2, list2Pivot)
-           
-        }
-
-        if(verifyIfListIsFinished(list2, list2Pivot, list1, list1Pivot)) {
-            break
-        }
-
-        if(verifyIfListIsFinished(list1,list1Pivot, list2, list2Pivot)) {
-            break
-        }
-    }
-    return ascendingOrderedList
+  return array;
 }
 
-function mergeSort(arr) {
+function ordena(parte1, parte2) {
+  let posicaoAtualParte1 = 0 
+  let posicaoAtualParte2 = 0
+  const resultado = []
 
-    if(arr.length === 1 ) return
-    
-    console.log(`
-    **********************************
+  while (posicaoAtualParte1 < parte1.length && posicaoAtualParte2 < parte2.length) {
+    let produtoAtualParte1 = parte1[posicaoAtualParte1]
+    let produtoAtualParte2 = parte2[posicaoAtualParte2]
 
-`)
-
-    if(arr.length > 1) {
-        const arrPart1 = arr.slice(0, Math.floor(arr.length / 2))
-        const arrPart2 = arr.slice(Math.floor(arr.length / 2), arr.length)
-
-        if(arrPart1.length === 1 && arrPart2.length === 1) {
-
-        }
-
-        console.log(`
-        Array Part 1:
-        `)
-        console.log(arrPart1)
-
-        console.log(`
-        Array Part 2:
-        `)
-        console.log(arrPart2)
-
-        console.log(`
-        
-    **********************************
-    
-    `)
-
-        mergeSort(arrPart1)
-        mergeSort(arrPart2)
+    if (produtoAtualParte1.preco < produtoAtualParte2.preco) {
+      resultado.push(produtoAtualParte1)
+      posicaoAtualParte1++
+    } else {
+      resultado.push(produtoAtualParte2)
+      posicaoAtualParte2++
     }
+  }
+
+  return resultado.concat(posicaoAtualParte1 < parte1.length
+                        ? parte1.slice(posicaoAtualParte1)
+                        : parte2.slice(posicaoAtualParte2))
 }
 
-mergeSort(editorBooks)
-
+console.log(mergeSort(listaLivros));

@@ -4,12 +4,12 @@ let { edFolha, edGalho } = editorsBooksList
 
 console.log(edFolha, edGalho)
 
+edFolha = edFolha.sort( (a,b) => a.price - b.price) // sorts arr in ascending order
+edGalho = edGalho.sort( (a,b) => a.price - b.price) // sorts arr in ascending order
+
 console.log(edFolha, edGalho)
 
 function assembleLists1and2 (list1, list2) {
-
-    // const list1Ordered = list1.sort( (a,b) => a.price - b.price) // sorts arr in ascending order
-    // const list2Ordered = list2.sort( (a,b) => a.price - b.price) // sorts arr in ascending order
 
     let list1Pivot = 0
     let list2Pivot = 0
