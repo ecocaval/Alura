@@ -5,7 +5,12 @@ function searchBookBasedOnPrice (booksOrderedArr, priceSearched) {
     const arrMiddleIndex = Math.floor(booksOrderedArr.length / 2)
     const priceFromMiddleBook = booksOrderedArr[arrMiddleIndex].price
 
-    if(arrMiddleIndex === 0) return booksOrderedArr; // guard function for recursivity
+    if(arrMiddleIndex === 0) { // guard function for recursivity
+        if(booksOrderedArr[arrMiddleIndex].price === priceSearched) {
+            return booksOrderedArr; 
+        }
+        return "\nWe don't have a book with that price!\n"
+    }
 
     if(priceFromMiddleBook === priceSearched) return booksOrderedArr[arrMiddleIndex]; 
 
@@ -16,5 +21,5 @@ function searchBookBasedOnPrice (booksOrderedArr, priceSearched) {
     }
 }   
 
-console.log(searchBookBasedOnPrice(booksOrdered, 45))
+console.log(searchBookBasedOnPrice(booksOrdered, 0))
 
