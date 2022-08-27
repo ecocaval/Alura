@@ -1,7 +1,4 @@
 const booksOrdered = require('./arrayOrdenado')
-console.log('\nOriginal Book List:\n')
-console.log(booksOrdered)
-console.log('\n*******************\n')
 
 function searchBookBasedOnPrice (booksOrderedArr, priceSearched) {  
 
@@ -19,5 +16,5 @@ function searchBookBasedOnPrice (booksOrderedArr, priceSearched) {
     }
 }   
 
-console.log(searchBookBasedOnPrice(booksOrdered, 22))
+console.log(searchBookBasedOnPrice(booksOrdered, 45))
 
