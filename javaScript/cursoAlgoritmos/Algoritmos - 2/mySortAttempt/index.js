@@ -1,4 +1,4 @@
-const booksAnalysed = require('./arrayOrdenado')
+const booksAnalysed = require('./array')
 // console.log(booksAnalysed)
 
 function invertBooks (arr, leftBook, rightBook) {
