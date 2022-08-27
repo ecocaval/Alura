@@ -1,48 +1,49 @@
 const listaLivros = [
   {
-    title: "Go",
-    price: 45
+    titulo: 'PHP',
+    preco: 15
   },
   {
-    title: "C++",
-    price: 35
+    titulo: 'Python',
+    preco: 20
   },
   {
-    title: "Java",
-    price: 30
+    titulo: 'Rust',
+    preco: 22
   },
   {
-  title: "PHP",
-  price: 15
+    titulo: 'JavaScript',
+    preco: 25
   },
   {
-    title: "Elixir",
-    price: 50
+    titulo: 'Ruby',
+    preco: 28
   },
   {
-    title: "Rust",
-    price: 22
+    titulo: 'Java',
+    preco: 30
   },
   {
-    title: "Scala",
-    price: 40
+    titulo: 'C#',
+    preco: 33
   },
   {
-    title: "Ruby",
-    price: 28
+    titulo: 'C++',
+    preco: 35
   },
   {
-    title: "JavaScript",
-    price: 25
+    titulo: 'Scala',
+    preco: 40
   },
   {
-    title: "C#",
-    price: 33
+    titulo: 'Go',
+    preco: 45
   },
   {
-    title: "Python",
-    price: 20
-  },
+    titulo: 'Elixir',
+    preco: 50
+  }
 ]
+
 
 module.exports = listaLivros
