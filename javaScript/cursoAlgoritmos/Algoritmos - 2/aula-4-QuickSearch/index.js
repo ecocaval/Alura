@@ -2,6 +2,17 @@ const booksOrdered = require('./arrayOrdenado')
 
 function searchBookBasedOnPrice (booksOrderedArr, priceSearched) {  
 
+    const inputsAreValid = (booksOrderedArr, priceSearched) => {
+        if(typeof priceSearched != 'number' || typeof booksOrderedArr != 'object') {
+            return false
+        }
+        return true
+    }
+
+    if (!inputsAreValid(booksOrderedArr, priceSearched)) {
+        return '\nSorry, yours inputs are not valid!\n'
+    }
+
     const arrMiddleIndex = Math.floor(booksOrderedArr.length / 2)
     const priceFromMiddleBook = booksOrderedArr[arrMiddleIndex].price
 
@@ -21,5 +32,6 @@ function searchBookBasedOnPrice (booksOrderedArr, priceSearched) {
     }
 }   
 
-console.log(searchBookBasedOnPrice(booksOrdered, 0))
+console.log(searchBookBasedOnPrice(booksOrdered, 15))
+
 
