@@ -10,9 +10,9 @@ function searchBookBasedOnPrice (booksOrderedArr, priceSearched) {
     if(priceFromMiddleBook === priceSearched) return booksOrderedArr[arrMiddleIndex]; 
 
     if(priceFromMiddleBook > priceSearched) {
-        booksOrderedArr = searchBookBasedOnPrice(booksOrderedArr.slice(0, arrMiddleIndex), priceSearched)
+        booksOrderedArr = searchBookBasedOnPrice(booksOrderedArr.slice(0, arrMiddleIndex - 1), priceSearched)
     } else {
-        booksOrderedArr = searchBookBasedOnPrice(booksOrderedArr.slice(arrMiddleIndex), priceSearched)
+        booksOrderedArr = searchBookBasedOnPrice(booksOrderedArr.slice(arrMiddleIndex + 1), priceSearched)
     }
 
     return booksOrderedArr
