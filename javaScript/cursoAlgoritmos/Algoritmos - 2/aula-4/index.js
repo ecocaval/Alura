@@ -1,7 +1,7 @@
 const booksAnalysed = require('./arrayOrdenado')
 // console.log(booksAnalysed)
 
-const invertBooks = (arr, leftBook, rightBook) => {
+function invertBooks (arr, leftBook, rightBook) {
     const previousLeftBook = arr[leftBook]
     const previousRigthBook = arr[rightBook]
 
@@ -16,58 +16,55 @@ function checkAndInvertBook (arrToCheck) {
     let arrRightReference = arrToCheck.length - 1
     let arrMiddleReference = Math.floor(arrToCheck.length/2)
 
-    console.log('\nMiddle Ref: ' + arrMiddleReference +
-                    '\nLeft Ref: ' + arrLeftReference   +
-                   '\nRigth Ref: ' + arrRightReference  + '\n')
-
-
     while(arrLeftReference < arrRightReference) {
-        if(arrToCheck[arrLeftReference].price > arrToCheck[arrRightReference].price) {
+        const leftPriceIsHigher = arrToCheck[arrLeftReference].price > arrToCheck[arrRightReference].price
+
+        if(leftPriceIsHigher) {
             arrToCheck = invertBooks(arrToCheck, arrLeftReference, arrRightReference)
         }
-    
-        if(arrToCheck[arrLeftReference].price < arrToCheck[arrMiddleReference].price) {
-            arrLeftReference++
-        }
-    
-        if(arrToCheck[arrRightReference].price > arrToCheck[arrMiddleReference].price) {
-            arrRightReference--
-        }
+        
+        const leftPriceCanIncrement = arrToCheck[arrLeftReference].price < arrToCheck[arrMiddleReference].price
+        const rightPriceCanDecrement = arrToCheck[arrRightReference].price > arrToCheck[arrMiddleReference].price
+
+        if(leftPriceCanIncrement) arrLeftReference++;
+        if(rightPriceCanDecrement) arrRightReference--
     }
 
     return arrToCheck
 }
 
-function newSort (arrToSort) {
+function modifyArrBeingSort (arrBeingSorted, subArrOrdered, leftReference) {
+    for(let allBooksIndex in subArrOrdered) {
+        arrBeingSorted[leftReference] = subArrOrdered[allBooksIndex]
+        leftReference++
+    }   
+    return arrBeingSorted
+}
 
+function newSort (arrToSort) {
     const arrMiddleReference = Math.floor(arrToSort.length / 2)
     let arrRightReference = arrMiddleReference + 1
     let arrLeftReference = arrMiddleReference - 1
     
-    let slicedArrToSort = arrToSort.slice(arrLeftReference, arrRightReference + 1)
-    
-    console.log('\nMiddle Ref: ' + arrMiddleReference +
-    '\nLeft Ref: ' + arrLeftReference   +
-    '\nRigth Ref: ' + arrRightReference  + '\n')
+    let slicedArrToSort = []
 
-    console.log(slicedArrToSort)
-    
-    console.log(checkAndInvertBook(slicedArrToSort))
+    do {       
+        slicedArrToSort = arrToSort.slice(arrLeftReference, arrRightReference + 1)
 
-    // while(slicedArrToSort.length != arrToSort.length) {
-    //     arrRightReference++
-    //     arrLeftReference--
-        
-    //     slicedArrToSort = arrToSort.slice(arrLeftReference, arrRightReference + 1)
-        
-    //     console.log(slicedArrToSort)
-        
-    //     console.log('\nMiddle Ref: ' + arrMiddleReference +
-    //     '\nLeft Ref: ' + arrLeftReference   +
-    //     '\nRigth Ref: ' + arrRightReference  + '\n')
+        console.log('\nMiddle Ref: ' + arrMiddleReference +
+        '\nLeft Ref: ' + arrLeftReference   +
+        '\nRigth Ref: ' + arrRightReference  + '\n')
+        console.log(slicedArrToSort)
 
-    //     console.log(checkAndInvertBook(slicedArrToSort))
-    // }                   
+        slicedArrToSort = checkAndInvertBook(slicedArrToSort)
+        console.log(slicedArrToSort)
+
+        arrToSort = modifyArrBeingSort(arrToSort, slicedArrToSort, arrLeftReference)
+        console.log(arrToSort)
+
+        arrRightReference++
+        arrLeftReference--
+    } while (slicedArrToSort.length != arrToSort.length)                    
 
     return arrToSort
 }
