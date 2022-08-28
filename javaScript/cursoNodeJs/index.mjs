@@ -21,15 +21,10 @@ function treatError (err) {
 function catchFile (fileToCatchPath) {
     const encoding = 'utf-8';
 
-    fs.promises.readFile(fileToCatchPath, encoding)
-    
-    .then((textFomFile) => {
-        console.log(chalk.yellow(textFomFile));
-    })
-
-    .catch((err) => {
-        treatError(err);
-    })
+    fs.promises
+    .readFile(fileToCatchPath, encoding)
+    .then((textFomFile) => console.log(chalk.yellow(textFomFile)))
+    .catch((err) => treatError(err))
 }
 
 catchFile('./arquivos/texto1.md');
