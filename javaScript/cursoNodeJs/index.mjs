@@ -13,12 +13,19 @@ const fs = require('fs'); // there's no need to install fs
         }
 */
 
+function treatError (err) {
+    throw new Error(chalk.red(err.code, "There's no reading file in this directory!"))
+}
+
 function catchFile (fileToCatchPath) {
     const encoding = 'utf-8';
-    const callBackCatchFIle = (_, textReceived) => {
-        console.log(chalk.green(textReceived));
+    const callBackCatchFIle = (err, textReceived) => {
+        if(err) {
+            return treatError(err)
+        }
+        return console.log(chalk.yellow(textReceived));
     };
     fs.readFile(fileToCatchPath, encoding, callBackCatchFIle);
 }
 
-catchFile('./arquivos/texto1.md');
+catchFile('./arquivos');
