@@ -1,16 +1,3 @@
-
-/*
-    fs refers to 'file system'  -> fs.readFile(file, [encoding], [callback]);
-    obs: file = (string) filepath of the file to read;
-        encoding = will normally refer to 'UTF-8';
-        callback = function (err, data) {
-            if (err) {
-                return console.log(err);
-            }
-            console.log(data);
-        }
-*/
-
 const chalk = require("chalk"); // must be installed through npm install chalk
 const fs = require('fs'); // there's no need to install fs
 
@@ -29,13 +16,26 @@ function catchFile (fileToCatchPath) {
 
 catchFile('./arquivos/texto1.md');
 
-// function catchFile (fileToCatchPath) {
-//     const encoding = 'utf-8';
-//     const callBackCatchFIle = (err, textReceived) => {
-//         if(err) {
-//             return treatError(err)
-//         }
-//         return console.log(chalk.yellow(textReceived));
-//     };
-//     fs.readFile(fileToCatchPath, encoding, callBackCatchFIle);
-// }
+
+/*
+function catchFile (fileToCatchPath) {
+    const encoding = 'utf-8';
+    const callBackCatchFIle = (err, textReceived) => {
+        if(err) {
+            return treatError(err)
+        }
+        return console.log(chalk.yellow(textReceived));
+    };
+    fs.readFile(fileToCatchPath, encoding, callBackCatchFIle);
+}
+
+fs refers to 'file system'  -> fs.readFile(file, [encoding], [callback]);
+    obs: file = (string) filepath of the file to read;
+        encoding = will normally refer to 'UTF-8';
+        callback = function (err, data) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log(data);
+        }
+*/
