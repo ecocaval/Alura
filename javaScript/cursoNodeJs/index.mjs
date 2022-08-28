@@ -16,7 +16,6 @@ function catchFile (fileToCatchPath) {
 
 catchFile('./arquivos/texto1.md');
 
-
 /*
 function catchFile (fileToCatchPath) {
     const encoding = 'utf-8';
