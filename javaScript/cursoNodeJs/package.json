@@ -1,5 +1,5 @@
 {
-  "name": "part1",
+  "name": "cursoNodeJs",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,6 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "chalk": "^5.0.1"
+    "chalk": "^5.0.1",
+    "esm": "^3.2.25"
   }
+  
 }
+
