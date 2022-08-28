@@ -15,5 +15,9 @@ const fs = require('fs'); // there's no need to install fs
 
 function catchFile (fileToCatchPath) {
     const encoding = 'utf-8';
-    fs.readFile(fileToCatchPath, encoding, );
+    fs.readFile(fileToCatchPath, encoding, (_, textReceived) => {
+        console.log(chalk.green(textReceived));
+    });
 }
+
+catchFile('./arquivos/texto1.md');
