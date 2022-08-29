@@ -2,7 +2,7 @@ const chalk = require('chalk');
 const fs = require('fs');
 
 function treatError (err) {
-    return console.log(chalk.red('An error was detected!\n${err}'));
+    return console.log(chalk.red(`An error was detected!\n${err}`));
 }
 
 async function readFile (filePath) {
@@ -15,7 +15,7 @@ async function readFile (filePath) {
     }
 }
 
-readFile('./arquivos/texto1.md');
+readFile('./arquivos/textso1.md');
 
 setTimeout(() => console.log(chalk.yellow('12345')), 10);
 
