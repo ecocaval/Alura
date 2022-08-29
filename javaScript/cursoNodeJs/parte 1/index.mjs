@@ -5,16 +5,39 @@ function treatError (err) {
     throw new Error(chalk.red(err.code, "There's no reading file in this directory!"));
 }
 
-function catchFile (fileToCatchPath) {
-    const encoding = 'utf-8';
-
-    fs.promises
-    .readFile(fileToCatchPath, encoding)
-    .then((textFomFile) => console.log(chalk.yellow(textFomFile)))
-    .catch((err) => treatError(err))
+async function readfile (fileToCatchPath, encoding) {
+    return fs.readFile(fileToCatchPath, encoding)
+                .then((textFomFile) => console.log(chalk.yellow(textFomFile)))
 }
 
-catchFile('./arquivos/texto1.md');
+async function catchFile (fileToCatchPath) {
+    const encoding = 'utf-8';
+    try {
+        return await readfile(fileToCatchPath, encoding);
+    } catch (err) {
+        return await treatError(err);        
+    }
+}
+
+async function catchIt () {
+    const catchIt = await catchFile('./arquivos/texto1.md');
+    return catchIt;
+}
+
+catchIt()
+
+
+// function catchFile (fileToCatchPath) {
+//     const encoding = 'utf-8';
+
+//     fs.promises
+//     .readFile(fileToCatchPath, encoding)
+//     .then((textFomFile) => console.log(chalk.yellow(textFomFile)))
+//     .catch((err) => treatError(err))
+// }
+
+// catchFile('./arquivos/texto1.md');
+
 
 /*
 function catchFile (fileToCatchPath) {
