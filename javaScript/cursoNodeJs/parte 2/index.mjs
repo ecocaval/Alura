@@ -12,6 +12,8 @@ async function readFile (filePath) {
         console.log(chalk.green(texto));
     } catch (err) {
         treatError(err);
+    } finally {
+        console.log('Finished reading file...')
     }
 }
 
