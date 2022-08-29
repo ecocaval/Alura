@@ -15,7 +15,7 @@ async function readFile (filePath) {
     }
 }
 
-readFile('./arquivos/textso1.md');
+readFile('./arquivos/texto1.md');
 
 setTimeout(() => console.log(chalk.yellow('12345')), 10);
 
