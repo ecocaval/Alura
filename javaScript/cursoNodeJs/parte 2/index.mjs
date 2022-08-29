@@ -2,32 +2,23 @@ const chalk = require('chalk');
 const fs = require('fs');
 
 function treatError (err) {
-    return console.log(chalk.red(`Error! -> ${err}`));
+    return console.log(chalk.red('An error was detected!\n${err}'));
 }
 
-function waitingTime () {
-    return console.log('waiting!')
-}
-
-function takeFile (filePath) {
+async function readFile (filePath) {
     const encoding = 'utf-8';
-    const text_ = fs.promises.readFile(filePath, encoding)
-                    .then((text) => {
-                        return text;
-                    })
-                    .catch((err) => {
-                        return treatError(err);
-                    });
-    waitingTime();
-    setTimeout(() => {
-        console.log('doing it!')
-    }, 10000);
-    return text_;
+
+    try {
+        const texto = await fs.promises.readFile(filePath, encoding);
+        console.log(chalk.green(texto));
+    } catch (err) {
+        treatError(err);
+    }
 }
 
-async function doSomething () {
-    let something = await takeFile('./arquivos/texto1.md');
-    return something;
-}
+readFile('./arquivos/texto1.md');
 
-doSomething()
+setTimeout(() => {
+    console.log(chalk.yellow('12345'));
+}, 10);
+
