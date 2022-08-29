@@ -1,8 +1,8 @@
-const chalk = require('chalk')
-const fs = require('fs')
+const chalk = require('chalk');
+const fs = require('fs');
 
 function treatError (err) {
-    return console.log(chalk.red(`Error! -> ${err}`))
+    return console.log(chalk.red(`Error! -> ${err}`));
 }
 
 function waitingTime () {
@@ -22,12 +22,12 @@ function takeFile (filePath) {
     setTimeout(() => {
         console.log('doing it!')
     }, 10000);
-    return text_
+    return text_;
 }
 
 async function doSomething () {
     let something = await takeFile('./arquivos/texto1.md');
-    return something
+    return something;
 }
 
 doSomething()
