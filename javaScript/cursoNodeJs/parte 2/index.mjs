@@ -7,6 +7,8 @@ function treatError (err) {
 
 async function readFile (filePath) {
     const encoding = 'utf-8';
+
+    console.log('\nStarted reading file...')
     try {
         const texto = await fs.promises.readFile(filePath, encoding);
         console.log(chalk.green(texto));
@@ -19,5 +21,10 @@ async function readFile (filePath) {
 
 readFile('./arquivos/texto1.md');
 
-setTimeout(() => console.log(chalk.yellow('12345')), 10);
+/*
+    EXPRESSOES REGULARES:
+    \[[\w]*\} ----> seleciona todas (*) as palavras (\w) dentro de (\[) e (\]) -> note que o '\' 
+    é para que a [ e a ] nao sejam consfundidas com um vetor).
+*/
+
 
