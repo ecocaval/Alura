@@ -1,13 +1,6 @@
 const chalk = require('chalk');
 const fs = require('fs');
 
-class Link {
-    constructor(linkName, url) {
-        this.linkName = linkName;
-        this.url = url;
-    }
-}
-
 function treatError (err) {
     return console.log(chalk.red(`An error was detected!\n${err}`));
 }
@@ -28,20 +21,13 @@ async function readFile (filePath) {
 // readFile('./arquivos/texto1.md');
 
 function linksExtract (textToExtractLinks) {
-    const regEx = /\[([^\]]*)\]\((https?:\/\/[^$#\s].[^\s]*)\)/gm; //gm refers to global and multi-line
-    
+    const regEx = /\[([^\]]*)\]\((https?:\/\/[^$#\s].[^\s]*)\)/gm; //gm refers to global and multi-line  
     let extractedLinks = [];
     let temp;
 
     while((temp = regEx.exec(textToExtractLinks)) !== null) {
         extractedLinks.push({[(temp[1])] : temp[2]})
     }
-
-    // console.log((extractedLinks));
-
-
-
-    
     return extractedLinks;
 }
 
@@ -70,5 +56,3 @@ console.log(linksExtractedArr);
     ex: const regex = /[a-zA-z\s]/;
         let regex = new RegExp("[a-zA-z\s]");
 */                
-
-
