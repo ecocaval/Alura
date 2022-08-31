@@ -29,8 +29,18 @@ async function readFile (filePath) {
 
 function linksExtract (textToExtractLinks) {
     const regEx = /\[([^\]]*)\]\((https?:\/\/[^$#\s].[^\s]*)\)/gm; //gm refers to global and multi-line
-    const extractedLinks = textToExtractLinks.match(regEx);
+    
+    let extractedLinks = [];
+    let temp;
+
+    while((temp = regEx.exec(textToExtractLinks)) !== null) {
+        extractedLinks.push({[(temp[1])] : temp[2]})
+    }
+
     // console.log((extractedLinks));
+
+
+
     
     return extractedLinks;
 }
