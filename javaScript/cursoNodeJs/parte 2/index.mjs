@@ -15,7 +15,6 @@ function linksExtract (textToExtractLinks) {
 
 const linksExtractedArr = linksExtract(texto1);
 
-
 /*
     EXPRESSOES REGULARES:
     1) \[[\w]*\} ----> seleciona todas (*) as palavras (\w) dentro de (\[) e (\]) -> note que o '\' 
