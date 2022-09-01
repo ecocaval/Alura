@@ -1,4 +1,3 @@
-
 async function validaURLs (arrayDeLinksParaValidar) {
     console.log(arrayDeLinksParaValidar);
 }
