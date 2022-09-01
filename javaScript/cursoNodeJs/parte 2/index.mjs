@@ -1,39 +1,20 @@
-const chalk = require('chalk');
-const fs = require('fs');
-
 const texto1 = 'A interface File provê informações sobre arquivos e permite ao JavaScript  a acessar seu conteúdo. São geralmente recuperados a partir de um objeto [FileList](https://developer.mozilla.org/pt-BR/docs/Web/API/FileList) que é retornado como resultado da seleção, pelo usuário, de arquivos através do elemento [<input>](https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element/Input), a partir do objeto [DataTransfer](https://developer.mozilla.org/pt-BR/docs/Web/API/DataTransfer) utilizado em operações de arrastar e soltar, ou a partir da API `mozGetAsFile()` em um [HTMLCanvasElement](https://developer.mozilla.org/pt-BR/docs/Web/API/HTMLCanvasElement). Em Gecko, códigos com privilégiios podem criar objetos File representando qualquer arquivo local sem a intereção do usuário (veja [Implementation notes](https://developer.mozilla.org/pt-BR/docs/Web/API/File#implementation_notes) para mais informações.)'
 
-function treatError (err) {
-    return console.log(chalk.red(`An error was detected!\n${err}`));
-}
-
-async function readFile (filePath) {
-    const encoding = 'utf-8';
-
-    console.log('\nStarted reading file...')
-    try {
-        const texto = await fs.promises.readFile(filePath, encoding);
-        console.log(chalk.green(texto));
-    } catch (err) {
-        treatError(err);
-    } finally {
-        console.log('Finished reading file...')
-    }
-}
-
 function linksExtract (textToExtractLinks) {
-    const regEx = /\[([^\]]*)\]\((https?:\/\/[^$#\s].[^\s]*)\)/gm; //gm refers to global and multi-line  
+    const regEx = /\[([^\]]*)\]\((https?:\/\/[^$#\s].[^\s]*)\)/gm; 
     let extractedLinks = [];
     let temp;
 
     while((temp = regEx.exec(textToExtractLinks)) !== null) {
         extractedLinks.push({[(temp[1])] : temp[2]})
     }
+    console.log(extractedLinks);
+
     return extractedLinks;
 }
 
 const linksExtractedArr = linksExtract(texto1);
-console.log(linksExtractedArr);
+
 
 /*
     EXPRESSOES REGULARES:

@@ -60,4 +60,18 @@ fs refers to 'file system'  -> fs.readFile(file, [encoding], [callback]);
             }
             console.log(data);
         }
+
+    async function readFile (filePath) {
+    const encoding = 'utf-8';
+
+    console.log('\nStarted reading file...')
+    try {
+        const texto = await fs.promises.readFile(filePath, encoding);
+        console.log(chalk.green(texto));
+    } catch (err) {
+        treatError(err);
+    } finally {
+        console.log('Finished reading file...')
+    }
+}
 */
