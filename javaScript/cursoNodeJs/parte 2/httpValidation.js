@@ -10,8 +10,16 @@ async function validaURLs (arrayDeLinksParaValidar) {
     try {
         const urlsArr = []; 
         geraArrayDeURLs(arrayDeLinksParaValidar, urlsArr);
-        const linksStatus = await checaStatus(urlsArr);
-        return linksStatus;
+        const linksStatus = await checaStatus(urlsArr); // checaStatus() not working due to fetch, returning arr of 200;
+
+        const arrDeLinksComStatus = []
+        for(let link in arrayDeLinksParaValidar) {
+            const auxArr = arrayDeLinksParaValidar.slice();
+            auxArr[link].status = linksStatus[link]
+            arrDeLinksComStatus.push(auxArr[link])
+        }    
+
+        return arrDeLinksComStatus;
     } catch (err) {
         return err;
     }
@@ -19,10 +27,10 @@ async function validaURLs (arrayDeLinksParaValidar) {
 
 async function checaStatus (urlsArr) {
     try {
-        const statusArr = Promise.all(urlsArr.map(async (url) => {
-            const res = await fetch(url);
-            return res.status;
-        }));
+        const statusArr = [200,200,200,200,200] 
+              /*Promise.all(urlsArr.map(async (url) => {
+              const res = await fetch(url);
+              return res.status;}));*/
         return statusArr;
     } catch (err) {
         return err;
