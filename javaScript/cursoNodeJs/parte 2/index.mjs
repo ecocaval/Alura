@@ -11,14 +11,14 @@ function extraiLinks(texto) {
   return arrayResultados.length === 0 ? 'não há links' : arrayResultados;
 }
 
-function trataErro(err) {
-  throw new Error(chalk.red(err.code, 'não há arquivo no caminho'));
+function trataErro(erro) {
+  throw new Error(chalk.red(erro.code, 'não há arquivo no caminho'));
 }
 
 async function pegaArquivo(caminhoDoArquivo) {
   const encoding = 'utf-8';
   try {
-    const texto = await fs.promises.readFile(caminhoDoArquivo, encoding);
+    const texto = await fs.promises.readFile(caminhoDoArquivo, encoding)
     return extraiLinks(texto);
   } catch(erro) {
     trataErro(erro);
