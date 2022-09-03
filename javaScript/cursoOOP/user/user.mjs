@@ -4,7 +4,7 @@ const user = {
     nome: 'erico',
     email: 'ecocaval@hotmail.com',
     nascimento: '18/02/2000',
-    role: 'admin',
+    role: 'estudante',
     ativo: true,
     exibirInfos: function() {
         console.log((chalk.yellow('Nome: ')) + this.nome);
@@ -13,4 +13,21 @@ const user = {
     }
 }
 
-user.exibirInfos();
+const admin = {
+    nome: 'marinana',
+    email: 'm@m.com',
+    role: 'admin',
+    criarCurso: function() {
+        console.log('Curso criado!');
+    }
+}
+
+Object.setPrototypeOf(admin, user);
+
+admin.criarCurso();
+admin.exibirInfos();    
+
+const exibeSomenteRole = admin.role;
+
+const exibeRoleBindado = exibeSomenteRole.bind(admin);
+
